@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="oscuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rumbo</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="icono-32.png">
+<link rel="apple-touch-icon" href="icono-180.png">
+<style>
+/* ============================ tokens ============================ */
+:root{
+  color-scheme:dark;
+  --plano:#0d0d0d; --sup:#1a1a19; --sup2:#232320; --sup3:#2b2b28;
+  --tinta:#ffffff; --tinta2:#c3c2b7; --tinta3:#898781;
+  --rejilla:#2c2c2a; --eje:#383835; --borde:rgba(255,255,255,.10);
+  --bien:#0ca30c; --mal:#e66767; --aviso:#fab219;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --s9:#2bb0d1; --s10:#c08a55; --s11:#93a1c2; --s12:#9cc21a;
+  --radio:14px;
+}
+:root[data-tema="claro"]{
+  color-scheme:light;
+  --plano:#f9f9f7; --sup:#fcfcfb; --sup2:#f2f1ec; --sup3:#e8e7e0;
+  --tinta:#0b0b0b; --tinta2:#52514e; --tinta3:#898781;
+  --rejilla:#e1e0d9; --eje:#c3c2b7; --borde:rgba(11,11,11,.10);
+  --bien:#006300; --mal:#d03b3b; --aviso:#b07d00;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+  --s9:#0e8fb0; --s10:#9a6a3a; --s11:#5d6b8a; --s12:#7c9a00;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--plano); color:var(--tinta);
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;font-weight:650;letter-spacing:-.015em}
+a{color:inherit}
+code{background:var(--sup2);padding:1px 6px;border-radius:5px;font-size:.9em}
+.env{max-width:1320px;margin:0 auto;padding:0 22px 72px}
+
+/* ============================ barra superior ============================ */
+.top{
+  position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--plano) 88%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--borde);
+}
+.top .env{padding-top:12px;padding-bottom:0}
+.topFila{display:flex;align-items:center;gap:14px;padding-bottom:10px}
+.marca{font-weight:680;font-size:15px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
+.marca .pt{width:9px;height:9px;border-radius:50%;background:var(--s1)}
+.sep{flex:1}
+.meta{color:var(--tinta3);font-size:12.5px}
+.btn{
+  border:1px solid var(--borde);background:var(--sup);color:var(--tinta2);
+  border-radius:9px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;transition:.13s;
+}
+.btn:hover{background:var(--sup2);color:var(--tinta)}
+a.btn{text-decoration:none}
+.btn.act{background:var(--tinta);color:var(--plano);border-color:var(--tinta)}
+
+/* ============================ pestanas ============================ */
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{
+  border:0;background:transparent;color:var(--tinta3);font:inherit;font-size:14px;font-weight:600;
+  padding:10px 15px 12px;cursor:pointer;border-bottom:2px solid transparent;
+  transition:.13s;white-space:nowrap;letter-spacing:-.01em;
+}
+.tabs button:hover{color:var(--tinta)}
+.tabs button[aria-selected="true"]{color:var(--tinta);border-bottom-color:var(--s1)}
+.panel[hidden]{display:none}
+
+/* ============================ hero ============================ */
+.hero{padding:34px 0 6px}
+.hEtq{color:var(--tinta3);font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;font-weight:600}
+.hCifra{font-size:clamp(44px,7.2vw,76px);font-weight:700;letter-spacing:-.035em;line-height:1;margin:8px 0 10px;font-variant-numeric:tabular-nums}
+.hSub{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;color:var(--tinta2);font-size:14.5px}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;border:1px solid var(--borde);
+  background:var(--sup);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--tinta2);
+}
+.pill.vivo{border-color:color-mix(in srgb,var(--bien) 45%,transparent)}
+.pill.reset{cursor:pointer;font-family:inherit;border-style:dashed}
+.pill.reset:hover{color:var(--tinta);border-color:var(--tinta3)}
+.latido{width:7px;height:7px;border-radius:50%;background:var(--bien);animation:lat 2s ease-in-out infinite}
+@keyframes lat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+.pos{color:var(--bien)} .neg{color:var(--mal)}
+.fuerte{font-weight:650;color:var(--tinta)}
+
+.prog{margin-top:26px;max-width:760px}
+.progBarra{height:9px;border-radius:99px;background:var(--sup2);overflow:hidden;border:1px solid var(--borde)}
+.progRelleno{height:100%;background:linear-gradient(90deg,var(--s1),var(--s3));border-radius:99px;transition:width .8s cubic-bezier(.2,.7,.3,1)}
+.progPie{display:flex;justify-content:space-between;margin-top:7px;font-size:12.5px;color:var(--tinta3)}
+
+/* ============================ tarjetas ============================ */
+.tarjeta{background:var(--sup);border:1px solid var(--borde);border-radius:var(--radio);padding:18px 20px}
+.tarjeta + .tarjeta{margin-top:16px}
+.tarjeta > header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.tarjeta > header h2{font-size:15px;font-weight:650}
+.subt{color:var(--tinta3);font-size:12.5px;font-weight:400}
+.desglose{display:block;margin:-6px 0 16px;line-height:1.5}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:12px;margin:30px 0 26px}
+.kpi{background:var(--sup);border:1px solid var(--borde);border-radius:12px;padding:14px 16px}
+.kpi .e{color:var(--tinta3);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.kpi .v{font-size:23px;font-weight:660;letter-spacing:-.02em;margin-top:6px;font-variant-numeric:tabular-nums}
+.kpi .n{color:var(--tinta3);font-size:12px;margin-top:3px}
+.kpisNota{margin:26px 0 -16px}
+.kpisNota:empty{display:none}
+
+.rejilla2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:16px}
+@media(max-width:900px){.rejilla2{grid-template-columns:1fr}}
+
+/* ============================ controles ============================ */
+.segm{display:inline-flex;flex-wrap:wrap;max-width:100%;background:var(--sup2);border:1px solid var(--borde);border-radius:9px;padding:2px}
+.segm button{
+  border:0;background:transparent;color:var(--tinta3);font:inherit;font-size:12.5px;
+  padding:5px 11px;border-radius:7px;cursor:pointer;transition:.13s;white-space:nowrap;
+}
+.segm button:hover{color:var(--tinta)}
+.segm button[aria-pressed="true"]{background:var(--sup);color:var(--tinta);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+
+/* ============================ filtros del grafico ============================ */
+.filtros{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0 0 15px}
+.filtro{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borde);
+  background:var(--sup2);border-radius:999px;padding:5px 12px;font:inherit;font-size:12.5px;
+  color:var(--tinta2);cursor:pointer;transition:.13s;white-space:nowrap;
+}
+.filtro:hover{color:var(--tinta);border-color:var(--tinta3)}
+.filtro i{width:9px;height:9px;border-radius:3px;background:var(--c);flex:none;transition:.13s}
+.filtro .im{color:var(--tinta3);font-variant-numeric:tabular-nums;font-size:12px}
+.filtro[aria-pressed="false"]{opacity:.42}
+.filtro[aria-pressed="false"] i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c)}
+.filtro[aria-pressed="false"] .im{text-decoration:line-through}
+.filtro.preset{background:transparent;border-style:dashed;color:var(--tinta3)}
+.filtro.preset[aria-pressed="true"]{border-style:solid;background:var(--tinta);color:var(--plano);border-color:var(--tinta);opacity:1}
+.filtroSep{width:1px;align-self:stretch;background:var(--borde);margin:2px 5px}
+
+/* ============================ chips de producto ============================ */
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(214px,1fr));gap:10px;margin-top:16px}
+.chip{
+  text-align:left;background:var(--sup);border:1px solid var(--borde);border-radius:12px;
+  padding:13px 15px;cursor:pointer;font:inherit;color:inherit;transition:.14s;position:relative;overflow:hidden;
+}
+.chip:hover{border-color:var(--tinta3);transform:translateY(-1px)}
+.chip .barra{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c)}
+.chip .nm{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--tinta)}
+.chip .nm i{width:9px;height:9px;border-radius:3px;background:var(--c);flex:none}
+.chip .vl{font-size:19px;font-weight:660;margin-top:7px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.chip .pi{display:flex;justify-content:space-between;align-items:center;margin-top:4px;font-size:12px;color:var(--tinta3)}
+.chip .sp{height:26px;margin-top:8px}
+.chip.apagado{opacity:.45}
+.chip.apagado .vl{text-decoration:line-through;text-decoration-thickness:1px}
+
+/* ============================ detalle de fondo ============================ */
+.selFondo{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.selFondo button{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borde);background:var(--sup);
+  border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;color:var(--tinta2);cursor:pointer;transition:.13s;
+}
+.selFondo button i{width:9px;height:9px;border-radius:3px;background:var(--c)}
+.selFondo button:hover{color:var(--tinta);border-color:var(--tinta3)}
+.selFondo button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff;font-weight:600}
+.selFondo button[aria-pressed="true"] i{background:rgba(255,255,255,.9)}
+.selFondo button.vendido:not([aria-pressed="true"]){opacity:.55;border-style:dashed}
+.selFondo button.vendido i{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c)}
+.selFondo button.vendido[aria-pressed="true"] i{box-shadow:inset 0 0 0 1.5px #fff}
+
+.ficha{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px 20px;
+  background:var(--sup2);border-radius:11px;padding:15px 17px;margin-bottom:16px}
+.ficha div{padding:6px 0}
+.ficha dt{color:var(--tinta3);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.ficha dd{margin:3px 0 0;font-size:13.5px;color:var(--tinta)}
+.papel{background:var(--sup2);border-left:3px solid var(--c,var(--s1));border-radius:0 9px 9px 0;
+  padding:11px 15px;margin-bottom:16px;color:var(--tinta2);font-size:13.5px}
+.ventanas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.ventana{background:var(--sup2);border-radius:9px;padding:8px 13px;min-width:78px}
+.ventana .e{color:var(--tinta3);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.ventana .v{font-size:15px;font-weight:640;margin-top:2px;font-variant-numeric:tabular-nums}
+
+.grupoEtq{flex-basis:100%;color:var(--tinta3);font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:-2px}
+.filaTabla{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 10px}
+.tramos{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:12px 0 0;font-size:12.5px;color:var(--tinta3)}
+.tramos span{display:inline-flex;align-items:center;gap:7px}
+.tramos i{width:11px;height:11px;border-radius:50%;flex:none}
+.tramos i.aro{outline:2px solid var(--tinta);outline-offset:1.5px}
+
+/* ============================ el mes ============================ */
+.mesBarra{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.mesBarra select{
+  background:var(--sup);color:var(--tinta);border:1px solid var(--borde);border-radius:9px;
+  padding:8px 12px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+}
+.mesTarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:22px 0 16px}
+.mesT{background:var(--sup);border:1px solid var(--borde);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden}
+.mesT .barra{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c)}
+.mesT .e{color:var(--tinta3);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.mesT .v{font-size:26px;font-weight:680;letter-spacing:-.025em;margin-top:7px;font-variant-numeric:tabular-nums}
+.mesT .n{color:var(--tinta3);font-size:12px;margin-top:4px}
+
+/* ============================ exposicion ============================ */
+.expo{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px}
+.expo h3{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--tinta3);margin-bottom:10px}
+.expoNota{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--tinta3)}
+.expoNota.viejo{color:var(--aviso)}
+.repDe{display:block;font-size:11.5px;font-weight:400;color:var(--tinta3);margin:1px 0 0 16px}
+.filaValor .repDe{margin-left:0}
+.filaRep{cursor:default}
+.onoffs{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:7px;font-weight:400}
+.onoff{display:inline-flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--tinta2);position:relative}
+.onoff input{position:absolute;opacity:0;width:0;height:0}
+.onoff .pista{width:30px;height:18px;border-radius:9px;background:var(--sup3);position:relative;flex:none;
+  transition:background .15s;box-shadow:inset 0 0 0 1px var(--borde)}
+.onoff .pista::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+  background:#fff;transition:left .15s;box-shadow:0 1px 2px rgba(0,0,0,.35)}
+.onoff input:checked + .pista{background:var(--bien)}
+.onoff input:checked + .pista::after{left:14px}
+.onoff input:focus-visible + .pista{box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 30%,transparent)}
+.onoff .est{font-weight:700;font-size:10.5px;letter-spacing:.05em;color:var(--tinta3);min-width:26px}
+.onoff .est::before{content:"OFF"}
+.onoff input:checked ~ .est{color:var(--bien)}
+.onoff input:checked ~ .est::before{content:"ON"}
+.onoff.fuera .nmP{color:var(--tinta3);text-decoration:line-through}
+.filaRep.apagado .nm{color:var(--tinta3)}
+.estadoRep{display:inline-block;font-size:11.5px;font-weight:650;border-radius:6px;padding:2px 8px}
+.estadoRep.ok{color:var(--bien);background:color-mix(in srgb,var(--bien) 13%,transparent)}
+.estadoRep.vigilar{color:var(--aviso);background:color-mix(in srgb,var(--aviso) 15%,transparent)}
+.estadoRep.rebalancear{color:var(--mal);background:color-mix(in srgb,var(--mal) 13%,transparent)}
+.calcAporte{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 10px;font-size:14px;color:var(--tinta2)}
+.calcAporte input{width:120px;font:inherit;font-size:14px;color:var(--tinta);background:var(--sup2);border:1px solid var(--borde);
+  border-radius:9px;height:36px;padding:0 10px;text-align:right}
+.sumaRep{font-weight:650}
+.sumaRep.mal{color:var(--mal)}
+.expoTitular{margin:-4px 0 18px;font-size:17px;color:var(--tinta2)}
+.expoTitular b{color:var(--tinta);font-size:22px;font-weight:700;letter-spacing:-.02em}
+
+/* ============================ tablas ============================ */
+.tablaEnv{overflow-x:auto;border-radius:11px;border:1px solid var(--borde)}
+table.dt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+table.dt th{
+  text-align:right;padding:9px 13px;color:var(--tinta3);font-weight:600;font-size:11.5px;
+  text-transform:uppercase;letter-spacing:.05em;background:var(--sup2);position:sticky;top:0;white-space:nowrap;
+}
+table.dt th:first-child,table.dt td:first-child{text-align:left}
+table.dt th.orden{cursor:pointer;user-select:none}
+table.dt th.orden:hover{color:var(--tinta)}
+table.dt td{padding:9px 13px;text-align:right;border-top:1px solid var(--borde);white-space:nowrap}
+table.dt tbody tr:hover{background:var(--sup2)}
+table.dt tbody tr.destacada td{font-weight:650;color:var(--tinta)}
+table.dt tbody tr.destacada{background:color-mix(in srgb,var(--s1) 13%,transparent)}
+table.dt td i.pt{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:8px;vertical-align:-1px}
+table.dt tfoot td{padding:9px 13px;text-align:right;border-top:1px solid var(--eje);font-weight:650}
+table.dt tfoot td:first-child{text-align:left}
+.tablaEnv.alto{max-height:420px;overflow-y:auto}
+
+.leyenda{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.leyenda td{padding:7px 0;border-top:1px solid var(--borde)}
+.leyenda tr:first-child td{border-top:0}
+.leyenda td:first-child{color:var(--tinta2)}
+.leyenda td:nth-child(2),.leyenda td:nth-child(3){text-align:right}
+.leyenda td:nth-child(3){color:var(--tinta3);width:56px}
+.leyenda i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:9px}
+
+/* ============================ graficos ============================ */
+.envGraf{position:relative;width:100%}
+svg.grafico{display:block;width:100%;height:auto;overflow:visible}
+svg.grafico .rejilla{stroke:var(--rejilla);stroke-width:1}
+svg.grafico .eje{stroke:var(--eje);stroke-width:1}
+svg.grafico .ejeY,svg.grafico .ejeX{fill:var(--tinta3);font-size:11px;font-variant-numeric:tabular-nums}
+svg.grafico .ejeY{text-anchor:end}
+svg.grafico .separador{stroke:var(--sup);stroke-width:2}
+svg.grafico .overlay{stroke:var(--tinta2);stroke-width:2;stroke-dasharray:5 4;opacity:.75}
+svg.grafico .crosshair{stroke:var(--tinta3);stroke-width:1;stroke-dasharray:3 3}
+svg.grafico .punto{stroke:var(--sup);stroke-width:2}
+svg.grafico .puntoTotal{fill:var(--tinta);stroke:var(--sup);stroke-width:2}
+svg.grafico .marcador{stroke:var(--sup);stroke-width:1.5}
+svg.grafico .marcador.aro{stroke:var(--tinta);stroke-width:2}
+svg.grafico .referencia{stroke:var(--tinta2);stroke-width:1.5;stroke-dasharray:6 4;opacity:.85}
+svg.grafico .refEtiqueta{fill:var(--tinta2);font-size:11px;font-weight:600}
+svg.grafico .resalte{fill:var(--tinta3);opacity:.09!important}
+svg.grafico .segSep{stroke:var(--sup);stroke-width:2}
+svg.grafico .arco{stroke:var(--sup);stroke-width:2;cursor:pointer;transition:opacity .12s}
+svg.donut:hover .arco{opacity:.55}
+svg.grafico .arco.act{opacity:1}
+svg.grafico .donutEtiqueta{fill:var(--tinta3);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+svg.grafico .donutValor{fill:var(--tinta);font-size:21px;font-weight:660}
+svg.grafico .barEtq{fill:var(--tinta2);font-size:12px}
+svg.grafico .barVal{fill:var(--tinta3);font-size:11.5px;font-variant-numeric:tabular-nums}
+svg.grafico .barValArriba{fill:var(--tinta);font-size:12px;font-weight:640;font-variant-numeric:tabular-nums}
+.spark{display:block;width:100%;height:100%}
+.vacio{color:var(--tinta3);font-size:13px;text-align:center;padding:40px 0;margin:0}
+
+.gtt{
+  position:absolute;top:0;left:0;pointer-events:none;opacity:0;transition:opacity .1s;
+  background:var(--sup2);border:1px solid var(--borde);border-radius:10px;padding:10px 12px;
+  font-size:12.5px;min-width:150px;box-shadow:0 8px 26px rgba(0,0,0,.36);z-index:20;
+}
+.gtt.on{opacity:1}
+.gtt b{color:var(--tinta3);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.gtt .ttTotal{font-size:18px;font-weight:660;margin:3px 0 7px;font-variant-numeric:tabular-nums;color:var(--tinta)}
+.gtt table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.gtt td{padding:2.5px 0;color:var(--tinta2)}
+.gtt td:last-child{text-align:right;padding-left:16px;color:var(--tinta)}
+.gtt tr.sep td{border-top:1px solid var(--borde);padding-top:6px;font-weight:650;color:var(--tinta)}
+.gtt i{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:7px}
+.gtt i.raya{width:12px;height:0;border-top:2px dashed var(--tinta2);border-radius:0;vertical-align:2px}
+.gtt .ttEvento{color:var(--s4);font-size:12px;margin-top:4px}
+
+/* ============================ hitos ============================ */
+.hitos{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.hito{flex:none;min-width:132px;background:var(--sup2);border-radius:11px;padding:13px 15px;border:1px solid transparent}
+.hito.hecho{border-color:color-mix(in srgb,var(--bien) 40%,transparent)}
+.hito .im{font-size:17px;font-weight:660;font-variant-numeric:tabular-nums}
+.hito .fe{font-size:12px;color:var(--tinta3);margin-top:4px}
+.hito.hecho .fe{color:var(--bien)}
+
+/* ============================ proyeccion ============================ */
+.mandos{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:18px}
+.mando label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--tinta3);margin-bottom:7px}
+.mando label b{color:var(--tinta);font-variant-numeric:tabular-nums;font-weight:640}
+input[type=range]{width:100%;accent-color:var(--s1);height:22px}
+
+/* ============================ avisos ============================ */
+.avisos{margin-top:18px;display:grid;gap:8px}
+.av{display:flex;gap:11px;align-items:flex-start;background:var(--sup);border:1px solid var(--borde);
+  border-left:3px solid var(--aviso);border-radius:0 11px 11px 0;padding:12px 15px;font-size:13px;color:var(--tinta2)}
+.av b{color:var(--tinta)}
+.pie{margin-top:34px;color:var(--tinta3);font-size:12px;line-height:1.7;border-top:1px solid var(--borde);padding-top:18px}
+
+/* ============================ modo video ============================ */
+body.video .topFila,body.video #seccionTabla,body.video .pie,body.video #seccionProyeccion,body.video .banner{display:none}
+.banner{margin-top:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--sup);
+  border:1px solid var(--borde);border-left:3px solid var(--s1);border-radius:10px;padding:12px 16px;font-size:13.5px;line-height:1.5}
+.banner span{flex:1;min-width:240px;color:var(--tinta2)}
+.banner b{color:var(--tinta)}
+.aviso-legal{margin-top:10px;color:var(--tinta3);font-size:11.5px}
+.notaMoneda{margin:8px 0 0;padding:8px 12px;border-radius:9px;font-size:12.5px;color:var(--tinta2);
+  background:color-mix(in srgb,var(--s1) 9%,var(--sup2));border:1px solid color-mix(in srgb,var(--s1) 22%,transparent)}
+body.video .notaMoneda{display:none}
+body.monedaLarga .kpi .v{font-size:18px;white-space:nowrap}
+body.monedaLarga .chip .vl{font-size:15px}
+.selMoneda{appearance:none;-webkit-appearance:none;background-image:var(--flecha);background-repeat:no-repeat;
+  background-position:right 9px center;padding-right:26px;font-variant-numeric:tabular-nums}
+.btn:disabled{opacity:.55;cursor:progress}
+[hidden]{display:none !important}
+.btn.prim{background:var(--s1);border-color:transparent;color:#fff;font-weight:600}
+.btn.prim:hover{filter:brightness(1.1);color:#fff;background:var(--s1)}
+body.sinDatos #tabs button:not([data-tab="datos"]):not([data-tab="ayuda"]),body.sinDatos #btnPrecios,body.sinDatos #metaFecha{display:none}
+
+/* ---- Mis datos ---- */
+.sp{flex:1}
+.edBarra{display:flex;align-items:center;gap:12px;margin:22px 0 14px;flex-wrap:wrap}
+#editor .tarjeta + .tarjeta,#editor .saldos{margin-top:16px}
+#editor select{appearance:none;-webkit-appearance:none;font:inherit;font-size:13px;color:var(--tinta);
+  background:var(--sup2) var(--flecha) no-repeat right 11px center;border:1px solid var(--borde);border-radius:9px;
+  height:34px;padding:0 32px 0 11px;cursor:pointer}
+table.dt td small{color:var(--tinta3);font-size:11.5px}
+table.dt td .idp{display:block;margin-left:17px}
+table.dt td.acc button{font:inherit;font-size:12.5px;background:none;border:0;color:var(--s1);cursor:pointer;padding:2px 5px}
+table.dt td.acc button:hover{text-decoration:underline}
+table.dt td.acc button[data-acc^="borrar"]{color:var(--mal)}
+table.dt td.nota{max-width:220px;overflow:hidden;text-overflow:ellipsis;text-align:left;color:var(--tinta3)}
+.saldos{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.saldos .tarjeta + .tarjeta{margin-top:0}
+.pt{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:8px;vertical-align:0}
+.bienvenida{margin-top:18px}
+.bienvenida h2{font-size:18px;margin-bottom:8px}
+.bienvenida ol{margin:0 0 16px 18px;line-height:1.7;color:var(--tinta2)}
+
+/* ---- Ventana modal ---- */
+:root{--flecha:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23898781' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.modal{border:0;border-radius:18px;background:var(--sup);color:var(--tinta);padding:0;text-align:left;
+  width:min(640px,calc(100vw - 24px));max-height:calc(100vh - 32px);
+  box-shadow:0 30px 90px rgba(0,0,0,.45),0 0 0 1px var(--borde)}
+.modal[open]{animation:entra .18s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.modal::backdrop{background:rgba(6,6,6,.55);backdrop-filter:blur(4px)}
+.mForm{display:flex;flex-direction:column;max-height:calc(100vh - 34px)}
+.mForm > header{display:flex;align-items:center;gap:12px;padding:22px 26px 8px}
+.mForm > header h2{font-size:19px;font-weight:700;letter-spacing:-.025em;flex:1;margin:0}
+.mForm .x{width:32px;height:32px;border-radius:50%;border:0;background:var(--sup2);color:var(--tinta2);
+  font-size:19px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:.12s}
+.mForm .x:hover{background:var(--sup3);color:var(--tinta)}
+.mCuerpo{padding:12px 26px 22px;overflow-y:auto;font-size:14px;line-height:1.5}
+.mCuerpo > p{margin:0 0 6px}
+.mForm > footer{display:flex;justify-content:flex-end;gap:10px;padding:14px 26px 18px;border-top:1px solid var(--borde)}
+.mForm > footer .btn{height:40px;padding:0 18px;font-size:14px;border-radius:11px}
+.mErr{margin:0 26px 10px;padding:11px 14px;border-radius:11px;white-space:pre-line;font-size:13.5px;
+  background:color-mix(in srgb,var(--mal) 13%,transparent);border:1px solid color-mix(in srgb,var(--mal) 40%,transparent)}
+
+.secc{display:flex;align-items:center;gap:12px;margin:26px 0 12px;font-size:11px;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--tinta3)}
+.secc::after{content:"";flex:1;height:1px;background:var(--borde)}
+.rejilla{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;align-items:end}
+.rejilla.tres{grid-template-columns:repeat(3,minmax(0,1fr))}
+.rejilla .ancho{grid-column:1/-1}
+.campo{display:flex;flex-direction:column;gap:7px;min-width:0}
+.campo .et{font-size:12.5px;font-weight:600;color:var(--tinta2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.campo .et em{font-style:normal;font-weight:400;color:var(--tinta3);margin-left:4px}
+.mForm input:not([type=checkbox]):not([type=radio]),.mForm select,.mForm textarea{
+  font:inherit;font-size:14px;color:var(--tinta);background:var(--sup2);border:1px solid var(--borde);
+  border-radius:11px;height:42px;padding:0 13px;width:100%;box-sizing:border-box;
+  transition:border-color .12s,box-shadow .12s,background .12s}
+.mForm textarea{height:auto;min-height:64px;padding:11px 13px;resize:vertical;line-height:1.45}
+.mForm select{appearance:none;-webkit-appearance:none;background-image:var(--flecha);background-repeat:no-repeat;
+  background-position:right 13px center;padding-right:36px;cursor:pointer}
+.mForm input[type=date]{padding-right:8px}
+.mForm input:hover,.mForm select:hover,.mForm textarea:hover{border-color:color-mix(in srgb,var(--tinta3) 55%,transparent)}
+.mForm input:focus,.mForm select:focus,.mForm textarea:focus{outline:0;background:var(--sup);border-color:var(--s1);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 22%,transparent)}
+.mForm input::placeholder,.mForm textarea::placeholder{color:var(--tinta3);opacity:.8}
+.conSufijo{position:relative}
+.conSufijo input{padding-right:32px !important;text-align:right;font-variant-numeric:tabular-nums}
+.conSufijo > span{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--tinta3);font-size:14px;pointer-events:none}
+.conMoneda input{padding-right:84px !important}
+.mForm .conMoneda select{position:absolute;right:5px;top:5px;height:32px;width:auto;min-width:0;padding:0 26px 0 10px;
+  border-radius:8px;font-size:13px;color:var(--tinta2);background-color:var(--sup);background-position:right 9px center}
+
+.interruptor{display:flex;align-items:center;gap:14px;cursor:pointer;padding:13px 15px;border:1px solid var(--borde);
+  border-radius:12px;background:var(--sup2)}
+.interruptor input{position:absolute;opacity:0;width:0;height:0}
+.interruptor .pista{width:40px;height:24px;border-radius:12px;background:var(--sup3);position:relative;flex:none;
+  transition:background .15s;box-shadow:inset 0 0 0 1px var(--borde)}
+.interruptor .pista::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
+  background:#fff;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.interruptor input:checked + .pista{background:var(--s1)}
+.interruptor input:checked + .pista::after{left:19px}
+.interruptor input:focus-visible + .pista{box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 30%,transparent)}
+.interruptor b{display:block;font-size:13.5px;font-weight:600;color:var(--tinta)}
+.interruptor small{display:block;color:var(--tinta3);font-size:12.5px;line-height:1.4;margin-top:1px}
+
+.colores{display:flex;align-items:center;gap:8px;min-height:42px;flex-wrap:wrap}
+.color{position:relative;line-height:0}
+.color input{position:absolute;opacity:0;width:0;height:0}
+.color i{display:block;width:24px;height:24px;border-radius:50%;background:var(--c);cursor:pointer;transition:transform .12s}
+.color i:hover{transform:scale(1.12)}
+.color input:checked + i{box-shadow:0 0 0 2px var(--sup),0 0 0 4px var(--c)}
+.color input:focus-visible + i{outline:2px solid var(--tinta);outline-offset:3px}
+
+.pildoras{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--sup2);border:1px solid var(--borde);
+  border-radius:13px;padding:4px}
+.pildoras label{position:relative;cursor:pointer}
+.pildoras input{position:absolute;opacity:0;width:0;height:0}
+.pildoras span{display:block;text-align:center;padding:9px 6px;border-radius:10px;font-size:13.5px;font-weight:600;
+  color:var(--tinta3);transition:.12s}
+.pildoras label:hover span{color:var(--tinta)}
+.pildoras input:checked + span{background:var(--sup);color:var(--tinta);box-shadow:0 1px 3px rgba(0,0,0,.22),0 0 0 1px var(--borde)}
+.pildoras input:focus-visible + span{outline:2px solid var(--s1);outline-offset:-2px}
+
+.resumen{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 15px;
+  border-radius:12px;background:color-mix(in srgb,var(--s1) 9%,var(--sup2));font-size:12.5px;line-height:1.45;color:var(--tinta2)}
+.resumen b{font-size:16px;font-weight:680;color:var(--tinta);white-space:nowrap;font-variant-numeric:tabular-nums}
+.resumen b:empty{display:none}
+.resumen > span{flex:1 1 200px;min-width:0}
+@media (max-width:520px){.resumen{flex-wrap:wrap}}
+.ayuda{font-size:12.5px;color:var(--tinta3);margin:10px 0 0;line-height:1.5}
+.relleno{margin:14px 0 0;font-size:12.5px;color:var(--bien)}
+.cargando{font-size:13px;color:var(--tinta3);margin:4px 0}
+
+.buscador{background:linear-gradient(160deg,color-mix(in srgb,var(--s1) 12%,var(--sup2)),var(--sup2) 70%);
+  border:1px solid var(--borde);border-radius:15px;padding:18px}
+.buscador .tit{font-size:15px;font-weight:680;letter-spacing:-.01em}
+.buscador .sub{font-size:12.5px;color:var(--tinta3);margin:2px 0 12px}
+.buscador .fila{display:flex;gap:8px}
+.buscador .caja{position:relative;flex:1}
+.buscador .caja svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--tinta3);pointer-events:none}
+.mForm .buscador .caja input{padding-left:40px;background:var(--sup);height:44px}
+.buscador .btn{height:44px;padding:0 20px;border-radius:11px;font-size:14px}
+.bRes{display:grid;gap:7px;margin-top:12px;max-height:290px;overflow-y:auto}
+.bRes:empty{display:none}
+.bItem{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:13px;align-items:center;text-align:left;font:inherit;
+  color:var(--tinta);background:var(--sup);border:1px solid var(--borde);border-radius:11px;padding:10px 14px 10px 0;
+  cursor:pointer;overflow:hidden;transition:border-color .12s,box-shadow .12s}
+.bItem .franja{align-self:stretch;background:var(--c)}
+.bItem .nm{display:block;font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bItem .meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.bItem .meta span{font-size:11px;color:var(--tinta3);background:var(--sup2);border-radius:6px;padding:1px 7px}
+.bItem .pre{text-align:right;font-variant-numeric:tabular-nums;font-weight:650;font-size:13.5px;white-space:nowrap}
+.bItem .pre small{display:block;font-weight:400;color:var(--tinta3);font-size:11.5px;margin-top:2px}
+.bItem:hover{border-color:color-mix(in srgb,var(--tinta3) 65%,transparent)}
+.bItem.sel{border-color:var(--s1);box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 20%,transparent)}
+
+.avanzado{margin-top:24px;border-top:1px solid var(--borde);padding-top:16px}
+.avanzado summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--tinta2);list-style:none;display:flex;align-items:center;gap:9px}
+.avanzado summary::-webkit-details-marker{display:none}
+.avanzado summary::before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:rotate(-45deg);transition:transform .15s;margin-left:2px}
+.avanzado[open] summary::before{transform:rotate(45deg)}
+.avanzado summary:hover{color:var(--tinta)}
+.avanzado .rejilla{margin-top:16px}
+
+.opcion{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--borde);border-radius:13px;padding:14px 15px;
+  margin-top:10px;cursor:pointer;background:var(--sup2);transition:.12s;font-size:13.5px;color:var(--tinta2)}
+.opcion b{color:var(--tinta)}
+.opcion:has(input:checked){border-color:var(--s1);box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 20%,transparent)}
+.opcion input{margin-top:3px;accent-color:var(--s1)}
+
+.listaValores{margin-top:16px;border-top:1px solid var(--borde)}
+.filaValor{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--borde);cursor:text}
+.filaValor .nm{display:block;font-weight:600;font-size:13.5px}
+.filaValor small{display:block;color:var(--tinta3);font-size:12px;margin-top:1px}
+
+@media(max-width:640px){
+  .rejilla,.rejilla.tres{grid-template-columns:1fr}
+  .saldos{grid-template-columns:1fr}
+  .buscador .fila{flex-wrap:wrap}
+  .pildoras{grid-template-columns:repeat(2,1fr)}
+  .filaValor{grid-template-columns:1fr}
+  .mForm > header,.mCuerpo,.mForm > footer{padding-left:18px;padding-right:18px}
+}
+body.video .hCifra{font-size:clamp(58px,10vw,124px)}
+body.video .kpi .v{font-size:28px}
+body.video .tarjeta{padding:22px 24px}
+
+@media(max-width:640px){
+  .env{padding:0 14px 56px}
+  .tarjeta{padding:15px 15px}
+  .hSub{font-size:13.5px}
+}
+/* ---- Importar ---- */
+.imOps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.imOp{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;font:inherit;color:var(--tinta);
+  background:var(--sup2);border:1px solid var(--borde);border-radius:14px;padding:16px;cursor:pointer;transition:.13s}
+.imOp .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:8px;
+  background:var(--sup);color:var(--tinta2);box-shadow:0 0 0 1px var(--borde)}
+.imOp b{font-size:14.5px;font-weight:650}
+.imOp small{font-size:12.5px;color:var(--tinta3)}
+.imOp:hover{border-color:color-mix(in srgb,var(--tinta3) 60%,transparent)}
+.imOp.sel{border-color:var(--s1);box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 18%,transparent);
+  background:color-mix(in srgb,var(--s1) 7%,var(--sup2))}
+.imOp.sel .ic{background:var(--s1);color:#fff;box-shadow:none}
+.imPaso{margin-top:20px;padding-top:20px;border-top:1px solid var(--borde)}
+.pasos{list-style:none;counter-reset:paso;margin:0;padding:0;display:grid;gap:12px}
+.pasos li{counter-increment:paso;position:relative;padding-left:40px;font-size:14px;line-height:1.55;color:var(--tinta2);min-height:28px}
+.pasos li::before{content:counter(paso);position:absolute;left:0;top:-1px;width:27px;height:27px;border-radius:50%;
+  display:grid;place-items:center;font-size:12.5px;font-weight:700;color:var(--s1);
+  background:color-mix(in srgb,var(--s1) 14%,transparent)}
+.pasos li b{color:var(--tinta)}
+.pasos .btn{margin:0 4px;vertical-align:middle;text-decoration:none}
+.alerta{display:block;margin-top:6px;padding:8px 11px;border-radius:9px;font-size:13px;color:var(--tinta);
+  background:color-mix(in srgb,var(--aviso) 16%,transparent);border:1px solid color-mix(in srgb,var(--aviso) 40%,transparent)}
+.verPrompt{margin-top:8px}
+.verPrompt summary{cursor:pointer;font-size:12.5px;color:var(--tinta3)}
+.verPrompt pre{white-space:pre-wrap;font:12px/1.55 ui-monospace,Consolas,monospace;color:var(--tinta2);background:var(--sup2);
+  border:1px solid var(--borde);border-radius:10px;padding:12px 14px;margin:8px 0 0;max-height:260px;overflow:auto}
+.zona{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;cursor:pointer;
+  border:2px dashed color-mix(in srgb,var(--tinta3) 45%,transparent);border-radius:14px;padding:26px 16px;
+  background:var(--sup2);transition:.13s}
+.zona input{position:absolute;width:1px;height:1px;opacity:0}
+.zona .zIc{font-size:22px;color:var(--s1);line-height:1;margin-bottom:4px}
+.zona b{font-size:14px}
+.zona small{font-size:12.5px;color:var(--tinta3)}
+.zona .zNom{margin-top:8px;font-size:12.5px;font-weight:600;color:var(--s1);word-break:break-word}
+.zona:hover,.zona.encima{border-color:var(--s1);background:color-mix(in srgb,var(--s1) 7%,var(--sup2))}
+.zona.lleno{border-style:solid;border-color:color-mix(in srgb,var(--s1) 60%,transparent)}
+.imTexto{margin-top:12px;width:100%;box-sizing:border-box;font:12.5px/1.55 ui-monospace,Consolas,monospace;color:var(--tinta);
+  background:var(--sup2);border:1px solid var(--borde);border-radius:12px;padding:12px 14px;resize:vertical}
+.imTexto:focus{outline:0;border-color:var(--s1);box-shadow:0 0 0 3px color-mix(in srgb,var(--s1) 22%,transparent)}
+.imAcc{display:flex;align-items:center;gap:10px;margin-top:20px}
+.imAcc .btn{height:40px;padding:0 18px;font-size:14px;border-radius:11px}
+.cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.cifra{background:var(--sup2);border:1px solid var(--borde);border-radius:12px;padding:12px 14px}
+.cifra span{display:block;font-size:12px;color:var(--tinta3)}
+.cifra b{display:block;font-size:20px;font-weight:680;letter-spacing:-.02em;margin-top:3px;font-variant-numeric:tabular-nums}
+.cifra small{display:block;font-size:12px;color:var(--tinta3);margin-top:1px}
+.comprueba{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.5;color:var(--tinta2);
+  background:color-mix(in srgb,var(--aviso) 13%,transparent);border:1px solid color-mix(in srgb,var(--aviso) 35%,transparent)}
+.comprueba b{color:var(--tinta)}
+.imErr{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:13px;
+  background:color-mix(in srgb,var(--mal) 10%,transparent);border:1px solid color-mix(in srgb,var(--mal) 35%,transparent)}
+.imErr ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:6px;max-height:220px;overflow:auto}
+.imErr li{display:flex;gap:10px;line-height:1.45;color:var(--tinta2)}
+.imErr .fila{flex:none;font-weight:650;color:var(--mal);min-width:54px}
+.imNuevos .secc{margin-top:20px}
+.imProd{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--borde);font-size:13.5px}
+.imProd .meta{display:flex;gap:5px;flex-wrap:wrap}
+.imProd .meta span{font-size:11.5px;color:var(--tinta3);background:var(--sup2);border-radius:6px;padding:1px 8px}
+.etqImp{display:inline-block;font-size:11px;color:var(--tinta3);background:var(--sup2);border-radius:6px;padding:1px 7px;margin-right:4px}
+.estado{display:inline-block;font-size:11.5px;font-weight:600;border-radius:6px;padding:2px 8px}
+.est-nuevo .estado{color:var(--bien);background:color-mix(in srgb,var(--bien) 13%,transparent)}
+.est-repetido .estado{color:var(--tinta3);background:var(--sup2)}
+.est-repetido td{opacity:.6}
+.est-error .estado{color:var(--mal);background:color-mix(in srgb,var(--mal) 13%,transparent)}
+.exito{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;padding:14px 16px;border-radius:13px;
+  background:color-mix(in srgb,var(--bien) 12%,var(--sup));border:1px solid color-mix(in srgb,var(--bien) 35%,transparent)}
+.exito b{flex:1;font-size:14px}
+@media(max-width:640px){.imOps{grid-template-columns:1fr}}
+/* ---- Ayuda y versión ---- */
+.ayudaTarjeta{margin-top:24px;max-width:860px}
+.faq{border-top:1px solid var(--borde)}
+.faq summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;padding:15px 2px;font-size:14.5px;font-weight:620}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";margin-left:auto;font-size:20px;font-weight:400;color:var(--tinta3);transition:transform .15s}
+.faq[open] summary::after{transform:rotate(45deg)}
+.faq summary:hover{color:var(--s1)}
+.faq > div{padding:0 2px 16px;font-size:14px;line-height:1.65;color:var(--tinta2)}
+.faq p{margin:0 0 8px} .faq ol,.faq ul{margin:0 0 8px;padding-left:22px}
+.faq li{margin-bottom:4px} .faq b{color:var(--tinta)}
+.faq code{font:12.5px ui-monospace,Consolas,monospace;background:var(--sup2);border:1px solid var(--borde);border-radius:5px;padding:1px 5px}
+.ayudaPie{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--borde);font-size:13px;color:var(--tinta3)}
+.ayudaPie a{color:var(--s1)}
+.dosCol{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bloque{background:var(--sup2);border:1px solid var(--borde);border-radius:14px;padding:16px}
+.bloque > b{font-size:14.5px}
+.bloque .zona{background:var(--sup);padding:18px 12px}
+.bloque .imAcc{margin-top:12px}
+#editor .tarjeta > .interruptor{margin-top:4px}
+@media(max-width:760px){.dosCol{grid-template-columns:1fr}}
+@media(max-width:720px){
+  .topFila{gap:6px;flex-wrap:wrap}
+  .topFila .btn{padding:6px 9px;font-size:12px;white-space:nowrap}
+  .topFila .meta{display:none}
+}
+.compTitular{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:4px 0 18px}
+.compCaja{background:var(--sup2);border:1px solid var(--borde);border-radius:13px;padding:14px 16px}
+.compCaja span{display:block;font-size:12px;color:var(--tinta3)}
+.compCaja b{display:block;font-size:24px;font-weight:700;letter-spacing:-.025em;margin-top:4px;font-variant-numeric:tabular-nums}
+.compCaja small{display:block;font-size:12.5px;color:var(--tinta3);margin-top:2px}
+.compCaja.veredicto{background:color-mix(in srgb,var(--s1) 10%,var(--sup2))}
+.compCaja.veredicto b{font-size:17px;line-height:1.35;letter-spacing:-.01em}
+.leyComp{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px;color:var(--tinta2)}
+.leyItem{display:inline-flex;align-items:center;gap:7px}
+.leyItem i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.compDetalles{margin-top:18px;border-top:1px solid var(--borde);padding-top:14px}
+.compDetalles summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--tinta2)}
+.compDetalles summary:hover{color:var(--tinta)}
+.conBoton{display:flex;gap:6px}
+.conBoton input{flex:1;min-width:0}
+.mForm .conBoton .btn{height:42px;border-radius:11px;flex:none}
+.pildoras.una{grid-template-columns:1fr}
+.progPie .editar{border:0;background:none;color:var(--s1);font:inherit;font-size:12.5px;cursor:pointer;padding:0 0 0 8px}
+.selPerfil{font-weight:600;color:var(--tinta);max-width:190px}
+body.video .selPerfil,body.video #bannerTodos,body.video #seccionFiscal,body.video #btnCompartir{display:none}
+.modal.cmpModal{width:min(760px,calc(100vw - 24px))}
+.lotesTraspaso{display:grid;gap:10px;margin-top:12px}
+.loteTraspaso{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 16px;padding:10px 12px;border:1px solid var(--borde);border-radius:11px}
+.loteTraspaso .loteEtq{flex:1 1 100%;font-size:13.5px;font-weight:600}
+.loteTraspaso .campo{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--tinta2)}
+.loteTraspaso .noSe{display:flex;align-items:center;gap:7px;font-size:13.5px;cursor:pointer;padding-bottom:9px}
+.marcaTraspaso{stroke:var(--tinta3);stroke-width:1.2;stroke-dasharray:3 4;opacity:.7}
+.marcaBola{cursor:pointer;outline:none}
+.marcaBola circle:first-child{fill:var(--sup);stroke:var(--tinta2);stroke-width:1.5;transition:fill .15s,stroke .15s}
+.marcaBola .marcaBolaIcono{font-size:12px;font-weight:700;fill:var(--tinta);pointer-events:none}
+.marcaBola .marcaBolaPunto{fill:var(--aviso);stroke:var(--sup);stroke-width:1.5}
+.marcaBola:hover circle:first-child,.marcaBola.activa circle:first-child,.marcaBola:focus-visible circle:first-child{fill:var(--tinta);stroke:var(--tinta)}
+.marcaBola:hover .marcaBolaIcono,.marcaBola.activa .marcaBolaIcono,.marcaBola:focus-visible .marcaBolaIcono{fill:var(--sup)}
+.gtt.ttMarca{min-width:230px}
+.gtt .ttNota{font-size:12px;color:var(--tinta3);margin-top:7px;line-height:1.4;max-width:260px}
+.gtt .ttEstimada{font-size:10.5px;font-weight:700;color:var(--aviso);border:1px solid var(--aviso);border-radius:999px;padding:0 6px;margin-left:4px}
+.cmpOpciones{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cmpOpciones select{width:auto;min-width:150px}
+.cmpEuros{display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
+.cmpLienzo{display:block;max-width:100%;max-height:min(58vh,620px);width:auto;height:auto;margin:16px auto 10px;
+  border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.fiscalAviso{background:var(--sup2);border-radius:10px;padding:12px 14px;margin:0 0 18px;
+  font-size:13px;line-height:1.5;color:var(--tinta2)}
+.fiscalAviso b{color:var(--tinta)}
+.fiscalRevisar{display:block;color:var(--tinta3);font-size:12px;line-height:1.4;margin-top:4px;white-space:normal}
+#seccionFiscal h3{font-size:15px;margin:22px 0 8px}
+.perfilFila{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--borde)}
+.perfilFila small{color:var(--tinta3)}
+.listaNovedades{margin:10px 0 4px;padding-left:20px;line-height:1.6;color:var(--tinta2)}
+.listaNovedades li{margin-bottom:5px}
+.verEnVideo{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;margin:0 0 12px;
+  border-radius:10px;background:var(--sup2)}
+/* ---- Canal del autor ---- */
+.ayudaVideo{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ayudaVideo > div:first-child{flex:1;min-width:260px}
+.ayudaVideo b{font-size:15px}
+.ayudaVideo p{margin:4px 0 0;font-size:13.5px;color:var(--tinta2);line-height:1.5}
+.ayudaVideo .botones{display:flex;gap:8px}
+.ayudaVideo .btn{text-decoration:none}
+.banner a,.pie a{color:var(--s1);text-decoration:none;font-weight:600}
+.banner a:hover,.pie a:hover{text-decoration:underline}
+.creditoCanal{display:block;margin-top:6px}
+.tarjetaCanal{position:fixed;right:22px;bottom:22px;z-index:50;width:340px;max-width:calc(100vw - 32px);
+  background:var(--sup);border:1px solid var(--borde);border-radius:16px;padding:16px 18px 14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.28);animation:subeCanal .35s ease-out}
+@keyframes subeCanal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.tarjetaCanal .x{position:absolute;top:8px;right:10px;border:0;background:none;color:var(--tinta3);font-size:18px;cursor:pointer}
+.tarjetaCanal b{display:block;font-size:14.5px;padding-right:18px}
+.tarjetaCanal p{margin:6px 0 12px;font-size:13px;line-height:1.5;color:var(--tinta2)}
+.tarjetaCanal .botones{display:flex;gap:8px;align-items:center}
+.tarjetaCanal .btn.prim{background:#e0322b;text-decoration:none}
+.tarjetaCanal .ahoraNo{border:0;background:none;color:var(--tinta3);font:inherit;font-size:13px;cursor:pointer}
+body.video .tarjetaCanal{display:none}
+@media(max-width:640px){.tarjetaCanal{right:16px;left:16px;bottom:16px;width:auto}}
+/* ---- Marca ---- */
+.marca .logoIcono{width:24px;height:24px;border-radius:6px;display:block}
+.marca .nombreApp{font-weight:780;letter-spacing:.02em;text-transform:uppercase;font-size:14.5px}
+.marca .marcaSep{width:1px;height:15px;background:var(--borde)}
+.marca #marcaTexto{font-weight:500;color:var(--tinta2);font-size:13.5px}
+@media(max-width:720px){.marca .marcaSep,.marca #marcaTexto{display:none}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="env">
+    <div class="topFila">
+      <div class="marca"><img class="logoIcono" src="icono-64.png" alt="" width="24" height="24"><span class="nombreApp">Rumbo</span><span class="marcaSep"></span><span id="marcaTexto">Mi patrimonio</span></div>
+      <select class="btn selMoneda selPerfil" id="selPerfil" aria-label="Perfil" title="Cambiar de perfil: tu cartera, la de tu pareja, la de tus hijos…" hidden></select>
+      <div class="sep"></div>
+      <span class="meta" id="metaFecha"></span>
+      <button class="btn" id="btnPrecios" title="Descarga los precios de hoy de cada producto">↻ Actualizar precios</button>
+      <select class="btn selMoneda" id="selMoneda" aria-label="Moneda en la que ver los importes"
+        title="Ver los importes en otra moneda, al cambio de hoy" hidden></select>
+      <button class="btn" id="btnTema" title="Cambiar entre claro y oscuro">◐ Tema</button>
+      <button class="btn" id="btnVideo" title="Oculta los controles y agranda las cifras">▶ Modo vídeo</button>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist">
+      <button data-tab="patrimonio" role="tab" aria-selected="true">Patrimonio</button>
+      <button data-tab="mes" role="tab" aria-selected="false">El mes</button>
+      <button data-tab="fondos" role="tab" aria-selected="false">Productos</button>
+      <button data-tab="rendimiento" role="tab" aria-selected="false">Rendimiento</button>
+      <button data-tab="datos" role="tab" aria-selected="false">Mis datos</button>
+      <button data-tab="ayuda" role="tab" aria-selected="false">Ayuda</button>
+    </nav>
+  </div>
+</div>
+
+<div class="env">
+
+<div class="banner" id="bannerVersion" hidden><span id="bannerVersionTexto"></span></div>
+<div class="banner" id="bannerTodos" hidden><span id="bannerTodosTexto"></span></div>
+<div class="banner" id="bannerDemo" hidden>
+  <span><b>Estás viendo una cartera de ejemplo:</b> es la cartera real de <span class="autorCanal"></span>,
+  que cada mes cuenta cómo evoluciona en su <a class="enlaceCanal" target="_blank" rel="noopener">canal de YouTube</a>.
+  No es una recomendación de inversión.</span>
+  <button class="btn prim" id="btnEmpezar">Empezar con mis datos</button>
+</div>
+<p class="aviso-legal">Herramienta informativa. No es asesoramiento financiero. No se garantiza la exactitud de los datos ni de los precios.</p>
+<p class="notaMoneda" id="notaMoneda" hidden></p>
+
+<!-- ==================================================== PATRIMONIO -->
+<div class="panel" id="tab-patrimonio" role="tabpanel">
+
+  <section class="hero">
+    <div class="hEtq" id="heroEtq">Patrimonio neto</div>
+    <div class="hCifra" id="heroCifra">—</div>
+    <div class="hSub" id="heroSub"></div>
+    <div class="prog" id="progEnv" hidden>
+      <div class="progBarra"><div class="progRelleno" id="progRelleno" style="width:0"></div></div>
+      <div class="progPie"><span id="progIzq"></span><span id="progDer"></span></div>
+    </div>
+  </section>
+
+  <p class="kpisNota subt" id="kpisNota"></p>
+  <div class="kpis" id="kpis"></div>
+
+  <section class="tarjeta">
+    <header>
+      <h2>Evolución del patrimonio</h2>
+      <span class="subt" id="evolNota"></span>
+      <div class="sep"></div>
+      <div class="segm" id="segRango"></div>
+      <div class="segm" id="segVista"></div>
+    </header>
+    <div class="filtros" id="filtros"></div>
+    <div class="envGraf" id="grafPrincipal"></div>
+  </section>
+
+  <section style="margin-top:26px">
+    <header style="display:flex;align-items:center;gap:12px;margin-bottom:2px">
+      <h2 style="font-size:15px">Componentes de la cartera</h2>
+      <span class="subt">Pulsa uno para abrir su ficha completa</span>
+    </header>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <div class="rejilla2">
+    <section class="tarjeta">
+      <header>
+        <h2>Distribución</h2>
+        <div class="sep"></div>
+        <div class="segm" id="segDist"></div>
+      </header>
+      <div class="envGraf" id="grafDonut"></div>
+      <table class="leyenda" id="leyendaDist" style="margin-top:14px"></table>
+    </section>
+    <section class="tarjeta">
+      <header><h2>Aportaciones por mes</h2><span class="subt" id="notaAport"></span></header>
+      <div class="envGraf" id="grafBarras"></div>
+    </section>
+  </div>
+
+  <section class="tarjeta" id="seccionExpo" style="margin-top:16px" hidden>
+    <header>
+      <h2>Dónde está tu dinero de verdad</h2>
+      <span class="subt" id="expoTotNota"></span>
+    </header>
+    <p class="expoTitular" id="expoTotTitular"></p>
+    <div class="expo">
+      <div><h3>Por país</h3><div class="envGraf" id="expoTotPaises"></div></div>
+      <div><h3>Por sector</h3><div class="envGraf" id="expoTotSectores"></div></div>
+    </div>
+    <p class="subt" id="expoTotPie" style="margin:16px 0 0"></p>
+  </section>
+
+  <section class="tarjeta" id="seccionLiquidez" style="margin-top:16px" hidden>
+    <header>
+      <h2>Liquidez y fondo de emergencia</h2>
+      <span class="subt" id="liqNota"></span>
+      <div class="sep"></div>
+      <button class="btn" id="btnColchon" hidden>Cambiar</button>
+    </header>
+    <div id="liqCuerpo"></div>
+  </section>
+
+  <section class="tarjeta" id="seccionReparto" style="margin-top:16px" hidden>
+    <header>
+      <h2>Mi reparto objetivo</h2>
+      <span class="subt" id="repartoNota"></span>
+      <div class="sep"></div>
+      <button class="btn" id="btnReparto" hidden>Cambiar</button>
+    </header>
+    <div id="repartoCuerpo"></div>
+  </section>
+
+  <section class="tarjeta" style="margin-top:16px">
+    <header><h2>Hitos</h2><span class="subt">La primera vez que el patrimonio cruzó cada cifra</span></header>
+    <div class="hitos" id="hitos"></div>
+  </section>
+
+  <section class="tarjeta" id="seccionProyeccion" style="margin-top:16px">
+    <header>
+      <h2>Si sigo así…</h2>
+      <span class="subt">Proyección orientativa: rentabilidad constante, sin impuestos ni inflación</span>
+    </header>
+    <div class="mandos">
+      <div class="mando"><label>Años <b id="vAnos">15</b></label><input type="range" id="rAnos" min="1" max="40" value="15"></div>
+      <div class="mando"><label>Rentabilidad anual <b id="vRent">7 %</b></label><input type="range" id="rRent" min="0" max="15" step="0.5" value="7"></div>
+      <div class="mando"><label>Aportación mensual <b id="vApor">—</b></label><input type="range" id="rApor" min="0" max="3000" step="50" value="500"></div>
+    </div>
+    <div class="envGraf" id="grafProy"></div>
+    <div class="hSub" id="proyResumen" style="margin-top:14px"></div>
+  </section>
+
+  <section class="tarjeta" id="seccionTabla" style="margin-top:16px">
+    <header>
+      <h2>Todas las aportaciones</h2>
+      <span class="subt" id="notaTabla"></span>
+      <div class="sep"></div>
+      <div class="segm" id="segTabla"></div>
+    </header>
+    <div class="tablaEnv alto"><table class="dt" id="tablaMov"></table></div>
+  </section>
+</div>
+
+<!-- ==================================================== EL MES -->
+<div class="panel" id="tab-mes" role="tabpanel" hidden>
+  <section class="hero" style="padding-bottom:0">
+    <div class="mesBarra">
+      <button class="btn" id="mesPrev" title="Mes anterior">‹</button>
+      <select id="mesSel" aria-label="Elegir mes"></select>
+      <button class="btn" id="mesNext" title="Mes siguiente">›</button>
+      <div class="sep"></div>
+      <span class="subt" id="mesNota"></span>
+    </div>
+    <div class="hEtq" id="mesEtq">Cambio del mes</div>
+    <div class="hCifra" id="mesCifra">—</div>
+    <div class="hSub" id="mesSub"></div>
+  </section>
+
+  <div class="mesTarjetas" id="mesTarjetas"></div>
+
+  <section class="tarjeta">
+    <header><h2>Qué ha hecho cada componente</h2><span class="subt" id="mesTablaNota"></span></header>
+    <div class="tablaEnv"><table class="dt" id="mesTabla"></table></div>
+  </section>
+
+  <section class="tarjeta">
+    <header>
+      <h2>Tu esfuerzo y el del mercado, mes a mes</h2>
+      <span class="subt">Lo que aportaste tú, y encima lo que puso o quitó el mercado.</span>
+    </header>
+    <div class="envGraf" id="grafMesHist"></div>
+  </section>
+</div>
+
+<!-- ==================================================== FONDOS -->
+<div class="panel" id="tab-fondos" role="tabpanel" hidden>
+  <div class="selFondo" id="selFondo" style="margin-top:24px"></div>
+  <section class="tarjeta" id="fondoFicha"></section>
+  <section class="tarjeta" id="fondoExpo" hidden></section>
+  <section class="tarjeta" id="fondoTabla"></section>
+</div>
+
+<!-- ==================================================== RENDIMIENTO -->
+<div class="panel" id="tab-rendimiento" role="tabpanel" hidden>
+  <section class="tarjeta" style="margin-top:24px">
+    <header><h2>Rentabilidad por año natural</h2><span class="subt" id="notaAnual"></span></header>
+    <div class="envGraf" id="grafAnual"></div>
+    <div class="filaTabla">
+      <span class="subt" id="notaTablaAnual"></span>
+    </div>
+    <div class="tablaEnv"><table class="dt" id="tablaAnual"></table></div>
+  </section>
+
+  <section class="tarjeta" id="seccionComparar">
+    <header>
+      <h2>¿Y si lo hubieras metido todo en un indexado?</h2>
+      <span class="subt">Las mismas compras y ventas que tú, en las mismas fechas, pero en otra cartera</span>
+      <span class="sp"></span>
+      <div class="segm" id="compRef"></div>
+    </header>
+    <div class="compTitular" id="compTitular"></div>
+    <div class="filaTabla" style="margin:0 0 8px"><span class="subt">Periodo del gráfico</span><div class="segm" id="compRango"></div></div>
+    <div class="envGraf" id="grafComparacion"></div>
+    <p class="subt" id="compNota" style="margin:10px 0 0"></p>
+    <details class="compDetalles" id="compDetalles">
+      <summary>Ver más detalles: volatilidad, Sharpe y caídas</summary>
+      <p class="subt" id="notaComparador" style="margin:12px 0 0"></p>
+      <div class="envGraf" id="grafComparador"></div>
+      <div class="tablaEnv" style="margin-top:16px"><table class="dt" id="tablaComparador"></table></div>
+      <p class="subt" id="notaRiesgo" style="margin:14px 0 0"></p>
+    </details>
+  </section>
+
+  <section class="tarjeta" id="seccionDividendos">
+    <header><h2>Dividendos, cupones e intereses</h2><span class="subt" id="notaDividendos"></span></header>
+    <div id="dividendos"></div>
+  </section>
+
+  <section class="tarjeta">
+    <header><h2>Lo que pagas en comisiones</h2><span class="subt" id="notaComisiones"></span></header>
+    <div class="tablaEnv"><table class="dt" id="tablaComisiones"></table></div>
+  </section>
+
+  <section class="tarjeta" id="seccionFiscal" hidden>
+    <header>
+      <h2>Para la Renta</h2>
+      <span class="subt">Lo que vendiste y cobraste en un año, para repasar el borrador</span>
+      <span class="sp"></span>
+      <div class="segm" id="fiscalAnos"></div>
+    </header>
+    <div id="fiscal"></div>
+  </section>
+</div>
+
+<div class="panel" id="tab-datos" role="tabpanel" hidden><div id="editor"></div></div>
+
+<div class="panel" id="tab-ayuda" role="tabpanel" hidden>
+  <section class="tarjeta ayudaTarjeta ayudaVideo">
+    <div><b>¿Prefieres verlo en vídeo?</b>
+      <p>En el canal de <span class="autorCanal"></span> tienes el vídeo con <b>todas las novedades de la 2.0</b> y el
+      <b>tutorial de instalación</b> paso a paso (grabado con la 1.0: se instala igual).</p></div>
+    <div class="botones"><a class="btn prim" id="ayudaNovedades" target="_blank" rel="noopener" hidden>▶ Novedades de la 2.0</a>
+      <a class="btn" id="ayudaTutorial" target="_blank" rel="noopener">▶ Tutorial de instalación</a>
+      <a class="btn enlaceSuscribir" target="_blank" rel="noopener">Suscribirme</a></div>
+  </section>
+
+  <section class="tarjeta ayudaTarjeta">
+    <header><h2>Ayuda</h2><span class="subt">Las dudas más habituales. Pulsa una para ver la respuesta.</span></header>
+
+    <details class="faq" open><summary>Mi producto no aparece en el buscador</summary><div>
+      <p>Prueba en este orden:</p>
+      <ol>
+        <li><b>Busca por ISIN</b> (12 caracteres, como <code>IE00BYX5NX33</code>). Lo tienes en la ficha del producto en tu banco. Es la forma más fiable, sobre todo para fondos.</li>
+        <li>Para acciones y ETF, prueba el <b>ticker con la bolsa</b>: <code>SAN.MC</code> (Madrid), <code>IWDA.AS</code> (Ámsterdam), <code>EUNL.DE</code> (Xetra), <code>AAPL</code> (EE. UU.).</li>
+        <li>Para criptomonedas, escribe su nombre en inglés (<code>bitcoin</code>, <code>ethereum</code>).</li>
+        <li><b>Planes de pensiones</b>: escribe su nombre (<code>MyInvestor Indexado Global</code>, <code>Indexa Más Rentabilidad Acciones</code>). Los que están en Morningstar salen con su precio y se actualizan solos.
+          ¿Ya lo tenías anotado a mano? Puedes dejarlo así o pasarlo a automático: crea el plan con el buscador y haz un <b>traspaso</b> desde el antiguo con fecha de hoy, marcando «Lo traspaso todo» y poniendo las participaciones que tienes hoy. Lo aportado pasa al plan nuevo y la curva de antes se conserva.</li>
+        <li>Si no cotiza en ningún sitio (un depósito, oro físico, un piso, un plan que no aparece), créalo igualmente y elige <b>«Valor anotado a mano»</b> como fuente del precio. Luego anota su valor de vez en cuando en «Saldos y valores».</li>
+      </ol></div></details>
+
+    <details class="faq"><summary>El valor no coincide con el que veo en mi banco</summary><div>
+      <p>Pequeñas diferencias son normales:</p>
+      <ul>
+        <li>Los <b>fondos</b> publican su valor liquidativo con uno o dos días de retraso, y cada web lo actualiza a una hora distinta.</li>
+        <li>Las <b>acciones y ETF</b> se valoran al último cierre; tu banco puede enseñar el precio en vivo.</li>
+        <li>El <b>precio de tu orden</b> que ves en el banco suele ir redondeado: lo exacto es importe ÷ unidades.</li>
+      </ul>
+      <p>Si la diferencia es grande, revisa que las unidades y los importes de tus movimientos sean correctos, y que el producto use la bolsa y la moneda buenas (en su ficha, «Fuente del precio»).</p></div></details>
+
+    <details class="faq"><summary>¿De dónde salen los precios y cada cuánto se actualizan?</summary><div>
+      <p>De Morningstar (fondos), Yahoo Finance (acciones, ETF, materias primas, cripto y tipos de cambio) y CoinGecko (cripto en vivo). Son servicios públicos y gratuitos: casi siempre van bien, pero pueden fallar o traer algún dato raro.</p>
+      <p>La app actualiza los precios al abrirse si tienen más de 6 horas, y cuando pulsas <b>«↻ Actualizar precios»</b>. Si una fuente no responde, usa el último precio guardado y te avisa.</p></div></details>
+
+    <details class="faq"><summary>¿Mis datos salen de mi ordenador?</summary><div>
+      <p>No. Todo se guarda en la carpeta <code>mis_datos</code>, dentro de la carpeta de la app. No hay cuentas, ni servidores, ni nadie más que los vea. La app solo sale a internet para descargar precios y el reparto de tus fondos, y en esas consultas no va ningún dato tuyo.</p>
+      <p>A internet solo salen <b>códigos de producto</b> (ISIN o ticker) para pedir precios y el reparto por países, y lo que escribes en el buscador. Nunca cuánto tienes, cuánto has puesto ni el total de tu patrimonio.</p>
+      <p>Y desde la 2.0, la app se abre con una <b>llave de acceso</b> que solo tiene el navegador que abrió el lanzador: ninguna otra web, otro programa ni otro usuario del ordenador puede ver ni cambiar tus datos. Por eso, si cierras la pestaña, vuelve a abrirla con el lanzador.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo meto mi cuenta del banco, un plan de pensiones o un piso?</summary><div>
+      <ol>
+        <li>En <b>Mis datos → Productos</b>, añade el producto. Para una cuenta elige el tipo «Cuenta / efectivo»; para lo demás, la fuente «Valor anotado a mano».</li>
+        <li>En <b>Saldos y valores</b>, anota su valor con la fecha. Una vez al mes basta: con <b>«Anotar todos de una vez»</b> lo haces en un minuto.</li>
+        <li>Si sabes cuánto llevas aportado (por ejemplo, a un plan de pensiones), anótalo también: así el panel calcula su rentabilidad.</li>
+      </ol></div></details>
+
+    <details class="faq"><summary>¿Puedo llevar la cartera de mi pareja o de mis hijos?</summary><div>
+      <p>Sí: arriba, junto al logo, está el selector de perfiles. Elige <b>«+ Añadir un perfil»</b>, ponle un nombre y tendrás una
+        cartera aparte, con sus productos, movimientos, copias e importaciones. Cuando haya dos perfiles con datos, aparece
+        <b>«Todos juntos»</b>: la suma de todos, solo para mirar.</p>
+      <p>Los perfiles se guardan dentro de <code>mis_datos</code> (en <code>mis_datos/perfiles</code>): al actualizar o cambiar de
+        ordenador, copiando <code>mis_datos</code> te los llevas todos.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo veo en qué países y sectores está mi dinero?</summary><div>
+      <p>En la pestaña <b>Patrimonio</b>, «Dónde está tu dinero de verdad» suma el reparto de todos tus fondos, ETF, planes y
+        acciones según lo que vale cada uno. Los datos son de Morningstar, sobre la cartera que publica cada fondo, y se
+        refrescan como mucho una vez al mes.</p>
+      <p>Si tienes un plan o una cartera gestionada que no cotiza, en su ficha (<b>Mis datos → Productos → Editar → opciones
+        avanzadas</b>) escribe en «Reparto como el de» el ISIN de un fondo que invierta en lo mismo.</p></div></details>
+
+    <details class="faq"><summary>¿Tengo suficiente colchón? (liquidez y fondo de emergencia)</summary><div>
+      <p>En <b>Patrimonio → Liquidez y fondo de emergencia</b> ves cuánto tienes disponible en días (cuentas y fondos
+        monetarios) y, si dices cuántos meses de gastos quieres tener a mano, cuántos te cubre y cuánto te sobra para
+        invertir. Para que un producto cuente o deje de contar, en su ficha: <b>«Cuenta como liquidez»</b>.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo sé si tengo que rebalancear?</summary><div>
+      <p>En <b>Patrimonio → Mi reparto objetivo</b> dices qué porcentaje quieres en cada tipo de activo (renta variable, renta fija, monetario, efectivo…)
+        o en cada producto (por ejemplo, 80 % al fondo del mundo y 20 % al de emergentes). Cuenta lo invertido a largo
+        plazo; tus cuentas, solo si les pones un %. En «Qué productos cuentan» puedes quitar o meter cada producto a mano
+        (sigue en tu patrimonio; solo sale del reparto). Rumbo te enseña cuánto te has desviado, un semáforo (OK, vigilar, rebalancear) y, con <b>«Voy a aportar…»</b>, cómo
+        repartir tu próxima aportación para volver a cuadrar sin vender nada. Es una herramienta para pensar, no una
+        recomendación.</p></div></details>
+
+    <details class="faq"><summary>Las participaciones no coinciden con las de mi banco</summary><div>
+      <p>Pasa sobre todo con traspasos importados de MyInvestor, porque su extracto no trae las participaciones. En
+        <b>Mis datos → Movimientos → «Cuadrar participaciones»</b> escribe las que ves en tu banco: Rumbo las fija desde
+        esa fecha sin cambiar lo que pagaste.</p></div></details>
+
+    <details class="faq"><summary>¿Qué es la TIR y por qué no coincide con la rentabilidad?</summary><div>
+      <p>La <b>rentabilidad</b> compara lo que vale tu cartera con lo que has metido, sin mirar cuándo lo metiste. La <b>TIR</b> (tasa interna de rentabilidad) sí tiene en cuenta cuándo entró y salió cada euro, y lo expresa como un porcentaje anual. Si aportas poco a poco, la TIR es la cifra honesta para compararte con un depósito o con un índice.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo compartir cómo me ha ido el mes sin decir cuánto tengo?</summary><div>
+      <p>Sí: en la pestaña <b>El mes</b>, pulsa <b>«Compartir mi mes»</b>. Eliges el formato (Mini, Resumen o Story), el tema (oscuro, claro o azul) y el mes,
+        y Rumbo prepara una imagen con la rentabilidad, cómo vas en el año, la curva, el logo y un QR. Por defecto solo salen
+        porcentajes; en el Resumen puedes marcar «Mostrar euros». La imagen se hace en tu ordenador: la descargas o la
+        copias y la pegas donde quieras.</p></div></details>
+
+    <details class="faq"><summary>Aporto lo mismo cada mes: ¿tengo que anotarlas una a una?</summary><div>
+      <p>No: <b>Mis datos → Movimientos → «↻ Periódica»</b>. Eliges el producto, cuánto, qué día del mes y desde cuándo, y
+        Rumbo prepara una compra por mes con el precio de cierre de ese día. Antes de guardar ves la lista, y las que ya
+        tengas anotadas se saltan.</p>
+      <p>Son <b>estimadas</b>: tu banco puede ejecutarlas otro día o a otro precio. Si quieres que cuadren al céntimo,
+        corrígelas después con lo que diga tu banco (o impórtalas de su extracto). Rumbo se acuerda de la aportación y,
+        cuando toca la siguiente, te avisa en Movimientos.</p></div></details>
+
+    <details class="faq"><summary>Tengo un piso alquilado: ¿cómo lo anoto?</summary><div>
+      <p>Crea el piso en <b>Mis datos → Productos</b> (tipo «Inmueble», valor anotado a mano) y anota lo que vale de vez en
+        cuando en <b>Saldos y valores</b>. En su tarjeta, <b>«+ Alquiler»</b> para lo que te paga el inquilino (cada mes o
+        sumado por año) y <b>«+ Gasto»</b> para comunidad, IBI, seguro, reparaciones…</p>
+      <p>En su ficha (pestaña <b>Productos</b>) verás el alquiler neto de los últimos 12 meses y su rentabilidad bruta y neta
+        sobre lo que vale hoy, y en «Ganancia total», lo que ha subido más lo que te ha rentado. Si tienes hipoteca, anótala
+        aparte como «Deuda / préstamo» para que tu patrimonio sea el neto.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo anoto Mintos, Urbanitae u otro P2P o crowdfunding?</summary><div>
+      <p>En <b>Mis datos → Productos</b>, añade uno de tipo <b>«Préstamos P2P / crowdfunding»</b> con «Valor anotado a mano».
+        Lo que metes y sacas, como compras y ventas (sin unidades); lo que te pagan, con <b>«+ Intereses»</b> en su tarjeta de
+        Saldos y valores; y de vez en cuando anota lo que vale tu cuenta en la plataforma. Rumbo calcula su rentabilidad y su TIR,
+        y lo cuenta aparte de la bolsa. Si un préstamo entra en impago, baja su valor anotado.</p></div></details>
+
+    <details class="faq"><summary>¿Me ayuda con la declaración de la Renta?</summary><div>
+      <p>En <b>Rendimiento → «Para la Renta»</b>, elige el año y verás cada venta con su <b>valor de transmisión</b> (lo
+        que cobraste), su <b>valor de adquisición</b> (lo que te costó, con comisiones) y la ganancia o pérdida, calculado
+        como Hacienda: lo primero que compraste es lo primero que vendes, y los traspasos entre fondos conservan el coste
+        y la fecha de compra. También los dividendos, cupones e intereses del año, y un botón para descargarlo en Excel.</p>
+      <p>Es <b>orientativo</b>, para repasar el borrador: no es asesoramiento fiscal. Rumbo no sabe las retenciones que
+        te hicieron ni tu situación, y Hacienda ya tiene casi todo esto en tus datos fiscales. Te avisa de lo que conviene
+        mirar a mano: pérdidas con recompras cerca (la regla de los dos meses), traspasos que no son entre fondos y ventas
+        sin coste anotado. Los rescates de planes de pensiones van aparte (son rendimiento del trabajo).</p></div></details>
+
+    <details class="faq"><summary>¿La rentabilidad cuenta los dividendos y lo que ya vendí?</summary><div>
+      <p>En la ficha de cada producto (pestaña <b>Productos</b>) tienes tres cifras:</p>
+      <ul>
+        <li><b>Plusvalía</b>: solo lo que ganas con lo que aún tienes, por el precio. No cuenta lo cobrado.</li>
+        <li><b>Ganancia total</b>: la plusvalía más lo que ya ganaste en ventas, más los dividendos e intereses, menos
+          las comisiones que pagaste aparte. Debajo verás de dónde sale cada parte. Su % es sobre todo lo que has llegado a
+          invertir en ese producto (lo que tienes y lo que vendiste, a lo que te costó).</li>
+        <li><b>TIR</b>: lo cuenta todo y además cuándo entró y salió cada euro, en % al año.</li>
+      </ul>
+      <p>Las ventas se calculan como en Hacienda: lo primero que compraste es lo primero que vendes (FIFO). Lo cobrado
+        de toda la cartera lo tienes también en el panel, bajo tu patrimonio («ya cobrados en ventas y dividendos»).</p></div></details>
+
+    <details class="faq"><summary>Compré en dólares (o en otra moneda). ¿Cómo lo anoto?</summary><div>
+      <p>Al añadir el movimiento, elige la moneda en el desplegable que hay junto al importe (por ejemplo, <b>$ USD</b>) y escribe lo que pagaste. Rumbo lo pasa a euros con el cambio de ese día y apunta en la nota lo que pagaste en dólares. Los precios de acciones o ETF que cotizan en otra moneda también se pasan a euros solos.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo ver el panel en dólares u otra moneda?</summary><div>
+      <p>Sí: con el desplegable <b>«€ EUR»</b> de arriba ves todos los importes en dólares, libras, francos suizos o pesos (mexicanos, argentinos, chilenos o colombianos), al cambio de hoy. Rumbo sigue calculando en euros, así que la TIR y las rentabilidades son las de tu dinero en euros, y en «Mis datos» todo va en euros.</p></div></details>
+
+    <details class="faq"><summary>Hice un traspaso de un fondo a otro</summary><div>
+      <p>En <b>Mis datos → Movimientos</b>, pulsa <b>«⇄ Traspaso»</b>: eliges de qué fondo (o plan de pensiones) sale, a cuál va, la fecha y las participaciones que salen (con <b>«Todas»</b> si lo traspasas entero). Rumbo rellena solo el importe y las participaciones que entran con el precio de ese día; corrígelas con las de tu banco si no coinciden.</p>
+      <p>No cuenta como una venta: lo que habías pagado y la fecha de cada compra pasan al fondo nuevo, igual que hace Hacienda. Tampoco cuenta como dinero nuevo en tus aportaciones. Si es un plan que valoras a mano, marca «Lo traspaso todo» y el antiguo se queda a cero ese día.</p>
+      <p>Si importas el extracto de MyInvestor, Rumbo reconoce los lotes que vienen de un traspaso (conservan la fecha y el coste del fondo antiguo) y en la vista previa te pregunta <b>de qué fondo venían y qué día fue</b>. Si ese fondo está en Rumbo, elígelo y pon la fecha de cada lote: se convierte en un traspaso de verdad, el dinero no cuenta dos veces y en la gráfica de los dos fondos verás una marca ese día. Si no sabes la fecha (está en el historial de órdenes de MyInvestor), marca «No la sé» y Rumbo la estima y la marca como estimada. Si el fondo no está en Rumbo, se importan como compras. Rumbo recuerda tu respuesta para la próxima vez.</p>
+      <p>En la plantilla, un traspaso son dos filas: <code>traspaso_salida</code> y <code>traspaso_entrada</code>. Si las participaciones no cuadran con tu banco, usa <b>Movimientos → «Cuadrar participaciones»</b>.</p></div></details>
+
+    <details class="faq"><summary>Vendí algo del todo. ¿Por qué ya no sale en el panel?</summary><div>
+      <p>Lo que ya no tienes se oculta del panel principal para que no ocupe sitio con 0 €, pero sigue contando en la historia, la TIR y lo que has ganado. Para verlo, pulsa <b>«Vendidos»</b> encima del gráfico. En la pestaña «Productos» aparece al final, en gris.</p></div></details>
+
+    <details class="faq"><summary>He borrado o cambiado algo sin querer</summary><div>
+      <p>Antes de cada cambio, la app guarda una copia automática (las últimas 20). Ve a <b>Mis datos → Copias y exportar</b> y pulsa <b>«Recuperar»</b> en la copia de antes del error.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo actualizo a una versión nueva sin perder mis datos?</summary><div>
+      <ol>
+        <li>Cierra la app (la ventana negra).</li>
+        <li>Descarga el ZIP nuevo desde la página del proyecto en GitHub y descomprímelo.</li>
+        <li>Copia tu carpeta <code>mis_datos</code> de la versión antigua a la nueva (o copia todo lo nuevo encima de lo viejo, menos <code>mis_datos</code>).</li>
+        <li>Abre la app con «Iniciar» como siempre.</li>
+      </ol>
+      <p>Por si acaso, antes descarga una copia en <b>Mis datos → Copias y exportar</b>.</p></div></details>
+
+    <details class="faq"><summary>¿Puedo sacar mis datos a Excel?</summary><div>
+      <p>Sí: <b>Mis datos → Copias y exportar → Descargar en Excel</b>. Tienes todos tus movimientos y saldos, y una hoja con la ficha de cada producto. La hoja «Movimientos» tiene el formato de la plantilla de importación, así que puedes cambiarla y volver a importarla.</p></div></details>
+
+    <details class="faq"><summary>¿Cómo lo paso a otro ordenador?</summary><div>
+      <p>En el ordenador viejo, <b>Mis datos → Copias y exportar → Descargar copia</b>. En el nuevo, instala la app, ábrela y, en ese mismo sitio, sube el archivo con <b>«Recuperar desde un archivo»</b>. También vale copiar la carpeta <code>mis_datos</code> entera.</p></div></details>
+
+    <details class="faq"><summary>Windows o Mac me dicen que el archivo puede ser peligroso</summary><div>
+      <p>Pasa con cualquier archivo descargado de internet que no viene de una tienda de apps. <code>Iniciar.bat</code> e <code>Iniciar.command</code> son texto plano: puedes abrirlos con el Bloc de notas o TextEdit y leer todo lo que hacen.</p>
+      <ul>
+        <li><b>Windows</b>: en el aviso azul, pulsa «Más información» y luego «Ejecutar de todas formas».</li>
+        <li><b>Mac</b>: la primera vez, clic derecho sobre <code>Iniciar.command</code> → «Abrir» → «Abrir».</li>
+      </ul></div></details>
+
+    <details class="faq"><summary>¿Puedo tener Rumbo en el Escritorio con su icono?</summary><div>
+      <ul>
+        <li><b>Windows</b>: en la carpeta de la app, doble clic en <code>Crear acceso directo.bat</code>. Aparece «Rumbo» en tu Escritorio.</li>
+        <li><b>Mac</b>: arrastra <code>Iniciar.command</code> al Dock, o clic derecho → «Crear alias» y deja el alias en el Escritorio.</li>
+        <li><b>Linux</b>: ejecuta una vez <code>bash crear-acceso-directo.sh</code> y lo tendrás en el menú de aplicaciones.</li>
+      </ul>
+      <p>El icono abre el lanzador de siempre, con tu llave de acceso. Si mueves la carpeta de la app, vuelve a crearlo.</p></div></details>
+
+    <details class="faq"><summary>Mi banco o bróker no se puede importar directamente</summary><div>
+      <p>Usa la <b>plantilla</b> o la opción <b>«Con ayuda de una IA»</b> de Mis datos → Importar: sirven para cualquier banco o bróker.</p></div></details>
+
+    <details class="faq"><summary>Algo no funciona: ¿cómo pido ayuda?</summary><div>
+      <p>Pulsa este botón y pega lo que copia en un <a href="https://github.com/danidm98/rumbo/issues" target="_blank" rel="noopener">issue de GitHub</a>
+        junto con lo que estabas haciendo. Lleva la versión, tu sistema, cuántos productos y movimientos tienes y los
+        últimos errores técnicos: <b>no lleva importes ni tus datos personales</b>. Léelo antes de pegarlo.</p>
+      <p><button class="btn prim" id="btnDiagnostico">Copiar informe para soporte</button></p></div></details>
+
+    <p class="ayudaPie" id="ayudaVersion">¿Otra duda? Mira la página del proyecto en GitHub.</p>
+  </section>
+</div><!-- /ayuda -->
+
+  <div class="avisos" id="avisos"></div>
+  <footer class="pie" id="pie"></footer>
+</div>
+
+<dialog class="modal" id="modal"></dialog>
+
+<script>
+/* Carga los scripts con un sello temporal para que, al recargar despues de
+   actualizar, el navegador no sirva los datos viejos de su cache.
+   async=false conserva el orden de ejecucion. */
+(function () {
+  // Con file:// no se puede anadir "?v=": algunos navegadores no encuentran
+  // el archivo. Ahi basta con la revalidacion por fecha de modificacion.
+  var sello = location.protocol === "file:" ? "" : "?v=" + Date.now();
+  ["datos.js", "canal.js", "graficos.js", "calculos.js", "app.js", "editor.js", "compartir.js"].forEach(function (archivo) {
+    var s = document.createElement("script");
+    s.src = archivo + sello;
+    s.async = false;
+    document.body.appendChild(s);
+  });
+})();
+</script>
+</body>
+</html>
