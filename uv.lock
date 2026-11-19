@@ -165,7 +165,7 @@ wheels = [
 ]
 
 [[package]]
-name = "rumbo"
+name = "finappgo"
 version = "2.0.0"
 source = { virtual = "." }
 dependencies = [
