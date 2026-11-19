@@ -76,9 +76,9 @@ class Cerrojo(ConCarpeta):
         self.assertEqual(r.headers.get("X-Frame-Options"), "DENY")
 
     def test_hosts_extra_por_variable(self):
-        with mock.patch.dict(os.environ, {"PATRIMONIO_HOSTS_PERMITIDOS": "rumbo.casa"}):
-            self.assertEqual(self.web.get("/api/cartera", headers={"Host": "rumbo.casa:8765"}).status_code, 200)
-        self.assertEqual(self.web.get("/api/cartera", headers={"Host": "rumbo.casa:8765"}).status_code, 403)
+        with mock.patch.dict(os.environ, {"PATRIMONIO_HOSTS_PERMITIDOS": "finappgo.casa"}):
+            self.assertEqual(self.web.get("/api/cartera", headers={"Host": "finappgo.casa:8765"}).status_code, 200)
+        self.assertEqual(self.web.get("/api/cartera", headers={"Host": "finappgo.casa:8765"}).status_code, 403)
 
 
 class SinCodigoEnLosTextos(ConCarpeta):
@@ -116,10 +116,10 @@ class Novedades(ConCarpeta):
         super().tearDown()
 
     def test_valida_lo_que_llega_de_github(self):
-        n = servidor.valida_novedades({"version": "2.0.0", "titulo": "<b>Rumbo 2.0</b>",
+        n = servidor.valida_novedades({"version": "2.0.0", "titulo": "<b>FinAppGo 2.0</b>",
                                        "novedades": ["Traspasos", "<script>x</script>", 7],
                                        "video": "javascript:alert(1)"})
-        self.assertEqual(n["titulo"], "bRumbo 2.0/b")
+        self.assertEqual(n["titulo"], "bFinAppGo 2.0/b")
         self.assertEqual(n["novedades"], ["Traspasos", "scriptx/script"])
         self.assertIsNone(n["video"])
         self.assertEqual(servidor.valida_novedades({"version": "2.0.0", "video": "https://youtu.be/abc_12-X"})["video"],
@@ -134,7 +134,7 @@ class Novedades(ConCarpeta):
         self.assertIsNone(j["nueva"])
 
     def test_version_nueva_en_github(self):
-        servidor._NOVEDADES.update(remota={"version": "99.0.0", "titulo": "Rumbo 99", "novedades": ["X"],
+        servidor._NOVEDADES.update(remota={"version": "99.0.0", "titulo": "FinAppGo 99", "novedades": ["X"],
                                            "video": "https://youtu.be/abc"},
                                    cuando=servidor.dt.datetime.now())
         j = self.web.get("/api/novedades").get_json()
@@ -149,6 +149,6 @@ class InformeDeSoporte(ConCarpeta):
             web.post("/api/empezar", json={"desde": "vacia"})
             web.post("/api/productos", json={"nombre": "Mi piso secreto", "tipo": "inmueble", "fuente": "manual"})
             j = web.get("/api/diagnostico").get_json()
-        self.assertIn("Rumbo ", j["texto"])
+        self.assertIn("FinAppGo ", j["texto"])
         self.assertIn("productos: 1", j["texto"])
         self.assertNotIn("secreto", j["texto"])

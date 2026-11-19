@@ -441,7 +441,7 @@ def guarda_traspaso(cfg, datos):
 
 def guarda_ajuste(cfg, datos):
     """
-    «Según mi banco tengo X participaciones»: corrige las que calcula Rumbo (por ejemplo,
+    «Según mi banco tengo X participaciones»: corrige las que calcula FinAppGo (por ejemplo,
     tras importar traspasos de MyInvestor) sin tocar lo que pagaste. Desde esa fecha el
     producto tiene exactamente esas participaciones.
     """
@@ -458,7 +458,7 @@ def guarda_ajuste(cfg, datos):
     mov = {"fecha": f, "producto": p["id"], "tipo": "ajuste", "unidades": round(unidades, 8), "importe": 0}
     nota = texto(datos.get("nota"))
     calculadas = unidades_a(cfg, p["id"], f, excluir=datos.get("id"))
-    mov["nota"] = nota or f"Rumbo calculaba {fmt_unidades(calculadas)}"
+    mov["nota"] = nota or f"FinAppGo calculaba {fmt_unidades(calculadas)}"
     lista = cfg.setdefault("movimientos", [])
     existente = next((m for m in lista if m.get("id") == datos.get("id")), None) if datos.get("id") else None
     if existente:

@@ -1,19 +1,19 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/logo/rumbo-oscuro.png">
-    <img src="docs/logo/rumbo-claro.png" alt="Rumbo" width="420">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/logo/finappgo-oscuro.png">
+    <img src="docs/logo/finappgo-claro.png" alt="FinAppGo" width="420">
   </picture>
 </p>
 
 <h3 align="center">Tu patrimonio neto en un panel bonito, claro y privado, que funciona en tu propio ordenador.</h3>
 
-Fondos, ETF, acciones, criptomonedas, oro, planes de pensiones, cuentas del banco, un piso… Metes lo que tienes una vez y **Rumbo** descarga los precios solo, calcula cuánto has ganado, tu rentabilidad real (TIR) y te dice si lo estás haciendo mejor o peor que un indexado.
+Fondos, ETF, acciones, criptomonedas, oro, planes de pensiones, cuentas del banco, un piso… Metes lo que tienes una vez y **FinAppGo** descarga los precios solo, calcula cuánto has ganado, tu rentabilidad real (TIR) y te dice si lo estás haciendo mejor o peor que un indexado.
 
 ![El panel de patrimonio](docs/capturas/01_panel.png)
 
 Herramienta **gratuita** hecha por **Dani Dominguez Quant**. Si te resulta útil, la mejor forma de apoyarla es [suscribirte al canal de YouTube](https://www.youtube.com/channel/UCiS3qumDoE7QDwzo_ChU6yQ?sub_confirmation=1) ▶, donde cuento cada mes cómo evoluciona la cartera de ejemplo.
 
-▶ **Vídeos:** [todas las novedades de Rumbo 2.0](https://www.youtube.com/watch?v=I5enjwfQFIw) · [tutorial de instalación paso a paso (Rumbo 1.0, se instala igual)](https://www.youtube.com/watch?v=NReXUH7Obm8)
+▶ **Vídeos:** [todas las novedades de FinAppGo 2.0](https://www.youtube.com/watch?v=I5enjwfQFIw) · [tutorial de instalación paso a paso (FinAppGo 1.0, se instala igual)](https://www.youtube.com/watch?v=NReXUH7Obm8)
 
 > **Aviso.** Es una herramienta informativa. **No es asesoramiento financiero** ni una recomendación de compra o venta. Los precios vienen de servicios públicos gratuitos y pueden tener errores o retrasos: no se garantiza la exactitud de los datos. La cartera de ejemplo que trae es la cartera real del autor, con fines divulgativos.
 
@@ -34,9 +34,9 @@ Todo lo que pedisteis en los comentarios del vídeo y en GitHub, por orden de im
 - 🏠 **Tu propio objetivo**: la entrada del piso, unas vacaciones… y cuánto te falta.
 - 🔧 **Cuadrar participaciones** con tu banco (por ejemplo, tras importar traspasos de MyInvestor).
 - 🧾 **Para la Renta**: tus ventas del año con su ganancia o pérdida (FIFO, como Hacienda), dividendos e intereses, y avisos de lo que conviene revisar. Descargable en Excel.
-- 📸 **Compartir mi mes**: una imagen de tu mes para redes (cuadrada, vertical o story), con el logo y un QR a Rumbo. Por defecto, solo porcentajes.
+- 📸 **Compartir mi mes**: una imagen de tu mes para redes (cuadrada, vertical o story), con el logo y un QR a FinAppGo. Por defecto, solo porcentajes.
 - ↻ **Aportaciones periódicas**: la de cada mes a tu fondo, con el precio de cada día, en un minuto (y aviso cuando toca la siguiente).
-- 🐳 **Rumbo en Docker**: para tenerla siempre encendida en un NAS, una Raspberry o un servidor de casa.
+- 🐳 **FinAppGo en Docker**: para tenerla siempre encendida en un NAS, una Raspberry o un servidor de casa.
 - Y además: una ventana con las novedades al abrir cada versión, icono en el Escritorio (`Crear acceso directo.bat`), préstamos P2P y crowdfunding como tipo propio (Mintos, Urbanitae…), pisos alquilados con su rentabilidad neta, intereses de cuentas remuneradas (cuentan como dinero cobrado), botón «Todas» para venderlo todo, lo ya cobrado en ventas y dividendos (en el panel y, como «Ganancia total», en la ficha de cada producto), periodo propio en la comparación con un indexado e informe para soporte.
 
 **¿Vienes de la 1.x?** Actualiza sin perder nada siguiendo [estos pasos](#actualizar-a-una-versión-nueva): tus datos sirven tal cual.
@@ -56,7 +56,7 @@ Todo lo que pedisteis en los comentarios del vídeo y en GitHub, por orden de im
 - [Instalación en Windows](#instalación-en-windows)
 - [Instalación en Mac](#instalación-en-mac)
 - [Instalación en Linux](#instalación-en-linux)
-- [Rumbo en Docker (NAS, Raspberry Pi o servidor de casa)](#rumbo-en-docker-nas-raspberry-pi-o-servidor-de-casa)
+- [FinAppGo en Docker (NAS, Raspberry Pi o servidor de casa)](#finappgo-en-docker-nas-raspberry-pi-o-servidor-de-casa)
 - [Primer uso](#primer-uso)
 - [Meter tus datos](#meter-tus-datos)
 - [Importar de golpe (MyInvestor, Excel o con una IA)](#importar-de-golpe)
@@ -140,9 +140,9 @@ Son unos 5 minutos la primera vez. No hace falta saber programar. Si lo prefiere
 
 A partir de ahí, cada vez que quieras ver tu patrimonio: doble clic en `Iniciar.bat`.
 
-**¿Lo quieres en el Escritorio con su icono?** Haz doble clic en **`Crear acceso directo.bat`** (en la misma carpeta). Aparece «Rumbo» en tu Escritorio y desde entonces lo abres desde ahí. Si algún día mueves la carpeta de la app, vuelve a hacerlo.
+**¿Lo quieres en el Escritorio con su icono?** Haz doble clic en **`Crear acceso directo.bat`** (en la misma carpeta). Aparece «FinAppGo» en tu Escritorio y desde entonces lo abres desde ahí. Si algún día mueves la carpeta de la app, vuelve a hacerlo.
 
-> Si la carpeta está en un sitio donde Windows no deja instalar programas (por ejemplo, sincronizada con OneDrive), la app lo detecta e instala Python en tu carpeta de usuario (`%LOCALAPPDATA%\Rumbo`). No tienes que hacer nada: tus datos siguen en `mis_datos`, dentro de la carpeta de la app.
+> Si la carpeta está en un sitio donde Windows no deja instalar programas (por ejemplo, sincronizada con OneDrive), la app lo detecta e instala Python en tu carpeta de usuario (`%LOCALAPPDATA%\FinAppGo`). No tienes que hacer nada: tus datos siguen en `mis_datos`, dentro de la carpeta de la app.
 
 ### Alternativa sin uv: Python de python.org
 
@@ -188,13 +188,13 @@ A partir de ahí, cada vez que quieras ver tu patrimonio: doble clic en `Iniciar
 
 ---
 
-## Rumbo en Docker (NAS, Raspberry Pi o servidor de casa)
+## FinAppGo en Docker (NAS, Raspberry Pi o servidor de casa)
 
 Para quien tiene un equipo siempre encendido en casa (un NAS de Synology o QNAP, una Raspberry Pi, un servidor) y
-quiere abrir Rumbo desde el navegador de cualquier ordenador de casa sin instalar nada en cada uno. Si no sabes qué es
+quiere abrir FinAppGo desde el navegador de cualquier ordenador de casa sin instalar nada en cada uno. Si no sabes qué es
 Docker, no lo necesitas: usa la instalación normal de arriba.
 
-**Imagen oficial:** `ghcr.io/danidm98/rumbo`, para PC y servidores (amd64) y Raspberry Pi (arm64). Cada versión tiene
+**Imagen oficial:** `ghcr.io/danidm98/finappgo`, para PC y servidores (amd64) y Raspberry Pi (arm64). Cada versión tiene
 su etiqueta (`2.0.0`, `2.0`) y `latest` es siempre la última.
 
 1. En el equipo donde la vas a tener, crea una carpeta y descarga dentro [`docker-compose.yml`](docker-compose.yml).
@@ -207,7 +207,7 @@ su etiqueta (`2.0.0`, `2.0`) y `latest` es siempre la última.
 3. Mira la dirección para abrirla, con tu llave de acceso:
 
    ```bash
-   docker compose logs rumbo
+   docker compose logs finappgo
    ```
 
    Sale algo así: `http://IP-DEL-EQUIPO:8765/?acceso=…`. Cambia `IP-DEL-EQUIPO` por la del NAS o la Raspberry
@@ -219,15 +219,15 @@ su etiqueta (`2.0.0`, `2.0`) y `latest` es siempre la última.
    docker compose pull && docker compose up -d
    ```
 
-**Tus datos** están en el volumen `rumbo_datos` (cartera, copias, perfiles y la llave). Para una copia de todo:
-`docker cp rumbo:/data ./copia-rumbo`. También puedes usar **Mis datos → Copias y exportar** como siempre.
+**Tus datos** están en el volumen `finappgo_datos` (cartera, copias, perfiles y la llave). Para una copia de todo:
+`docker cp finappgo:/data ./copia-finappgo`. También puedes usar **Mis datos → Copias y exportar** como siempre.
 
 **Seguridad:**
 - Sin la llave no se ve nada, ni desde otro equipo de tu casa ni desde otra web.
-- **No abras el puerto 8765 a internet en tu router.** Rumbo no usa HTTPS: para entrar desde fuera de casa, usa una
+- **No abras el puerto 8765 a internet en tu router.** FinAppGo no usa HTTPS: para entrar desde fuera de casa, usa una
   VPN como [Tailscale](https://tailscale.com).
 - Solo responde a direcciones de casa (IP privadas, nombres como `nas` o `raspberrypi.local`, Tailscale). Si entras
-  con un nombre propio (`rumbo.midominio.com`), añádelo en `PATRIMONIO_HOSTS_PERMITIDOS` dentro de `docker-compose.yml`.
+  con un nombre propio (`finappgo.midominio.com`), añádelo en `PATRIMONIO_HOSTS_PERMITIDOS` dentro de `docker-compose.yml`.
 
 ---
 
@@ -242,7 +242,7 @@ Cuando quieras usar la tuya, pulsa **«Empezar con mis datos»** y elige:
 
 Si más adelante quieres volver a empezar, en **Mis datos** tienes el botón **«Empezar de nuevo…»**. Tu cartera anterior se guarda antes en las copias, por si acaso.
 
-> **Abre siempre Rumbo con su lanzador** (`Iniciar.bat`, `Iniciar.command` o `Iniciar.sh`). Lleva tu llave de acceso: si escribes la dirección a mano en otro navegador, verás un aviso que te pide usar el lanzador. Es lo que impide que cualquier otra web o programa entre en tus datos.
+> **Abre siempre FinAppGo con su lanzador** (`Iniciar.bat`, `Iniciar.command` o `Iniciar.sh`). Lleva tu llave de acceso: si escribes la dirección a mano en otro navegador, verás un aviso que te pide usar el lanzador. Es lo que impide que cualquier otra web o programa entre en tus datos.
 
 ---
 
@@ -277,19 +277,19 @@ Las ventas descuentan el coste por **FIFO** (primero lo más antiguo), como hace
 
 ### Aportaciones periódicas (la de cada mes)
 
-¿Metes lo mismo cada mes en un fondo? **Movimientos → «↻ Periódica»**: eliges el producto, cuánto, qué día del mes y desde cuándo, y Rumbo prepara una compra por mes con el precio de cierre de ese día (si ese día no hubo cierre, el anterior). Antes de guardar ves la lista; las que ya tengas anotadas se saltan. Son **estimadas**: tu banco puede ejecutarlas otro día o a otro precio, así que puedes corregir cada una después. Rumbo se acuerda de la aportación y, cuando toca la siguiente, te avisa en Movimientos para añadirla con un clic. No se añade nada sin que lo confirmes.
+¿Metes lo mismo cada mes en un fondo? **Movimientos → «↻ Periódica»**: eliges el producto, cuánto, qué día del mes y desde cuándo, y FinAppGo prepara una compra por mes con el precio de cierre de ese día (si ese día no hubo cierre, el anterior). Antes de guardar ves la lista; las que ya tengas anotadas se saltan. Son **estimadas**: tu banco puede ejecutarlas otro día o a otro precio, así que puedes corregir cada una después. FinAppGo se acuerda de la aportación y, cuando toca la siguiente, te avisa en Movimientos para añadirla con un clic. No se añade nada sin que lo confirmes.
 
 ### Traspasos
 
-**Movimientos → «⇄ Traspaso»**: de qué fondo (o plan) sale, a cuál va, la fecha y las participaciones que salen (**«Todas»** si es total). Rumbo rellena el importe y las participaciones que entran con el precio de ese día. No cuenta como venta: lo que pagaste y la fecha de cada compra pasan al destino, y no suma como aportación nueva. Si es un plan valorado a mano, marca **«Lo traspaso todo»** y el antiguo se queda a cero.
+**Movimientos → «⇄ Traspaso»**: de qué fondo (o plan) sale, a cuál va, la fecha y las participaciones que salen (**«Todas»** si es total). FinAppGo rellena el importe y las participaciones que entran con el precio de ese día. No cuenta como venta: lo que pagaste y la fecha de cada compra pasan al destino, y no suma como aportación nueva. Si es un plan valorado a mano, marca **«Lo traspaso todo»** y el antiguo se queda a cero.
 
-Si importas el CSV de MyInvestor, Rumbo **detecta los traspasos solo**: en la vista previa te pregunta de qué fondo venía cada uno (**«Venía de»**) y, si el de origen no está en Rumbo, lo importa como compras. En la ficha del fondo, el traspaso sale marcado en la gráfica con **⇄**.
+Si importas el CSV de MyInvestor, FinAppGo **detecta los traspasos solo**: en la vista previa te pregunta de qué fondo venía cada uno (**«Venía de»**) y, si el de origen no está en FinAppGo, lo importa como compras. En la ficha del fondo, el traspaso sale marcado en la gráfica con **⇄**.
 
 ![Un fondo que viene de un traspaso, con su marca en la gráfica](docs/capturas/13_traspasos.png)
 
 ### Cuadrar participaciones con tu banco
 
-Si las participaciones de un fondo no coinciden con las de tu banco (pasa con algunos traspasos importados de MyInvestor), **Movimientos → «Cuadrar participaciones»**: escribe las buenas y Rumbo las fija desde esa fecha sin cambiar lo que pagaste.
+Si las participaciones de un fondo no coinciden con las de tu banco (pasa con algunos traspasos importados de MyInvestor), **Movimientos → «Cuadrar participaciones»**: escribe las buenas y FinAppGo las fija desde esa fecha sin cambiar lo que pagaste.
 
 ### Cuentas, planes de pensiones, pisos… (valores anotados a mano)
 
@@ -323,15 +323,15 @@ Arriba, junto al logo, está el selector de perfiles. **«+ Añadir un perfil»*
 
 Si el fondo no existe todavía, se crea solo. Cada importación **sustituye** lo que importaste antes de ese fondo, así que puedes repetirlo cada mes sin duplicar nada.
 
-**Traspasos entre fondos**: en un traspaso, MyInvestor conserva la fecha y el coste del fondo antiguo, pero no dice de qué fondo venía. Rumbo reconoce esos lotes y, en la vista previa, te pregunta **de qué fondo venían y qué día fue el traspaso**:
+**Traspasos entre fondos**: en un traspaso, MyInvestor conserva la fecha y el coste del fondo antiguo, pero no dice de qué fondo venía. FinAppGo reconoce esos lotes y, en la vista previa, te pregunta **de qué fondo venían y qué día fue el traspaso**:
 
-- Si ese fondo está en Rumbo, elígelo y pon la fecha de cada lote (cada uno puede haberse traspasado otro día). Rumbo crea un traspaso de verdad y el dinero no cuenta dos veces. Si el extracto de ese fondo ya no trae lo que salió (lo normal: MyInvestor solo enseña lo que queda), Rumbo lo reconstruye en su fecha, así ves cómo entró y salió.
-- ¿No sabes la fecha? Está en el historial de órdenes de MyInvestor. Si no la encuentras, marca **«No la sé»**: Rumbo pone el día en que mejor cuadran los precios de los dos fondos y la marca como **estimada** (la ficha del fondo te lo recuerda hasta que la corrijas en Movimientos).
-- Si no está en Rumbo, deja «No está en Rumbo»: se importan como compras con su fecha y coste originales.
+- Si ese fondo está en FinAppGo, elígelo y pon la fecha de cada lote (cada uno puede haberse traspasado otro día). FinAppGo crea un traspaso de verdad y el dinero no cuenta dos veces. Si el extracto de ese fondo ya no trae lo que salió (lo normal: MyInvestor solo enseña lo que queda), FinAppGo lo reconstruye en su fecha, así ves cómo entró y salió.
+- ¿No sabes la fecha? Está en el historial de órdenes de MyInvestor. Si no la encuentras, marca **«No la sé»**: FinAppGo pone el día en que mejor cuadran los precios de los dos fondos y la marca como **estimada** (la ficha del fondo te lo recuerda hasta que la corrijas en Movimientos).
+- Si no está en FinAppGo, deja «No está en FinAppGo»: se importan como compras con su fecha y coste originales.
 
 En la gráfica de cada fondo, una raya marca el día de cada traspaso: «⇄ a World» o «⇄ desde AXA».
 
-Rumbo recuerda tu respuesta para la siguiente importación. Si las participaciones no cuadran con MyInvestor, usa **Movimientos → «Cuadrar participaciones»**.
+FinAppGo recuerda tu respuesta para la siguiente importación. Si las participaciones no cuadran con MyInvestor, usa **Movimientos → «Cuadrar participaciones»**.
 
 MyInvestor no permite descargar las órdenes de **ETF o acciones**: haz capturas de pantalla de tus órdenes y usa la opción **«Con ayuda de una IA»**.
 
@@ -405,11 +405,11 @@ EXTRACTO:
 - **Solo largo plazo**: el botón del panel quita lo que no es inversión (tu colchón, las cuentas…) y recalcula todas las cifras. Cada producto tiene su interruptor «Inversión a largo plazo».
 - **Modo vídeo** (tecla `V`): esconde los controles y agranda las cifras. Las teclas `1` a `6` cambian de pestaña.
 - **Tema claro u oscuro** con el botón **«Tema»**.
-- **Ver en otra moneda**: con el desplegable **«€ EUR»** de arriba ves todos los importes en dólares, libras, francos suizos o pesos, al cambio de hoy. Rumbo sigue calculando en euros: la TIR y las rentabilidades son las de tu dinero en euros.
+- **Ver en otra moneda**: con el desplegable **«€ EUR»** de arriba ves todos los importes en dólares, libras, francos suizos o pesos, al cambio de hoy. FinAppGo sigue calculando en euros: la TIR y las rentabilidades son las de tu dinero en euros.
 - **Tu objetivo**: en la barra de progreso, **«cambiar»** pone tu propia meta (por ejemplo, la entrada de un piso). Si no eliges ninguna, va al siguiente hito.
 - **Dónde está tu dinero de verdad**: en la pestaña Patrimonio, tu reparto por países y sectores con datos de Morningstar (se refrescan una vez al mes). Para un plan que no cotiza, en su ficha avanzada dile a qué fondo se parece.
 - **Liquidez y fondo de emergencia**: suma tus cuentas y monetarios (o lo que marques con «Cuenta como liquidez») y, si dices cuántos meses de gastos quieres de colchón, te dice si lo tienes cubierto y cuánto te sobra para invertir.
-- **Mi reparto objetivo**: dices qué % quieres en cada tipo de activo o en cada producto (y cuáles cuentan, con su interruptor) y Rumbo te enseña la desviación, un semáforo y cómo repartir tu próxima aportación sin vender. Es una herramienta para pensar, no una recomendación.
+- **Mi reparto objetivo**: dices qué % quieres en cada tipo de activo o en cada producto (y cuáles cuentan, con su interruptor) y FinAppGo te enseña la desviación, un semáforo y cómo repartir tu próxima aportación sin vender. Es una herramienta para pensar, no una recomendación.
 
 ---
 
@@ -433,7 +433,7 @@ Tres tarjetas de la pestaña **Patrimonio**:
 
 ![Liquidez y fondo de emergencia](docs/capturas/10_liquidez.png)
 
-**Mi reparto objetivo.** Rumbo compara lo que tienes con el reparto que tú quieres y te enseña la desviación, un semáforo (OK, vigilar, rebalancear) y, con **«Voy a aportar…»**, cómo repartir la próxima aportación para volver a cuadrar **sin vender nada**. Es una herramienta para pensar, no una recomendación.
+**Mi reparto objetivo.** FinAppGo compara lo que tienes con el reparto que tú quieres y te enseña la desviación, un semáforo (OK, vigilar, rebalancear) y, con **«Voy a aportar…»**, cómo repartir la próxima aportación para volver a cuadrar **sin vender nada**. Es una herramienta para pensar, no una recomendación.
 
 ![Mi reparto objetivo](docs/capturas/11_reparto.png)
 
@@ -480,7 +480,7 @@ En **Rendimiento → «Para la Renta»** eliges el año y tienes lo que hace fal
 - **Avisos** de lo que conviene mirar a mano: pérdidas con una recompra cerca (la regla de los dos meses, o de un año en fondos), traspasos que no son entre fondos y ventas sin coste anotado. Los rescates de planes de pensiones van aparte, porque tributan como rendimiento del trabajo.
 - Un botón para **descargarlo en Excel**.
 
-Es orientativo: **no es asesoramiento fiscal**. Rumbo no sabe las retenciones que te hicieron ni tu situación, y Hacienda ya tiene casi todo esto en tus datos fiscales. Se calcula en tu ordenador y no sale en la web publicada ni en el modo vídeo.
+Es orientativo: **no es asesoramiento fiscal**. FinAppGo no sabe las retenciones que te hicieron ni tu situación, y Hacienda ya tiene casi todo esto en tus datos fiscales. Se calcula en tu ordenador y no sale en la web publicada ni en el modo vídeo.
 
 ![Para la Renta](docs/capturas/16_renta.png)
 
@@ -488,7 +488,7 @@ Es orientativo: **no es asesoramiento fiscal**. Rumbo no sabe las retenciones qu
 
 ## Compartir mi mes
 
-En la pestaña **El mes**, el botón **«Compartir mi mes»** prepara una imagen para redes con la rentabilidad del mes, cómo vas en el año y la curva, el logo de Rumbo y un QR a la página de Rumbo. Tres formatos:
+En la pestaña **El mes**, el botón **«Compartir mi mes»** prepara una imagen para redes con la rentabilidad del mes, cómo vas en el año y la curva, el logo de FinAppGo y un QR a la página de FinAppGo. Tres formatos:
 
 - **Mini** (cuadrada): un solo dato, para Instagram o WhatsApp.
 - **Resumen** (vertical): el mes, el año, la TIR, tu racha de aportaciones y de dónde sale el cambio (lo que pusiste tú y lo que puso el mercado).
@@ -574,12 +574,12 @@ En la ficha de cada producto (pestaña Productos): la **plusvalía** es solo lo 
 
 <details><summary><b>Hice un traspaso de un fondo a otro</b></summary>
 
-En **Movimientos → «⇄ Traspaso»** (ver [Traspasos](#traspasos)). Si importas el extracto de MyInvestor, Rumbo reconoce las compras que vienen de un traspaso (ver [MyInvestor](#myinvestor-fondos)); en la plantilla, un traspaso son dos filas, `traspaso_salida` y `traspaso_entrada`.
+En **Movimientos → «⇄ Traspaso»** (ver [Traspasos](#traspasos)). Si importas el extracto de MyInvestor, FinAppGo reconoce las compras que vienen de un traspaso (ver [MyInvestor](#myinvestor-fondos)); en la plantilla, un traspaso son dos filas, `traspaso_salida` y `traspaso_entrada`.
 </details>
 
 <details><summary><b>¿Funciona sin internet?</b></summary>
 
-Sí. Rumbo funciona en tu ordenador (`127.0.0.1` es tu propio ordenador, no internet). Solo necesita conexión para instalarse la primera vez, descargar precios, buscar productos nuevos y comprobar si hay una versión nueva. Sin conexión, usa los últimos precios guardados.
+Sí. FinAppGo funciona en tu ordenador (`127.0.0.1` es tu propio ordenador, no internet). Solo necesita conexión para instalarse la primera vez, descargar precios, buscar productos nuevos y comprobar si hay una versión nueva. Sin conexión, usa los últimos precios guardados.
 </details>
 
 <details><summary><b>La ventana negra se cierra sola o sale un error</b></summary>

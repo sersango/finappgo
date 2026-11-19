@@ -2,7 +2,7 @@
 """
 periodicas.py  ·  Aportaciones periódicas (la de cada mes a tu fondo)
 =====================================================================
-Dices el producto, cuánto, qué día del mes y desde cuándo, y Rumbo prepara una compra
+Dices el producto, cuánto, qué día del mes y desde cuándo, y FinAppGo prepara una compra
 por mes con el precio de cierre de ese día (o del último día con precio, como mucho una
 semana antes) y las participaciones que salen.
 

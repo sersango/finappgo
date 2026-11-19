@@ -38,7 +38,7 @@ test("cada formato se dibuja con sus cifras", () => {
     Comp.dibuja(ctx, formato, datos(), { qr: "repo" });
     const todo = textos.map(t => t.s).join(" | ");
     assert.match(todo, /\+2,4 %/, formato);
-    assert.match(todo, /RUMBO/, formato);
+    assert.match(todo, /FINAPPGO/, formato);
     assert.doesNotMatch(todo, /58\.150|1\.912/, formato + ": sin euros por defecto");
     for (const t of textos) {
       assert.ok(t.x >= 0 && t.x <= Comp.FORMATOS[formato].w, `${formato}: «${t.s}» se sale por el lado`);
@@ -64,7 +64,7 @@ test("casos raros: mes en negativo, sin racha, sin curva, primer mes", () => {
   ];
   for (const d of raros) for (const formato of Object.keys(Comp.FORMATOS)) {
     const { ctx, textos } = lienzoFalso();
-    Comp.dibuja(ctx, formato, d, { qr: "canal" });   // ya no existe: cae en el de Rumbo
+    Comp.dibuja(ctx, formato, d, { qr: "canal" });   // ya no existe: cae en el de FinAppGo
     assert.ok(textos.length > 5);
   }
   const { ctx, textos } = lienzoFalso();
@@ -117,6 +117,6 @@ test("tres temas (oscuro, claro y azul) para las tres imágenes", () => {
   Comp.dibuja(ctx, "mini", datos(), { tema: "rosa" });
 });
 
-test("solo hay un QR: el de Rumbo", () => {
+test("solo hay un QR: el de FinAppGo", () => {
   assert.deepEqual(Object.keys(Comp.QR), ["repo"]);
 });

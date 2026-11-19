@@ -114,7 +114,7 @@ class ConvertirTraspaso(ConCarpeta):
 
     def test_avisa_si_el_coste_no_cuadra(self):
         cfg = cartera([fondo("a", "0PA", "IE00AAAAAAA1"), fondo("b", "0PB", "IE00BBBBBBB2")],
-                      [mov("2020-03-02", "a", "compra", 250, 2000, mid="m1")])   # en Rumbo solo 2.000 €
+                      [mov("2020-03-02", "a", "compra", 250, 2000, mid="m1")])   # en FinAppGo solo 2.000 €
         plan = importar.preparar_myinvestor(cfg, [(ARCHIVO_B, CSV_B.encode())], self.carpeta)
         inf = importar.aplicar(cfg, plan, {"b": {"origen": "a", "fecha": "2023-06-01"}})
         self.assertIn("Revisa que esté completo", inf["traspasosMyInvestor"][0]["aviso"])

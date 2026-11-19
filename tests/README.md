@@ -1,4 +1,4 @@
-# Pruebas de Rumbo
+# Pruebas de FinAppGo
 
 Comprueban que una versión nueva no rompe nada antes de publicarla. Funcionan **sin internet**
 (los precios son inventados) y **nunca tocan `mis_datos`**: cada prueba usa una carpeta temporal.
@@ -31,7 +31,7 @@ Si todo va bien, termina con `OK`. Las cuentas del navegador y la imagen de «Co
 | `test_perfiles.py` | Perfiles, «Todos juntos» (solo lectura) y que cada perfil tenga sus copias. |
 | `test_exposicion.py` | Países y sectores con respuestas de Morningstar simuladas, y su cache. |
 | `test_privacidad.py` | Llave de acceso, política de la página (CSP), copias manipuladas y **qué sale a internet** (ninguna cifra). |
-| `test_docker.py` | Rumbo en Docker: abierta solo a direcciones de casa y siempre con la llave; los archivos de la imagen. |
+| `test_docker.py` | FinAppGo en Docker: abierta solo a direcciones de casa y siempre con la llave; los archivos de la imagen. |
 | `test_myinvestor_real.py` | Extractos reales de MyInvestor con traspasos (importes escalados): detecta los lotes de traspaso y las participaciones dan el valor del extracto. |
 | `test_traspasos_myinvestor.py` | Traspasos que llegan en el CSV de MyInvestor: «¿de qué fondo venía?», sin contar dos veces. |
 | `test_calculos_js.py` | Las cuentas del navegador (`app/web/calculos.js`) y la imagen de «Compartir mi mes» (`compartir.js`) con Node, y que dan lo mismo que el motor. |

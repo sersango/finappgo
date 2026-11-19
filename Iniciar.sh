@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==========================================================================
-#  Iniciar.sh  -  Abre Rumbo, la app de tu patrimonio, en Linux
+#  Iniciar.sh  -  Abre FinAppGo, la app de tu patrimonio, en Linux
 #
 #  Desde una terminal en esta carpeta:   ./Iniciar.sh   (o: bash Iniciar.sh)
 #
@@ -14,8 +14,8 @@
 # ==========================================================================
 cd "$(dirname "$0")" || exit 1
 if [ ! -f app/__main__.py ]; then
-  echo "Parece que estás abriendo Rumbo sin descomprimir la carpeta."
-  echo "Descomprime el ZIP de Rumbo y ejecuta Iniciar.sh desde la carpeta que se crea."
+  echo "Parece que estás abriendo FinAppGo sin descomprimir la carpeta."
+  echo "Descomprime el ZIP de FinAppGo y ejecuta Iniciar.sh desde la carpeta que se crea."
   exit 1
 fi
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
@@ -25,7 +25,7 @@ if command -v uv >/dev/null 2>&1; then
   echo "Preparando la app con uv. La primera vez tarda un poco: descarga Python y lo necesario."
   # Si no se puede crear .venv aquí (carpeta de solo lectura o sincronizada), el
   # entorno de Python va a tu carpeta de usuario. Tus datos siguen en mis_datos.
-  FUERA="${XDG_DATA_HOME:-$HOME/.local/share}/Rumbo/entorno"
+  FUERA="${XDG_DATA_HOME:-$HOME/.local/share}/FinAppGo/entorno"
   if [ ! -d .venv ] && [ -f "$FUERA/pyvenv.cfg" ]; then
     export UV_PROJECT_ENVIRONMENT="$FUERA"
   elif ! uv run --quiet python -c "import flask" >/dev/null 2>&1; then

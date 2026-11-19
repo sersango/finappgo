@@ -1,6 +1,6 @@
-# Rumbo en Docker: para tenerlo siempre encendido en un NAS, una Raspberry Pi o un servidor
+# FinAppGo en Docker: para tenerlo siempre encendido en un NAS, una Raspberry Pi o un servidor
 # de casa, y abrirlo desde el navegador de cualquier ordenador de tu red.
-# Instrucciones en el README («Rumbo en Docker»). La imagen oficial se publica sola en
+# Instrucciones en el README («FinAppGo en Docker»). La imagen oficial se publica sola en
 # ghcr.io con cada versión: no hace falta construirla a mano.
 
 FROM python:3.12-slim
@@ -20,9 +20,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends tzdata \
     && rm -rf /var/lib/apt/lists/* \
-    && useradd --create-home --uid 1000 rumbo \
+    && useradd --create-home --uid 1000 finappgo \
     && mkdir -p /data \
-    && chown rumbo:rumbo /data
+    && chown finappgo:finappgo /data
 
 WORKDIR /app
 COPY requirements.txt .
@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 COPY demo ./demo
 
-USER rumbo
+USER finappgo
 # Tus datos (cartera, copias, perfiles y la llave de acceso): sobreviven a las actualizaciones.
 VOLUME ["/data"]
 EXPOSE 8765

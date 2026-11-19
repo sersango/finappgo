@@ -112,19 +112,19 @@ class Perfiles(ConCarpeta):
 
 
 class PestanasConOtroPerfil(Perfiles):
-    """El perfil activo es uno para todo Rumbo: una pestaña que se quedó en otro no guarda nada."""
+    """El perfil activo es uno para todo FinAppGo: una pestaña que se quedó en otro no guarda nada."""
 
     def test_una_pestana_vieja_no_guarda_en_el_perfil_equivocado(self):
         self.post("/api/empezar", {"desde": "vacia"})
         self.assertEqual(self.post("/api/perfiles", {"nombre": "Irmita"})[0], 200)
         activo = servidor.perfiles()["activo"]
         r = self.web.post("/api/productos", json={"nombre": "Piso", "tipo": "inmueble", "fuente": "manual"},
-                          headers={"X-Rumbo-Perfil": "principal" if activo != "principal" else "irmita"})
+                          headers={"X-FinAppGo-Perfil": "principal" if activo != "principal" else "irmita"})
         self.assertEqual(r.status_code, 409)
         self.assertTrue(r.get_json()["perfilCambiado"])
         self.assertIn("Recarga esta página", r.get_json()["errores"][0])
         r = self.web.post("/api/productos", json={"nombre": "Piso", "tipo": "inmueble", "fuente": "manual"},
-                          headers={"X-Rumbo-Perfil": activo})
+                          headers={"X-FinAppGo-Perfil": activo})
         self.assertEqual(r.status_code, 200)                      # la pestaña buena sí guarda
         r = self.web.post("/api/productos", json={"nombre": "Coche", "tipo": "otro", "fuente": "manual"})
         self.assertEqual(r.status_code, 200)                      # sin cabecera (otras herramientas), como antes
@@ -132,5 +132,5 @@ class PestanasConOtroPerfil(Perfiles):
     def test_cambiar_de_perfil_siempre_se_puede(self):
         self.post("/api/empezar", {"desde": "vacia"})
         self.post("/api/perfiles", {"nombre": "Irmita"})
-        r = self.web.post("/api/perfiles/activar", json={"id": "principal"}, headers={"X-Rumbo-Perfil": "otro"})
+        r = self.web.post("/api/perfiles/activar", json={"id": "principal"}, headers={"X-FinAppGo-Perfil": "otro"})
         self.assertEqual(r.status_code, 200)

@@ -14,7 +14,7 @@ Lo que hace falta para repasar el borrador de un año:
 - los rescates de planes de pensiones, aparte: no son una ganancia patrimonial.
 
 Y avisa de lo que conviene revisar a mano (la regla de los dos meses, traspasos que no
-son entre fondos, ventas sin coste conocido). No es asesoramiento fiscal: Rumbo no sabe
+son entre fondos, ventas sin coste conocido). No es asesoramiento fiscal: FinAppGo no sabe
 las retenciones ni tu situación, y Hacienda ya tiene casi todo esto en tus datos fiscales.
 No sale nada a internet: se calcula con tus movimientos.
 """
@@ -192,7 +192,7 @@ def csv_texto(inf):
     fecha = motor.fmt_fecha_es
     out = io.StringIO()
     w = csv.writer(out, delimiter=";", lineterminator="\r\n")
-    w.writerow([f"Resumen para la Renta {inf['ano']} (orientativo, hecho con Rumbo: compruébalo con tu banco)"])
+    w.writerow([f"Resumen para la Renta {inf['ano']} (orientativo, hecho con FinAppGo: compruébalo con tu banco)"])
     w.writerow([])
     w.writerow(["Ventas", "ISIN", "Tipo", "Fecha de venta", "Fechas de compra", "Unidades",
                 "Valor de transmisión", "Valor de adquisición", "Ganancia o pérdida", "Revisar"])

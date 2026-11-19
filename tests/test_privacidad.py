@@ -67,7 +67,7 @@ class LlaveDeAcceso(ConServidor):
 
     def test_la_pagina_sin_llave_explica_que_hacer(self):
         r = self.extrano.get("/")
-        self.assertIn("Abre Rumbo con su lanzador", r.get_data(as_text=True))
+        self.assertIn("Abre FinAppGo con su lanzador", r.get_data(as_text=True))
         self.assertNotIn("window.DATOS", r.get_data(as_text=True))
 
     def test_el_lanzador_abre_con_la_llave(self):

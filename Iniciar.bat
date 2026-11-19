@@ -1,6 +1,6 @@
 @echo off
 rem ==========================================================================
-rem  Iniciar.bat  -  Abre Rumbo, la app de tu patrimonio, en Windows (doble clic)
+rem  Iniciar.bat  -  Abre FinAppGo, la app de tu patrimonio, en Windows (doble clic)
 rem
 rem  Este archivo es texto plano: puedes abrirlo con el Bloc de notas y leer
 rem  todo lo que hace. No instala nada sin preguntarte. Pasos:
@@ -13,17 +13,17 @@ rem  actualiza los precios y abre la app en tu navegador.
 rem ==========================================================================
 setlocal
 cd /d "%~dp0"
-title Rumbo
+title FinAppGo
 
 rem Si falta la carpeta "app" al lado de este archivo, casi seguro que se esta
 rem abriendo desde dentro del ZIP sin descomprimirlo: se explica que hacer.
 if not exist "%~dp0app\__main__.py" (
   echo.
-  echo  Parece que estas abriendo Rumbo desde dentro del archivo ZIP, sin descomprimirlo.
+  echo  Parece que estas abriendo FinAppGo desde dentro del archivo ZIP, sin descomprimirlo.
   echo.
   echo  Cierra esta ventana y haz esto:
   echo    1. Ve a tu carpeta de Descargas.
-  echo    2. Haz clic derecho sobre el ZIP de Rumbo y elige "Extraer todo".
+  echo    2. Haz clic derecho sobre el ZIP de FinAppGo y elige "Extraer todo".
   echo    3. Entra en la carpeta que se crea y haz doble clic en Iniciar.bat.
   echo.
   pause
@@ -38,7 +38,7 @@ if not defined UV if exist "%USERPROFILE%\.local\bin\uv.exe" set "UV=%USERPROFIL
 rem Recien instalado con winget, esta ventana aun no lo ve en el PATH: lo buscamos.
 if not defined UV for /d %%D in ("%LOCALAPPDATA%\Microsoft\WinGet\Packages\astral-sh.uv_*") do if exist "%%D\uv.exe" set "UV=%%D\uv.exe"
 rem Si una vez hubo que instalar el entorno fuera de esta carpeta, se usa ese directamente.
-if not exist ".venv\" if exist "%LOCALAPPDATA%\Rumbo\entorno\pyvenv.cfg" set "UV_PROJECT_ENVIRONMENT=%LOCALAPPDATA%\Rumbo\entorno"
+if not exist ".venv\" if exist "%LOCALAPPDATA%\FinAppGo\entorno\pyvenv.cfg" set "UV_PROJECT_ENVIRONMENT=%LOCALAPPDATA%\FinAppGo\entorno"
 if defined UV (
   echo  Preparando la app con uv. La primera vez tarda un poco: descarga Python y lo necesario.
   "%UV%" run --quiet python -c "import flask" >nul 2>&1 || call :reparar_uv
@@ -113,9 +113,9 @@ exit /b 0
 :entorno_fuera
 rem Si Windows no deja crear la carpeta .venv aqui (OneDrive, Documentos o Escritorio
 rem protegidos, rutas largas...), el entorno de Python se instala en
-rem %LOCALAPPDATA%\Rumbo. Tus datos siguen en mis_datos, dentro de esta carpeta.
+rem %LOCALAPPDATA%\FinAppGo. Tus datos siguen en mis_datos, dentro de esta carpeta.
 echo  No puedo instalar Python dentro de esta carpeta. Lo instalo en tu carpeta de usuario.
-set "UV_PROJECT_ENVIRONMENT=%LOCALAPPDATA%\Rumbo\entorno"
+set "UV_PROJECT_ENVIRONMENT=%LOCALAPPDATA%\FinAppGo\entorno"
 if defined PYREAL (
   "%UV%" sync --quiet --python "%PYREAL%"
 ) else (

@@ -119,11 +119,11 @@ def pagina(web, datos, ocultar=False, titulo="Mi patrimonio"):
         icono = "data:image/png;base64," + base64.b64encode(f.read()).decode()
     html = html.replace('src="icono-64.png"', f'src="{icono}"')
     html = re.sub(r'\s*<link rel="(icon|apple-touch-icon)"[^>]*>', "", html)
-    desc = "Panel de patrimonio neto e inversiones hecho con Rumbo." + (" Importes ocultos." if ocultar else "")
+    desc = "Panel de patrimonio neto e inversiones hecho con FinAppGo." + (" Importes ocultos." if ocultar else "")
     titulo = html_.escape(str(titulo), quote=True)
     cabeceras = ('<meta name="robots" content="noindex, nofollow">\n'
                  f'<link rel="icon" type="image/png" href="{icono}">\n'
-                 f'<meta property="og:title" content="{titulo} · Rumbo">\n'
+                 f'<meta property="og:title" content="{titulo} · FinAppGo">\n'
                  f'<meta property="og:description" content="{desc}">\n'
                  f'<meta name="description" content="{desc}">\n'
                  f'<!-- Exportado el {dt.datetime.now():%d/%m/%Y %H:%M} -->')

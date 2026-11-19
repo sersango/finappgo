@@ -26,7 +26,7 @@ class Versiones(unittest.TestCase):
         v = lee("app/VERSION").strip()
         self.assertRegex(v, r"^\d+\.\d+\.\d+$")
         self.assertIn(f'version = "{v}"', lee("pyproject.toml"))
-        self.assertRegex(lee("uv.lock"), rf'name = "rumbo"\s+version = "{re.escape(v)}"')
+        self.assertRegex(lee("uv.lock"), rf'name = "finappgo"\s+version = "{re.escape(v)}"')
 
 
 class Lanzadores(unittest.TestCase):
@@ -41,12 +41,12 @@ class Lanzadores(unittest.TestCase):
                 self.assertTrue(all(b < 128 for b in bat), f"{nombre} no puede tener tildes ni ñ (cmd las rompe)")
 
     def test_el_icono_del_escritorio_es_nitido(self):
-        ico = lee("app/web/rumbo.ico", "rb")
-        self.assertEqual(ico[:4], b"\x00\x00\x01\x00", "rumbo.ico no es un icono de Windows")
+        ico = lee("app/web/finappgo.ico", "rb")
+        self.assertEqual(ico[:4], b"\x00\x00\x01\x00", "finappgo.ico no es un icono de Windows")
         n = int.from_bytes(ico[4:6], "little")
         lados = {ico[6 + 16 * i] or 256 for i in range(n)}   # 0 en el archivo quiere decir 256
         self.assertTrue({16, 32, 48, 256} <= lados, f"faltan tamaños: tiene {sorted(lados)}")
-        self.assertIn("rumbo.ico", lee("Crear acceso directo.bat"))
+        self.assertIn("finappgo.ico", lee("Crear acceso directo.bat"))
         self.assertIn("icono-512.png", lee("crear-acceso-directo.sh"))
 
     def test_mac_y_linux_ejecutables(self):

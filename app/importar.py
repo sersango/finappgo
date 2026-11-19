@@ -650,8 +650,8 @@ def _un_traspaso(cfg, item, resp, destino, serie_origen=None):
     lotes = motor.lotes_vivos(cfg, origen["id"], resp["fecha"])
     coste_total = sum(l[1] for l in lotes)
     if not lotes or coste_total <= 0:
-        raise almacen.ErrorValidacion([f"En Rumbo, «{nombre}» no tenía nada el {almacen.fmt_fecha(resp['fecha'])}. "
-                                       "Si ya lo has reimportado o borrado, elige «No están en Rumbo»."])
+        raise almacen.ErrorValidacion([f"En FinAppGo, «{nombre}» no tenía nada el {almacen.fmt_fecha(resp['fecha'])}. "
+                                       "Si ya lo has reimportado o borrado, elige «No están en FinAppGo»."])
     # Las participaciones que salen: las de los lotes más antiguos hasta sumar el coste traspasado.
     falta, unidades = item["coste"], 0.0
     for lu, lc, _, _ in lotes:
@@ -662,7 +662,7 @@ def _un_traspaso(cfg, item, resp, destino, serie_origen=None):
         falta -= toma
     aviso = None
     if falta > max(1.0, 0.02 * item["coste"]):
-        aviso = (f"«{nombre}» solo tenía {almacen.fmt_num(round(coste_total, 2))} € de coste en Rumbo y el traspaso es de "
+        aviso = (f"«{nombre}» solo tenía {almacen.fmt_num(round(coste_total, 2))} € de coste en FinAppGo y el traspaso es de "
                  f"{almacen.fmt_num(item['coste'])} €: sale todo lo que tenía. Revisa que esté completo.")
     precio = valor_en(item.get("serie") or {}, resp["fecha"], margen=7)
     importe = round(item["unidades"] * precio, 2) if precio else item["coste"]
@@ -692,7 +692,7 @@ def _traspaso_desde_extracto(cfg, item, resp, destino, origen, del_extracto, ser
         vl = valor_en(serie_origen, fecha, margen=7)
         if not vl:
             raise almacen.ErrorValidacion([f"No encuentro el valor liquidativo de «{nombre}» el {almacen.fmt_fecha(fecha)}: "
-                                           "no puedo reconstruir lo que salió de él. Elige «No está en Rumbo»."])
+                                           "no puedo reconstruir lo que salió de él. Elige «No está en FinAppGo»."])
         compra = almacen.guarda_movimiento(cfg, {
             "tipo": "compra", "producto": origen["id"], "fecha": fecha, "unidades": coste / vl, "importe": coste,
             "nota": "Reconstruido: se compró aquí y salió después en un traspaso (el extracto de MyInvestor ya no lo trae)"})
@@ -706,7 +706,7 @@ def _traspaso_desde_extracto(cfg, item, resp, destino, origen, del_extracto, ser
         "unidades": unidades, "unidadesDestino": item["unidades"], "importe": importe,
         "nota": "Traspaso importado de MyInvestor"})
     mov["origen"] = "myinvestor"
-    aviso = (f"El extracto de «{nombre}» ya no trae lo que salió en este traspaso: Rumbo lo ha añadido en su fecha "
+    aviso = (f"El extracto de «{nombre}» ya no trae lo que salió en este traspaso: FinAppGo lo ha añadido en su fecha "
              f"({len(reconstruir)} {'compra' if len(reconstruir) == 1 else 'compras'}) para que se vea cómo entró y salió."
              if reconstruir else None)
     return mov, aviso

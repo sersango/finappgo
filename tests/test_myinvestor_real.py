@@ -118,7 +118,7 @@ class TraspasoDesdeElMonetario(ExtractosReales):
 
 
 class FechaPorLote(ExtractosReales):
-    """Cada lote puede haberse traspasado otro día, y si no se sabe la fecha, Rumbo la estima."""
+    """Cada lote puede haberse traspasado otro día, y si no se sabe la fecha, FinAppGo la estima."""
 
     def item(self, ref):
         return next(it for it in self.plan.traspasos_mi if it["ref"] == ref)
@@ -138,7 +138,7 @@ class FechaPorLote(ExtractosReales):
         r = importar.respuesta_valida(it, {"origen": "monetario", "fecha": "2026-05-12"}, None)   # una sola: para todos
         self.assertEqual(r["fechas"], ["2026-05-12", "2026-05-12"])
 
-    def test_no_la_se_rumbo_la_estima_y_la_marca(self):
+    def test_no_la_se_finappgo_la_estima_y_la_marca(self):
         from app import motor
         resp = {"emergentes": {"origen": "monetario", "fechas": ["estimar", "2026-05-29"]},
                 "world": {"origen": "monetario", "fechas": ["estimar"]}}

@@ -23,7 +23,7 @@ if RAIZ not in sys.path:
 
 # Red de seguridad: si algo se escapa de los parches (un hilo que acaba tarde, una prueba
 # que olvida cambiar la carpeta), escribe en una carpeta temporal, nunca en mis_datos.
-os.environ["PATRIMONIO_DATOS"] = tempfile.mkdtemp(prefix="rumbo_tests_")
+os.environ["PATRIMONIO_DATOS"] = tempfile.mkdtemp(prefix="finappgo_tests_")
 
 from app import almacen, motor  # noqa: E402
 
@@ -53,7 +53,7 @@ class ClienteConLlave(FlaskClient):
 
     def open(self, *args, **kwargs):
         # La llave depende de la carpeta de datos (cada test usa la suya): se pone en cada petición.
-        dominios = {"localhost", "127.0.0.1", "::1", "rumbo.casa"}
+        dominios = {"localhost", "127.0.0.1", "::1", "finappgo.casa"}
         cabeceras = kwargs.get("headers")
         if isinstance(cabeceras, dict) and cabeceras.get("Host"):   # otra dirección (Docker en la red de casa)
             dominios.add(servidor._sin_puerto(cabeceras["Host"]).strip("[]"))
@@ -152,7 +152,7 @@ class ConCarpeta(unittest.TestCase):
     """Test con una carpeta de datos temporal (se borra al acabar)."""
 
     def setUp(self):
-        self.carpeta = tempfile.mkdtemp(prefix="rumbo_test_")
+        self.carpeta = tempfile.mkdtemp(prefix="finappgo_test_")
         motor.AVISOS.clear()
 
     def tearDown(self):

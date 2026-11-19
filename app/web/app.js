@@ -517,7 +517,7 @@
     if (sinDatos > 1) {
       pie.push(`Sin reparto: ${G.fmtEur(sinDatos, 0)} (${sinNombre.slice(0, 4).join(", ")}${sinNombre.length > 4 ? "…" : ""}).
         Si es un plan o una cartera que no cotiza, en su ficha (Mis datos → Productos → opciones avanzadas) puedes
-        decir a qué fondo se parece y Rumbo usará su reparto.`);
+        decir a qué fondo se parece y FinAppGo usará su reparto.`);
     }
     pie.push("Datos de Morningstar sobre la cartera de cada fondo, con la fecha de su última publicación. Se actualizan como mucho una vez al mes.");
     $("#expoTotPie").innerHTML = pie.join(" ");
@@ -546,7 +546,7 @@
     const queCuenta = '<p class="subt" style="margin:10px 0 0">Cuentan las cuentas y los fondos monetarios. Para cambiar qué cuenta, en la ficha del producto: «Cuenta como liquidez».</p>';
     if (!c) {
       $("#liqCuerpo").innerHTML = `<p class="subt" style="margin:0 0 12px">¿Cuánto quieres tener siempre a mano por si
-        pasa algo? Dilo en meses de gastos (lo habitual es entre 3 y 6) y Rumbo te dirá si lo tienes cubierto y cuánto te
+        pasa algo? Dilo en meses de gastos (lo habitual es entre 3 y 6) y FinAppGo te dirá si lo tienes cubierto y cuánto te
         sobra para invertir.</p>${editable ? '<button class="btn prim" id="btnColchonNuevo">Definir mi fondo de emergencia</button>' : ""}${tabla}${queCuenta}`;
       if (editable) $("#btnColchonNuevo").onclick = () => window.Editor.colchon();
       return;
@@ -583,7 +583,7 @@
       sec.hidden = !editable;
       $("#repartoNota").textContent = "";
       $("#repartoCuerpo").innerHTML = `<p class="subt" style="margin:0 0 12px">Di qué porcentaje quieres en cada tipo de
-        activo (por ejemplo, 80 % renta variable y 20 % renta fija) y Rumbo te avisará cuando te desvíes y te dirá dónde
+        activo (por ejemplo, 80 % renta variable y 20 % renta fija) y FinAppGo te avisará cuando te desvíes y te dirá dónde
         meter tu próxima aportación para volver a cuadrar, sin vender nada.</p>
         <button class="btn prim" id="btnRepartoNuevo">Definir mi reparto objetivo</button>`;
       if (editable) $("#btnRepartoNuevo").onclick = () => window.Editor.reparto();
@@ -710,7 +710,7 @@
   }
 
   // Los botones para cambiar el objetivo, el colchón o el reparto dependen del editor, que llega después.
-  document.addEventListener("rumbo:editor", () => { if (D) pintaPatrimonio(); });
+  document.addEventListener("finappgo:editor", () => { if (D) pintaPatrimonio(); });
 
   function pintaPatrimonio() {
     const mTodo = metricas(TODOS());
@@ -1308,7 +1308,7 @@
     const t = j.totales;
     const signo = v => `<span class="${v >= 0 ? "pos" : "neg"}">${G.fmtEurSigno(v)}</span>`;
     const aviso = `<div class="fiscalAviso"><b>Orientativo, para repasar el borrador: no es asesoramiento fiscal.</b>
-      Ventas como Hacienda (FIFO; los traspasos entre fondos conservan coste y fecha). Rumbo no sabe tus retenciones ni tu
+      Ventas como Hacienda (FIFO; los traspasos entre fondos conservan coste y fecha). FinAppGo no sabe tus retenciones ni tu
       situación: compáralo con los datos fiscales de tu banco.</div>`;
     if (!j.ventas.length && !j.cobros.length && !j.rescates.length && !j.comisiones.length && !j.gastosAlquiler.length) {
       cont.innerHTML = aviso + `<p class="vacio" style="text-align:left;padding:4px 0">En ${escH(j.ano)} no anotaste
@@ -1361,7 +1361,7 @@
       `<p style="margin:18px 0 0"><a class="btn" id="fiscalBajar">Descargar en Excel (CSV)</a></p>`;
     const bajar = $("#fiscalBajar");
     bajar.href = URL.createObjectURL(new Blob(["\ufeff" + j.csv], { type: "text/csv;charset=utf-8" }));
-    bajar.download = `rumbo_renta_${j.ano}.csv`;
+    bajar.download = `finappgo_renta_${j.ano}.csv`;
   }
 
   /* ---------------------------------------------- avisos y pie */
@@ -1442,7 +1442,7 @@
   function pintar() { pintaComun(); pintarTab(); }
 
   /* ---------------------------------------------- arranque */
-  document.title = "Rumbo · " + (D.titular || "Mi patrimonio");
+  document.title = "FinAppGo · " + (D.titular || "Mi patrimonio");
   $("#marcaTexto").textContent = D.titular || "Mi patrimonio";
   $("#metaFecha").textContent = "Datos a " + G.fmtFecha(D.fechaExtracto);
 
@@ -1460,7 +1460,7 @@
     if (m) {
       nota.textContent = `Estás viendo los importes en ${m.nombre.toLowerCase()} (${estado.moneda}) al cambio del ` +
         `${G.fmtFecha(m.fecha)}: 1 € = ${m.porEuro.toLocaleString("es-ES", { maximumFractionDigits: 4 })} ${G.moneda.simbolo}. ` +
-        "Rumbo calcula en euros: la TIR y las rentabilidades son las de tu dinero en euros, y en «Mis datos» todo va en euros.";
+        "FinAppGo calcula en euros: la TIR y las rentabilidades son las de tu dinero en euros, y en «Mis datos» todo va en euros.";
     }
   }
   const selMoneda = $("#selMoneda");
@@ -1487,7 +1487,7 @@
     b.textContent = "↻ Actualizando…";
     try {
       const r = await fetch("api/actualizar", { method: "POST",
-        headers: window.PERFILES && window.PERFILES.activo ? { "X-Rumbo-Perfil": window.PERFILES.activo } : {} });
+        headers: window.PERFILES && window.PERFILES.activo ? { "X-FinAppGo-Perfil": window.PERFILES.activo } : {} });
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
       location.reload();

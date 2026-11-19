@@ -45,7 +45,7 @@ cerrojo = threading.RLock()  # el motor no admite dos cálculos (ni dos escritur
 
 
 # ---------------------------------------------------------------- seguridad
-# Rumbo es una web en tu propio ordenador. Para que nada más que tú pueda usarla:
+# FinAppGo es una web en tu propio ordenador. Para que nada más que tú pueda usarla:
 #  1. Solo escucha en 127.0.0.1 (nadie de tu red ni de internet puede conectarse).
 #  2. Solo atiende si la dirección es 127.0.0.1 o localhost: una web con un dominio que
 #     apunte a tu ordenador (DNS rebinding) no puede hacerse pasar por ella.
@@ -57,16 +57,16 @@ cerrojo = threading.RLock()  # el motor no admite dos cálculos (ni dos escritur
 #     prohíbe cargar código o enviar datos a ningún sitio que no sea ella (CSP).
 
 HOSTS_LOCALES = {"127.0.0.1", "localhost", "[::1]"}
-COOKIE = "rumbo_acceso"
+COOKIE = "finappgo_acceso"
 LIMITE_SUBIDA = 25 * 1024 * 1024      # archivos para importar o copias: de sobra
 app.config["MAX_CONTENT_LENGTH"] = LIMITE_SUBIDA
 _LLAVES = {}
 
-PAGINA_SIN_LLAVE = """<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Rumbo</title>
+PAGINA_SIN_LLAVE = """<!doctype html><html lang="es"><head><meta charset="utf-8"><title>FinAppGo</title>
 <style>body{font:16px/1.6 system-ui,sans-serif;margin:14vh auto;max-width:540px;padding:0 22px;color:#1d1d1b;background:#f9f9f7}
 h1{font-size:22px}code{background:#ecebe6;padding:1px 6px;border-radius:5px}</style></head><body>
-<h1>Abre Rumbo con su lanzador</h1>
-<p>Por seguridad, Rumbo solo se abre desde su lanzador: <code>Iniciar.bat</code> en Windows,
+<h1>Abre FinAppGo con su lanzador</h1>
+<p>Por seguridad, FinAppGo solo se abre desde su lanzador: <code>Iniciar.bat</code> en Windows,
 <code>Iniciar.command</code> en Mac o <code>Iniciar.sh</code> en Linux. Haz doble clic en él y se abrirá aquí.</p>
 <p>Así, ninguna otra página ni otro programa puede ver ni cambiar tus datos.</p></body></html>"""
 
@@ -106,7 +106,7 @@ def escucha_en():
 
 
 def en_red():
-    """True si Rumbo está abierta a la red de casa (Docker en un NAS, una Raspberry Pi...)."""
+    """True si FinAppGo está abierta a la red de casa (Docker en un NAS, una Raspberry Pi...)."""
     return escucha_en() not in ("127.0.0.1", "localhost", "::1")
 
 
@@ -118,10 +118,10 @@ NOMBRES_DE_CASA = (".local", ".lan", ".home", ".internal", ".home.arpa", ".ts.ne
 
 
 def host_valido(host):
-    """¿Es esta una dirección por la que se puede entrar en Rumbo?
+    """¿Es esta una dirección por la que se puede entrar en FinAppGo?
     En tu ordenador, solo 127.0.0.1 y localhost. Abierta a la red de casa (Docker), además
     las IP privadas (192.168…, 10…, Tailscale) y los nombres de la red local (nas, raspberrypi.local).
-    Un dominio de internet nunca: así una web no puede hacerse pasar por Rumbo (DNS rebinding)."""
+    Un dominio de internet nunca: así una web no puede hacerse pasar por FinAppGo (DNS rebinding)."""
     h = _sin_puerto(host)
     if h in hosts_permitidos():
         return True
@@ -158,12 +158,12 @@ def _rechazo(texto):
 
 
 @app.before_request
-def solo_desde_rumbo():
+def solo_desde_finappgo():
     if not host_valido(request.host):
-        return Response("Rumbo no responde en esta dirección. Si entras con un nombre propio, añádelo en "
+        return Response("FinAppGo no responde en esta dirección. Si entras con un nombre propio, añádelo en "
                         "PATRIMONIO_HOSTS_PERMITIDOS.", status=403, mimetype="text/plain")
     if request.path == "/api/ping":
-        return None   # solo dice «soy Rumbo»: el lanzador lo usa para no abrirla dos veces
+        return None   # solo dice «soy FinAppGo»: el lanzador lo usa para no abrirla dos veces
     # Los navegadores modernos dicen quién hace la petición. Solo vale la propia app
     # («same-origin») o escribir la dirección / abrirla desde el lanzador («none»).
     sitio = request.headers.get("Sec-Fetch-Site")
@@ -171,18 +171,18 @@ def solo_desde_rumbo():
         abrir_app = (request.method == "GET" and request.path == "/"
                      and request.headers.get("Sec-Fetch-Mode") == "navigate")
         if not abrir_app:
-            return _rechazo("Petición bloqueada: no viene de Rumbo.")
+            return _rechazo("Petición bloqueada: no viene de FinAppGo.")
     # Navegadores sin Sec-Fetch: lo que cambia datos tiene que venir de esta app.
     if request.method not in ("GET", "HEAD", "OPTIONS"):
         origen = request.headers.get("Origin") or request.headers.get("Referer")
         if origen and not _origen_local(origen):
-            return _rechazo("Petición bloqueada: no viene de Rumbo.")
+            return _rechazo("Petición bloqueada: no viene de FinAppGo.")
     # La llave: o llega en la dirección (al abrir desde el lanzador) o en la cookie.
     llave = token_acceso()
     dada = request.args.get("acceso")
     if dada is not None:
         if not hmac.compare_digest(dada, llave):
-            return _rechazo("Llave de acceso incorrecta: abre Rumbo con su lanzador.")
+            return _rechazo("Llave de acceso incorrecta: abre FinAppGo con su lanzador.")
         g.poner_cookie = True
         if request.method == "GET":
             # La llave no se queda en la barra de direcciones; lo demás (?tab=, ?novedades=) sí.
@@ -190,7 +190,7 @@ def solo_desde_rumbo():
             return redirect(request.path + ("?" + resto if resto else ""))
         return None
     if not hmac.compare_digest(request.cookies.get(COOKIE, ""), llave):
-        return _rechazo("Sin llave de acceso: abre Rumbo con su lanzador.")
+        return _rechazo("Sin llave de acceso: abre FinAppGo con su lanzador.")
     return None
 
 
@@ -223,10 +223,10 @@ CSP = "; ".join([
 
 @app.before_request
 def mismo_perfil_que_la_pagina():
-    """El perfil activo es uno para todo Rumbo. Una pestaña abierta con otro perfil (porque se cambió
+    """El perfil activo es uno para todo FinAppGo. Una pestaña abierta con otro perfil (porque se cambió
     en otra pestaña) no puede guardar: lo haría en el perfil equivocado. La página dice el suyo en la
-    cabecera X-Rumbo-Perfil; si no coincide, no se toca nada y se le pide recargar."""
-    pid = request.headers.get("X-Rumbo-Perfil")
+    cabecera X-FinAppGo-Perfil; si no coincide, no se toca nada y se le pide recargar."""
+    pid = request.headers.get("X-FinAppGo-Perfil")
     if not pid or request.method in ("GET", "HEAD", "OPTIONS") or request.path.startswith("/api/perfiles"):
         return None
     d = perfiles()
@@ -792,7 +792,7 @@ def api_plantilla_csv():
 @app.get("/api/exportar-excel")
 def api_exportar_excel():
     """Tus movimientos, saldos y productos en un Excel (se puede volver a importar)."""
-    nombre = f"rumbo_mis_datos_{dt.date.today().isoformat()}.xlsx"
+    nombre = f"finappgo_mis_datos_{dt.date.today().isoformat()}.xlsx"
     return Response(plantilla.mis_datos(cartera()),
                     mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     headers={"Content-Disposition": f'attachment; filename="{nombre}"'})
@@ -1136,7 +1136,7 @@ def api_diagnostico():
         clave = f"{p.get('tipo')}/{p.get('fuente')}"
         tipos[clave] = tipos.get(clave, 0) + 1
     texto = "\n".join([
-        f"Rumbo {version_actual()} · {platform.system()} {platform.release()} ({platform.machine()}) · Python {platform.python_version()}",
+        f"FinAppGo {version_actual()} · {platform.system()} {platform.release()} ({platform.machine()}) · Python {platform.python_version()}",
         f"Modo: {modo()} · perfiles: {len(perfiles()['lista'])} · productos: {len(cfg.get('productos', []))} {tipos}"
         f" · movimientos: {len(cfg.get('movimientos', []))} · valores anotados: {len(cfg.get('valoraciones', []))}",
         f"Precios actualizados: {estado().get('preciosActualizados') or 'nunca'} · datos a {calc.get('fechaExtracto') or '—'}",
@@ -1180,7 +1180,7 @@ def main():
             webbrowser.open(url_con_llave(PUERTO))
         return
 
-    print("\n  RUMBO  ·  tu patrimonio neto")
+    print("\n  FINAPPGO  ·  tu patrimonio neto")
     print("  " + "-" * 40)
     if modo() == "demo":
         print("  Modo demostración: estás viendo una cartera de ejemplo.")
@@ -1210,7 +1210,7 @@ def main():
     url = f"http://127.0.0.1:{srv.server_port}/"
     if en_red():
         # Docker en un NAS o una Raspberry: se entra desde el navegador de otro equipo de casa.
-        print(f"\n  Rumbo está abierta en tu red de casa (puerto {srv.server_port}).")
+        print(f"\n  FinAppGo está abierta en tu red de casa (puerto {srv.server_port}).")
         print("  Ábrela desde el navegador de cualquier ordenador de casa con esta dirección,")
         print("  cambiando IP-DEL-EQUIPO por la del NAS o la Raspberry (por ejemplo, 192.168.1.50):")
         print(f"\n      http://IP-DEL-EQUIPO:{srv.server_port}/?acceso={token_acceso()}\n")

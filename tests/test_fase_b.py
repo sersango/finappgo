@@ -74,7 +74,7 @@ class ExportarExcel(ConCarpeta):
         with mock.patch.object(servidor, "DATOS", self.carpeta):
             r = servidor.app.test_client().get("/api/exportar-excel")
         self.assertEqual(r.status_code, 200)
-        self.assertIn("rumbo_mis_datos_", r.headers["Content-Disposition"])
+        self.assertIn("finappgo_mis_datos_", r.headers["Content-Disposition"])
         self.assertTrue(r.data.startswith(b"PK"))       # un .xlsx es un zip
 
 

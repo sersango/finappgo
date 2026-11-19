@@ -79,4 +79,4 @@ class CompartirSoloEnLaApp(ConCarpeta):
             D = motor.construir(lee_demo(), self.carpeta, descargar=False)
         html = exportar.pagina(os.path.join(RAIZ, "app", "web"), D)
         self.assertNotIn("raiz.Compartir = M", html)             # el código de compartir.js no va
-        self.assertNotIn("QR: descargar Rumbo", html)
+        self.assertNotIn("QR: descargar FinAppGo", html)

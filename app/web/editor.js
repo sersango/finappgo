@@ -38,7 +38,7 @@
   E.vista = new URLSearchParams(location.search).get("vista") || recuerda.lee("patrimonio.editor") || "productos";
 
   // El perfil de esta página va en cada cambio: si en otra pestaña se cambió de perfil, el servidor no guarda.
-  const cabeceraPerfil = () => (window.PERFILES && window.PERFILES.activo ? { "X-Rumbo-Perfil": window.PERFILES.activo } : {});
+  const cabeceraPerfil = () => (window.PERFILES && window.PERFILES.activo ? { "X-FinAppGo-Perfil": window.PERFILES.activo } : {});
   // Al volver a esta pestaña, si el perfil activo ya no es el suyo, se recarga con el bueno.
   document.addEventListener("visibilitychange", async () => {
     if (document.hidden || !window.PERFILES) return;
@@ -487,7 +487,7 @@
           ${cotizables.map(p => `<option value="${esc(p.id)}"${p.id === E.filtro ? " selected" : ""}>${esc(nombre(p))}</option>`).join("")}</select>
         <button class="btn" data-acc="nuevoAjuste" title="Si las participaciones no coinciden con las de tu banco">Cuadrar participaciones</button>
         <button class="btn" data-acc="nuevoTraspaso" title="De un fondo o plan a otro, sin vender">⇄ Traspaso</button>
-        <button class="btn" data-acc="periodica" title="La aportación de cada mes: Rumbo la rellena con el precio de cada día">↻ Periódica</button>
+        <button class="btn" data-acc="periodica" title="La aportación de cada mes: FinAppGo la rellena con el precio de cada día">↻ Periódica</button>
         <button class="btn prim" data-acc="nuevoMov">+ Añadir movimiento</button></header>
       ${avisoPeriodicas()}
       ${filas ? `<div class="tablaEnv alto"><table class="dt"><thead><tr><th>Fecha</th><th style="text-align:left">Producto</th>
@@ -760,7 +760,7 @@
       try {
         const j = await api("GET", "api/unidades?" + q);
         const real = leeNum(f.elements.unidades.value);
-        $("#aResumen").innerHTML = `Rumbo calcula <b>${num(j.unidades, 6)}</b> participaciones ese día.` +
+        $("#aResumen").innerHTML = `FinAppGo calcula <b>${num(j.unidades, 6)}</b> participaciones ese día.` +
           (real >= 0 && !isNaN(real) ? ` Con tu cifra, ${real >= j.unidades ? "+" : "−"}${num(Math.abs(real - j.unidades), 6)}.` : "");
       } catch (x) { $("#aResumen").textContent = x.message; }
     };
@@ -774,7 +774,7 @@
     const c = E.cfg.colchon || { modo: "meses", meses: 6 };
     const f = abreModal("Mi fondo de emergencia", `
       <p>Lo que quieres tener siempre a mano por si pasa algo (una avería, quedarte sin trabajo…). Lo habitual es entre
-        3 y 6 meses de gastos. Rumbo lo compara con tu liquidez y te dice cuánto te sobra para invertir.</p>
+        3 y 6 meses de gastos. FinAppGo lo compara con tu liquidez y te dice cuánto te sobra para invertir.</p>
       <div class="pildoras" style="grid-template-columns:repeat(2,1fr);margin-top:12px">
         <label><input type="radio" name="modo" value="meses"><span>En meses de gastos</span></label>
         <label><input type="radio" name="modo" value="importe"><span>Un importe fijo</span></label></div>
@@ -827,7 +827,7 @@
   function aplicaDemo(o) {
     E.cfg.objetivoReparto = o;
     if (D) D.objetivoReparto = o;
-    return () => document.dispatchEvent(new Event("rumbo:editor"));
+    return () => document.dispatchEvent(new Event("finappgo:editor"));
   }
 
   function formReparto() {
@@ -847,7 +847,7 @@
         .map(([nombre, de]) => ({ nombre, de }));
     };
     const f = abreModal("Mi reparto objetivo", `
-      <p>¿Qué parte de tu dinero quieres en cada sitio? Rumbo compara con lo que tienes y te dice dónde meter
+      <p>¿Qué parte de tu dinero quieres en cada sitio? FinAppGo compara con lo que tienes y te dice dónde meter
         la próxima aportación para volver a cuadrar, sin vender nada.</p>
       <div class="pildoras" style="grid-template-columns:repeat(2,1fr);margin-top:12px">
         <label><input type="radio" name="por" value="clase"><span>Por tipo de activo</span></label>
@@ -1183,10 +1183,10 @@
       return `<div class="bloque traspasoMI" style="margin-top:12px" data-ref="${esc(t.ref)}">
         <b>«${esc(t.nombre)}»: ${t.lotes} ${t.lotes === 1 ? "lote viene" : "lotes vienen"} de un traspaso</b>
         <p class="ayuda">${eur(t.coste)} de coste, ≈ ${num(t.unidades, 4)} participaciones. MyInvestor no dice de qué fondo
-          venían. Si ese fondo está en Rumbo, elígelo y pon la fecha del traspaso: Rumbo hará un traspaso de verdad, el dinero
+          venían. Si ese fondo está en FinAppGo, elígelo y pon la fecha del traspaso: FinAppGo hará un traspaso de verdad, el dinero
           no contará dos veces y verás cómo salió de él, aunque su extracto ya no traiga lo que se traspasó.</p>
         <div class="rejilla" style="margin-top:10px">
-          ${campo("Venía de", `<select name="tmi_origen_${i}" data-i="${i}"><option value="ninguno">No está en Rumbo: importar como compras</option>
+          ${campo("Venía de", `<select name="tmi_origen_${i}" data-i="${i}"><option value="ninguno">No está en FinAppGo: importar como compras</option>
             ${t.origenes.map(o => `<option value="${esc(o.id)}"${o.id === origen ? " selected" : ""}>${esc(o.nombre)}</option>`).join("")}</select>`)}
         </div>
         <div class="lotesTraspaso">${lotes.map((l, k) => {
@@ -1195,10 +1195,10 @@
             <span class="loteEtq">${lotes.length > 1 ? `Lote ${k + 1}: ` : ""}${eur(l[1])}${l[0] ? ` · comprado el ${fecha(l[0])}` : ""}</span>
             <label class="campo"><span>Fecha del traspaso</span>
               <input type="date" name="tmi_fecha_${i}_${k}" max="${hoy()}" value="${estimar ? "" : esc(f)}"${estimar ? " disabled" : ""}></label>
-            <label class="noSe"><input type="checkbox" name="tmi_estimar_${i}_${k}"${estimar ? " checked" : ""}> No la sé: que Rumbo la estime</label>
+            <label class="noSe"><input type="checkbox" name="tmi_estimar_${i}_${k}"${estimar ? " checked" : ""}> No la sé: que FinAppGo la estime</label>
           </div>`;
         }).join("")}
-          <p class="ayuda">La fecha está en el historial de órdenes de MyInvestor. Si no la encuentras, Rumbo la estima con los
+          <p class="ayuda">La fecha está en el historial de órdenes de MyInvestor. Si no la encuentras, FinAppGo la estima con los
             precios de los dos fondos y la marca como estimada.</p></div>${estado}${t.aviso ? `<div class="comprueba">${esc(t.aviso)}</div>` : ""}</div>`;
     }).join("");
     const ESTADO = { nuevo: "Nuevo", repetido: "Ya estaba", error: "Con error" };
@@ -1260,8 +1260,8 @@
     const b = $("#imConfirmarBtn");
     const faltan = Object.values(leeRespuestas()).filter(r => r.origen && r.origen !== "ninguno" && r.fechas.some(f => !f)).length;
     if (faltan) {
-      alert(faltan === 1 ? "Falta la fecha de un traspaso. Ponla, o elige «No está en Rumbo», antes de importar."
-        : `Faltan las fechas de ${faltan} traspasos. Ponlas, o elige «No está en Rumbo», antes de importar.`);
+      alert(faltan === 1 ? "Falta la fecha de un traspaso. Ponla, o elige «No está en FinAppGo», antes de importar."
+        : `Faltan las fechas de ${faltan} traspasos. Ponlas, o elige «No está en FinAppGo», antes de importar.`);
       return;
     }
     b.disabled = true;
@@ -1306,7 +1306,7 @@
     const filtro = prod(E.filtro);
     const d = pre || { producto: filtro && !soloSaldo(filtro) ? filtro.id : lista[0].id, dia: 1, hasta: hoy() };
     const f = abreModal("Aportación periódica", `
-      <p>¿Aportas lo mismo cada mes a un fondo, un ETF o un plan? Dile a Rumbo cuánto, qué día y desde cuándo, y prepara
+      <p>¿Aportas lo mismo cada mes a un fondo, un ETF o un plan? Dile a FinAppGo cuánto, qué día y desde cuándo, y prepara
         una compra por mes con el precio de cierre de ese día.</p>
       <div class="rejilla">
         ${campo("Producto", `<select name="producto">${lista.map(p =>
@@ -1337,7 +1337,7 @@
         ${eur(pl.importe)}, el día ${pl.dia} de cada mes. Se ${n === 1 ? "añade" : "añaden"} <b>${n}</b>${n < pl.lineas.length ? "; el resto se salta" : ""}.</p>
       <div class="tablaEnv alto"><table class="dt"><thead><tr><th>Fecha</th><th>Importe</th><th>Precio de cierre</th>
         <th>Participaciones</th><th></th></tr></thead><tbody>${filas}</tbody></table></div>
-      <p class="ayuda">Cada una se guarda como una compra con la nota «Aportación periódica (estimada…)». Rumbo se acuerda de
+      <p class="ayuda">Cada una se guarda como una compra con la nota «Aportación periódica (estimada…)». FinAppGo se acuerda de
         esta aportación y, cuando toque la siguiente, te avisará aquí, en Movimientos.</p>`,
     async () => {
       const j = await api("POST", "api/periodicas/crear", datos);
@@ -1439,7 +1439,7 @@
       <a href="${esc(v.repo)}" target="_blank" rel="noopener">página del proyecto en GitHub</a>.`;
     if (!v.hayNueva) return;
     $("#bannerVersionTexto").innerHTML = v.docker
-      ? `<b>Hay una versión nueva (${esc(v.ultima)}).</b> Para actualizar, en el equipo donde tienes Rumbo:
+      ? `<b>Hay una versión nueva (${esc(v.ultima)}).</b> Para actualizar, en el equipo donde tienes FinAppGo:
         <code>docker compose pull &amp;&amp; docker compose up -d</code>. Tus datos se quedan donde están.`
       : `<b>Hay una versión nueva (${esc(v.ultima)}).</b> Descárgala en
       <a href="${esc(v.repo)}" target="_blank" rel="noopener">GitHub</a> y copia tu carpeta <code>mis_datos</code> a la
@@ -1449,9 +1449,9 @@
 
   /* ---------------------------------------------- ventana de novedades */
   // Una sola vez por versión: «hay una nueva» (con su vídeo) o, recién actualizada,
-  // «esto es lo nuevo de tu versión». Solo a quien ya usa Rumbo con sus datos.
+  // «esto es lo nuevo de tu versión». Solo a quien ya usa FinAppGo con sus datos.
   setTimeout(() => api("GET", "api/novedades").then(n => {
-    const vista = recuerda.lee("rumbo.novedades") || "";
+    const vista = recuerda.lee("finappgo.novedades") || "";
     // ?novedades=1 la vuelve a enseñar aunque ya se viera, también con la cartera de ejemplo (para un vídeo).
     const forzar = new URLSearchParams(location.search).has("novedades");
     let caso = null, clave = "";
@@ -1460,12 +1460,12 @@
       caso = n.tuya; clave = "tuya:" + n.tuya.version + (n.tuya.video ? ":v" : "");
     }
     if (!caso || (vista === clave && !forzar) || $("#modal").open || document.body.classList.contains("video")) return;
-    recuerda.guarda("rumbo.novedades", clave);
+    recuerda.guarda("finappgo.novedades", clave);
     const lista = caso.novedades.length ? `<ul class="listaNovedades">${caso.novedades.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
     // Arriba del todo: quien prefiera el vídeo lo tiene a un clic (petición de Dani, 22-oct).
     const video = caso.video ? `<div class="verEnVideo"><b>¿Prefieres verlo en vídeo?</b>
        <a class="btn prim" href="${esc(caso.video)}" target="_blank" rel="noopener">▶ Ver las novedades en YouTube</a></div>` : "";
-    const f = abreModal(n.nueva ? `Hay una versión nueva: ${esc(caso.titulo || caso.version)}` : `Novedades de ${esc(caso.titulo || "Rumbo " + caso.version)}`,
+    const f = abreModal(n.nueva ? `Hay una versión nueva: ${esc(caso.titulo || caso.version)}` : `Novedades de ${esc(caso.titulo || "FinAppGo " + caso.version)}`,
       `${video}${n.nueva ? `<p>Tienes la ${esc(n.actual)}. Esto es lo que trae la ${esc(caso.version)}:</p>` : "<p>Esto es lo que ha cambiado desde tu versión anterior:</p>"}
        ${lista}<div class="imAcc">${n.nueva ? `<a class="btn" href="${esc(n.repo)}" target="_blank" rel="noopener">Descargar en GitHub</a>` : ""}</div>
        ${n.nueva ? (n.docker ? '<p class="ayuda">Para actualizar: <code>docker compose pull &amp;&amp; docker compose up -d</code>. Tus datos no se tocan.</p>'
@@ -1599,7 +1599,7 @@
   window.Editor = { mostrar: pinta, objetivo: () => ACC.objetivo(), reparto: () => ACC.reparto(),
     colchon: () => ACC.colchon(), perfiles };
   // El panel pudo pintarse antes de que llegara el editor: que vuelva a pintar sus botones de «Cambiar».
-  document.dispatchEvent(new Event("rumbo:editor"));
+  document.dispatchEvent(new Event("finappgo:editor"));
   carga().then(pinta).catch(x => {
     const cont = $("#editor");
     if (cont) cont.innerHTML = `<div class="av"><span>⚠</span><span>${esc(x.message)}</span></div>`;

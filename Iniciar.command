@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==========================================================================
-#  Iniciar.command  -  Abre Rumbo, la app de tu patrimonio, en Mac (doble clic)
+#  Iniciar.command  -  Abre FinAppGo, la app de tu patrimonio, en Mac (doble clic)
 #
 #  Este archivo es texto plano: puedes abrirlo con TextEdit y leer todo lo
 #  que hace. No instala nada sin preguntarte. Pasos:
@@ -12,8 +12,8 @@
 # ==========================================================================
 cd "$(dirname "$0")" || exit 1
 if [ ! -f app/__main__.py ]; then
-  echo "Parece que estás abriendo Rumbo sin descomprimir la carpeta."
-  echo "Haz doble clic en el ZIP de Rumbo para descomprimirlo y abre Iniciar.command desde la carpeta que se crea."
+  echo "Parece que estás abriendo FinAppGo sin descomprimir la carpeta."
+  echo "Haz doble clic en el ZIP de FinAppGo para descomprimirlo y abre Iniciar.command desde la carpeta que se crea."
   read -r -p "Pulsa Intro para cerrar esta ventana..." _
   exit 1
 fi
@@ -26,7 +26,7 @@ if command -v uv >/dev/null 2>&1; then
   echo "Preparando la app con uv. La primera vez tarda un poco: descarga Python y lo necesario."
   # Si no se puede crear .venv aquí (carpeta sincronizada o protegida), el entorno de
   # Python va a tu carpeta de usuario. Tus datos siguen en mis_datos.
-  FUERA="$HOME/Library/Application Support/Rumbo/entorno"
+  FUERA="$HOME/Library/Application Support/FinAppGo/entorno"
   if [ ! -d .venv ] && [ -f "$FUERA/pyvenv.cfg" ]; then
     export UV_PROJECT_ENVIRONMENT="$FUERA"
   elif ! uv run --quiet python -c "import flask" >/dev/null 2>&1; then

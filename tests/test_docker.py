@@ -1,4 +1,4 @@
-"""Rumbo en Docker: abierta a la red de casa, pero solo con la llave y solo por direcciones de casa.
+"""FinAppGo en Docker: abierta a la red de casa, pero solo con la llave y solo por direcciones de casa.
 (La imagen de verdad la arranca y la prueba GitHub en cada versión: .github/workflows/docker.yml.)"""
 import os
 import re
@@ -36,7 +36,7 @@ class ModoRed(ConCarpeta):
 
     def test_direcciones_de_casa_si(self):
         for host in ("192.168.1.50:8765", "10.0.0.7:8765", "172.20.1.2:8765", "100.101.102.103:8765",
-                     "nas:8765", "raspberrypi.local:8765", "rumbo.lan:8765", "minas.tail1234.ts.net:8765",
+                     "nas:8765", "raspberrypi.local:8765", "finappgo.lan:8765", "minas.tail1234.ts.net:8765",
                      "[fd00::1]:8765", "localhost:8765"):
             with self.subTest(host=host):
                 self.assertTrue(servidor.host_valido(host))
@@ -44,14 +44,14 @@ class ModoRed(ConCarpeta):
                     self.assertEqual(self.web.get("/api/cartera", headers={"Host": host}).status_code, 200)
 
     def test_dominios_de_internet_no(self):
-        for host in ("evil.com", "rumbo.evil.com:8765", "8.8.8.8:8765", "nas.example.org"):
+        for host in ("evil.com", "finappgo.evil.com:8765", "8.8.8.8:8765", "nas.example.org"):
             with self.subTest(host=host):
                 self.assertFalse(servidor.host_valido(host))
                 self.assertEqual(self.web.get("/api/cartera", headers={"Host": host}).status_code, 403)
 
     def test_un_nombre_propio_se_puede_permitir(self):
-        with mock.patch.dict(os.environ, {"PATRIMONIO_HOSTS_PERMITIDOS": "rumbo.midominio.com"}):
-            self.assertTrue(servidor.host_valido("rumbo.midominio.com:8765"))
+        with mock.patch.dict(os.environ, {"PATRIMONIO_HOSTS_PERMITIDOS": "finappgo.midominio.com"}):
+            self.assertTrue(servidor.host_valido("finappgo.midominio.com:8765"))
 
     def test_en_red_sigue_haciendo_falta_la_llave(self):
         cab = {"Host": "192.168.1.50:8765"}
@@ -86,13 +86,13 @@ class ArchivosDeDocker(ConCarpeta):
                       "PATRIMONIO_DOCKER=1", 'VOLUME ["/data"]', "EXPOSE 8765", "HEALTHCHECK", "/api/ping",
                       "requirements.txt", "COPY app ./app", "COPY demo ./demo"):
             self.assertIn(trozo, d)
-        self.assertRegex(d, r"\nUSER rumbo\n")                     # no corre como administrador
-        self.assertLess(d.index("USER rumbo"), d.index("CMD"))
+        self.assertRegex(d, r"\nUSER finappgo\n")                     # no corre como administrador
+        self.assertLess(d.index("USER finappgo"), d.index("CMD"))
 
     def test_compose(self):
         c = lee("docker-compose.yml")
         self.assertIn("8765:8765", c)
-        self.assertRegex(c, r"rumbo_datos:/data")
+        self.assertRegex(c, r"finappgo_datos:/data")
         self.assertIn("restart: unless-stopped", c)
 
     def test_la_imagen_no_lleva_tus_datos(self):

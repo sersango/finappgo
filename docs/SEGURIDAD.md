@@ -1,6 +1,6 @@
-# Seguridad y privacidad de Rumbo
+# Seguridad y privacidad de FinAppGo
 
-Rumbo funciona entero en tu ordenador. Este documento explica qué hace para que **nadie más que tú** pueda ver o
+FinAppGo funciona entero en tu ordenador. Este documento explica qué hace para que **nadie más que tú** pueda ver o
 cambiar tus datos, y qué sale exactamente a internet. Si encuentras un fallo de seguridad, cuéntalo en un
 [issue](https://github.com/danidm98/rumbo/issues) (sin poner datos tuyos).
 
@@ -11,7 +11,7 @@ Las copias que descargas (`.json`, Excel o la web exportada) llevan tus datos: g
 
 ## Quién puede entrar en la app
 
-Rumbo es una pequeña web que solo vive en tu ordenador. Desde la 2.0 tiene varias capas:
+FinAppGo es una pequeña web que solo vive en tu ordenador. Desde la 2.0 tiene varias capas:
 
 1. **Solo escucha en `127.0.0.1`**: nadie de tu wifi ni de internet puede conectarse.
 2. **Llave de acceso.** La primera vez se crea un número aleatorio en `mis_datos/.acceso`. El lanzador
@@ -51,10 +51,10 @@ inventada y comprueba que ninguna de sus cifras aparece en lo que sale a interne
 Lo que sí ven esos servicios, como cualquier web que visitas: tu dirección IP y qué productos consultas
 (por ejemplo, que alguien pidió el precio de `IE00BYX5NX33`), no cuánto tienes de ellos.
 
-## Lo que Rumbo no puede evitar
+## Lo que FinAppGo no puede evitar
 
 - Un virus o un programa espía en tu ordenador, o alguien que use tu sesión de Windows o Mac, puede leer tus archivos.
-  Rumbo no puede protegerte de eso: mantén el ordenador actualizado.
+  FinAppGo no puede protegerte de eso: mantén el ordenador actualizado.
 - Una extensión del navegador con permiso para «leer todos los sitios» puede ver cualquier página, también esta.
 - Si descomprimes la app en una carpeta compartida con otros usuarios, ellos podrían leer `mis_datos`. Lo normal
   (Escritorio, Descargas o Documentos) es privado para tu usuario.

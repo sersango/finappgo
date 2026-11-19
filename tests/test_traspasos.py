@@ -221,7 +221,7 @@ class CuadrarParticipaciones(ConCarpeta):
         self.assertAlmostEqual(a["aportado"], 2500)        # lo pagado no cambia
         self.assertAlmostEqual(a["valor"], 180 * 20)
         self.assertEqual(a["ajustes"][0]["antes"], 200)
-        self.assertIn("Rumbo calculaba 200", cfg["movimientos"][-1]["nota"])
+        self.assertIn("FinAppGo calculaba 200", cfg["movimientos"][-1]["nota"])
 
     def test_venta_despues_del_ajuste(self):
         cfg = cartera([fondo("a", "A")], [mov("2020-01-02", "a", "compra", 100, 1000, mid="m1")])

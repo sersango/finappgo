@@ -3,7 +3,7 @@
    ------------------------------------------------------------
    Dibuja en el navegador (sin salir a internet) una imagen para
    redes con la rentabilidad del mes, el año y la curva, el logo
-   de Rumbo y un QR. Tres formatos: Mini (1080×1080), Resumen
+   de FinAppGo y un QR. Tres formatos: Mini (1080×1080), Resumen
    (1080×1350) y Story (1080×1920). Por defecto, solo porcentajes:
    los euros salen únicamente si marcas «Mostrar euros».
    Solo va en la app; la web publicada no lo lleva.
@@ -42,7 +42,7 @@
   const LETRA = '"Segoe UI Variable Display", "Segoe UI", "SF Pro Display", "Helvetica Neue", system-ui, sans-serif';
   const MONO = '"Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", ui-monospace, monospace';
 
-  // El QR (a la página de Rumbo) va ya calculado (segno, corrección M): no hace falta ninguna librería ni internet.
+  // El QR (a la página de FinAppGo) va ya calculado (segno, corrección M): no hace falta ninguna librería ni internet.
   // Si cambia el enlace, se generan de nuevo y se pegan aquí.
   const QR = {
     repo: { n: 29, texto: "Descárgala", d: "M0 0h7v1h-7zM10 0h4v1h-4zM16 0h4v1h-4zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM13 1h3v1h-3zM17 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h1v1h-1zM12 2h2v1h-2zM16 2h2v1h-2zM19 2h2v1h-2zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM11 3h1v1h-1zM13 3h3v1h-3zM18 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM12 4h3v1h-3zM16 4h1v1h-1zM18 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h2v1h-2zM13 5h2v1h-2zM18 5h2v1h-2zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h1v1h-1zM17 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM5 8h2v1h-2zM8 8h1v1h-1zM11 8h2v1h-2zM15 8h2v1h-2zM21 8h1v1h-1zM23 8h1v1h-1zM2 9h4v1h-4zM7 9h5v1h-5zM14 9h2v1h-2zM20 9h1v1h-1zM22 9h1v1h-1zM25 9h1v1h-1zM28 9h1v1h-1zM3 10h2v1h-2zM6 10h3v1h-3zM19 10h3v1h-3zM24 10h4v1h-4zM0 11h1v1h-1zM2 11h2v1h-2zM10 11h3v1h-3zM14 11h2v1h-2zM18 11h2v1h-2zM24 11h1v1h-1zM26 11h2v1h-2zM0 12h1v1h-1zM4 12h4v1h-4zM9 12h3v1h-3zM16 12h3v1h-3zM20 12h3v1h-3zM25 12h1v1h-1zM27 12h2v1h-2zM1 13h5v1h-5zM8 13h4v1h-4zM15 13h2v1h-2zM18 13h4v1h-4zM0 14h3v1h-3zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM11 14h2v1h-2zM17 14h2v1h-2zM20 14h1v1h-1zM22 14h7v1h-7zM1 15h2v1h-2zM4 15h2v1h-2zM7 15h1v1h-1zM12 15h3v1h-3zM16 15h3v1h-3zM20 15h3v1h-3zM25 15h1v1h-1zM27 15h1v1h-1zM0 16h2v1h-2zM3 16h2v1h-2zM6 16h2v1h-2zM9 16h2v1h-2zM13 16h3v1h-3zM17 16h2v1h-2zM20 16h1v1h-1zM23 16h1v1h-1zM27 16h1v1h-1zM1 17h1v1h-1zM4 17h1v1h-1zM8 17h1v1h-1zM10 17h1v1h-1zM16 17h3v1h-3zM20 17h4v1h-4zM25 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM5 18h3v1h-3zM13 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM21 18h1v1h-1zM23 18h2v1h-2zM27 18h2v1h-2zM4 19h2v1h-2zM9 19h1v1h-1zM13 19h1v1h-1zM16 19h2v1h-2zM20 19h2v1h-2zM23 19h2v1h-2zM27 19h2v1h-2zM0 20h1v1h-1zM3 20h2v1h-2zM6 20h4v1h-4zM12 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM18 20h7v1h-7zM26 20h1v1h-1zM8 21h6v1h-6zM16 21h1v1h-1zM19 21h2v1h-2zM24 21h1v1h-1zM26 21h3v1h-3zM0 22h7v1h-7zM9 22h3v1h-3zM13 22h2v1h-2zM16 22h2v1h-2zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM27 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM11 23h3v1h-3zM15 23h2v1h-2zM18 23h1v1h-1zM20 23h1v1h-1zM24 23h3v1h-3zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM9 24h1v1h-1zM14 24h4v1h-4zM20 24h5v1h-5zM28 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM10 25h5v1h-5zM17 25h4v1h-4zM22 25h6v1h-6zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM9 26h1v1h-1zM14 26h1v1h-1zM18 26h3v1h-3zM24 26h3v1h-3zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM12 27h2v1h-2zM15 27h3v1h-3zM19 27h3v1h-3zM24 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM16 28h2v1h-2zM20 28h6v1h-6zM27 28h1v1h-1z" },
@@ -183,7 +183,7 @@
 
   function cabecera(ctx, x, y, tamLogo) {
     logo(ctx, x, y, tamLogo, T.logoFondo, T.logoTinta);
-    texto(ctx, "RUMBO", x + tamLogo + 20, y + tamLogo / 2 + tamLogo * 0.17,
+    texto(ctx, "FINAPPGO", x + tamLogo + 20, y + tamLogo / 2 + tamLogo * 0.17,
       { tam: Math.round(tamLogo * 0.48), peso: 800, esp: 3, color: T.tinta });
   }
 
@@ -205,7 +205,7 @@
     texto(ctx, lineaAno(d), 96, 800, { tam: 38, peso: 500, max: 888 });
 
     raya(ctx, 96, 850, 984, 850, T.linea, 2);
-    texto(ctx, "Hecho con Rumbo", 96, 920, { tam: 36, peso: 700 });
+    texto(ctx, "Hecho con FinAppGo", 96, 920, { tam: 36, peso: 700 });
     texto(ctx, "Gratis y de código abierto.", 96, 966, { tam: 23, mono: true, color: T.sub });
     texto(ctx, "Tus datos no salen de tu ordenador.", 96, 998, { tam: 23, mono: true, color: T.sub });
     qr(ctx, 834, 868, 150, o.qr, null, T.borde);
@@ -274,7 +274,7 @@
       { tam: 27, peso: 700, color: color(d.mercadoEur), alin: "right" });
 
     raya(ctx, 80, 1105, 1000, 1105, T.linea, 2);
-    texto(ctx, "¿Quieres el tuyo? Hazte tu Rumbo", 80, 1170, { tam: 34, peso: 700, max: 740 });
+    texto(ctx, "¿Quieres el tuyo? Hazte tu FinAppGo", 80, 1170, { tam: 34, peso: 700, max: 740 });
     texto(ctx, "Gratis y de código abierto.", 80, 1210, { tam: 21, mono: true, color: T.sub });
     texto(ctx, "Tus datos no salen de tu ordenador.", 80, 1240, { tam: 21, mono: true, color: T.sub });
     qr(ctx, 860, 1125, 140, o.qr, null, T.borde);
@@ -305,7 +305,7 @@
     caja(ctx, 80, 1420, 920, 330, 40, "#ffffff", T.borde, 2);
     qr(ctx, 110, 1460, 250, o.qr, "#121211");
     texto(ctx, "¿Quieres el tuyo?", 392, 1530, { tam: 48, peso: 800, color: "#121211", max: 580 });
-    texto(ctx, "Rumbo es gratis y de código", 392, 1585, { tam: 30, color: "#3f3e3a" });
+    texto(ctx, "FinAppGo es gratis y de código", 392, 1585, { tam: 30, color: "#3f3e3a" });
     texto(ctx, "abierto. Escanea y llévatelo.", 392, 1625, { tam: 30, color: "#3f3e3a" });
     texto(ctx, "Tus datos no salen de tu ordenador.", 392, 1690, { tam: 22, mono: true, color: "#5b5a55", max: 580 });
   }
@@ -328,9 +328,9 @@
     const guarda = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* da igual */ } };
     const sel = document.getElementById("mesSel");
     const op = {
-      formato: lee("rumbo.compartir.formato", "resumen"),
+      formato: lee("finappgo.compartir.formato", "resumen"),
       qr: "repo",
-      tema: lee("rumbo.compartir.tema", "oscuro"),
+      tema: lee("finappgo.compartir.tema", "oscuro"),
       euros: false,
       mes: sel && sel.value !== "" ? +sel.value : rm.length - 1,
     };
@@ -371,18 +371,18 @@
       $(".cmpEuros").hidden = op.formato !== "resumen";
       $("#cmpNota").textContent = op.formato === "resumen" && op.euros
         ? "Con euros: se ve tu patrimonio y cuánto has aportado. Revísala antes de publicarla."
-        : "Solo porcentajes: nadie sabe cuánto tienes. El QR lleva a la página de Rumbo para descargarlo.";
+        : "Solo porcentajes: nadie sabe cuánto tienes. El QR lleva a la página de FinAppGo para descargarlo.";
     };
     $("#cmpMes").value = String(op.mes);
     dlg.querySelectorAll("#cmpFormato button").forEach(b => {
-      b.onclick = () => { op.formato = b.dataset.f; guarda("rumbo.compartir.formato", op.formato); pinta(); };
+      b.onclick = () => { op.formato = b.dataset.f; guarda("finappgo.compartir.formato", op.formato); pinta(); };
     });
     dlg.querySelectorAll("#cmpTema button").forEach(b => {
-      b.onclick = () => { op.tema = b.dataset.t; guarda("rumbo.compartir.tema", op.tema); pinta(); };
+      b.onclick = () => { op.tema = b.dataset.t; guarda("finappgo.compartir.tema", op.tema); pinta(); };
     });
     $("#cmpMes").onchange = e => { op.mes = +e.target.value; pinta(); };
     $("#cmpEuros").onchange = e => { op.euros = e.target.checked; pinta(); };
-    const nombre = () => `rumbo-${rm[op.mes].mes}-${op.formato}-${op.tema}.png`;
+    const nombre = () => `finappgo-${rm[op.mes].mes}-${op.formato}-${op.tema}.png`;
     $("#cmpBajar").onclick = () => lienzo.toBlob(b => {
       const a = document.createElement("a");
       a.href = URL.createObjectURL(b);
