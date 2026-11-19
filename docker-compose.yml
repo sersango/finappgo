@@ -1,16 +1,6 @@
-# FinAppGo en Docker
-#
-#   Arrancar:     docker compose up -d
-#   Ver la llave: docker compose logs finappgo     (sale la dirección para abrirla)
-#   Actualizar:   docker compose pull && docker compose up -d
-#
-# Tus datos están en el volumen «finappgo_datos» y no se tocan al actualizar.
-# NO abras el puerto 8765 a internet en tu router: para entrar desde fuera de casa, usa una VPN (Tailscale).
-
 services:
   finappgo:
-    image: ghcr.io/sersango/finappgo:latest   # o una versión fija, por ejemplo ghcr.io/danidm98/finappgo:2.0.0
-    # build: .                              # para construirla tú desde el código, en vez de descargarla
+    image: ghcr.io/sersango/finappgo:latest
     container_name: finappgo
     restart: unless-stopped
     security_opt:
@@ -23,9 +13,8 @@ services:
       - finappgo_datos:/data
     environment:
       - TZ=Europe/Madrid
-      # Si entras con un nombre propio que FinAppGo no reconoce (finappgo.midominio.com), añádelo aquí:
-      # - PATRIMONIO_HOSTS_PERMITIDOS=finappgo.midominio.com
 
 volumes:
   finappgo_datos:
     name: ${FINAPPGO_DATA_VOLUME:-finappgo_datos}
+    external: ${FINAPPGO_EXTERNAL_VOLUME:-false}

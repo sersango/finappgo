@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FinAppGo</title>
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="icono-32.png">
-<link rel="apple-touch-icon" href="icono-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <style>
-/* ============================ tokens ============================ */
 :root{
   color-scheme:dark;
   --plano:#0d0d0d; --sup:#1a1a19; --sup2:#232320; --sup3:#2b2b28;
@@ -42,7 +41,6 @@ a{color:inherit}
 code{background:var(--sup2);padding:1px 6px;border-radius:5px;font-size:.9em}
 .env{max-width:1320px;margin:0 auto;padding:0 22px 72px}
 
-/* ============================ barra superior ============================ */
 .top{
   position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--plano) 88%,transparent);
   backdrop-filter:blur(12px);border-bottom:1px solid var(--borde);
@@ -62,7 +60,6 @@ code{background:var(--sup2);padding:1px 6px;border-radius:5px;font-size:.9em}
 a.btn{text-decoration:none}
 .btn.act{background:var(--tinta);color:var(--plano);border-color:var(--tinta)}
 
-/* ============================ pestanas ============================ */
 .tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tabs button{
@@ -74,7 +71,6 @@ a.btn{text-decoration:none}
 .tabs button[aria-selected="true"]{color:var(--tinta);border-bottom-color:var(--s1)}
 .panel[hidden]{display:none}
 
-/* ============================ hero ============================ */
 .hero{padding:34px 0 6px}
 .hEtq{color:var(--tinta3);font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;font-weight:600}
 .hCifra{font-size:clamp(44px,7.2vw,76px);font-weight:700;letter-spacing:-.035em;line-height:1;margin:8px 0 10px;font-variant-numeric:tabular-nums}
@@ -96,7 +92,6 @@ a.btn{text-decoration:none}
 .progRelleno{height:100%;background:linear-gradient(90deg,var(--s1),var(--s3));border-radius:99px;transition:width .8s cubic-bezier(.2,.7,.3,1)}
 .progPie{display:flex;justify-content:space-between;margin-top:7px;font-size:12.5px;color:var(--tinta3)}
 
-/* ============================ tarjetas ============================ */
 .tarjeta{background:var(--sup);border:1px solid var(--borde);border-radius:var(--radio);padding:18px 20px}
 .tarjeta + .tarjeta{margin-top:16px}
 .tarjeta > header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
@@ -115,7 +110,6 @@ a.btn{text-decoration:none}
 .rejilla2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:16px}
 @media(max-width:900px){.rejilla2{grid-template-columns:1fr}}
 
-/* ============================ controles ============================ */
 .segm{display:inline-flex;flex-wrap:wrap;max-width:100%;background:var(--sup2);border:1px solid var(--borde);border-radius:9px;padding:2px}
 .segm button{
   border:0;background:transparent;color:var(--tinta3);font:inherit;font-size:12.5px;
@@ -124,7 +118,6 @@ a.btn{text-decoration:none}
 .segm button:hover{color:var(--tinta)}
 .segm button[aria-pressed="true"]{background:var(--sup);color:var(--tinta);box-shadow:0 1px 3px rgba(0,0,0,.25)}
 
-/* ============================ filtros del grafico ============================ */
 .filtros{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0 0 15px}
 .filtro{
   display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borde);
@@ -141,7 +134,6 @@ a.btn{text-decoration:none}
 .filtro.preset[aria-pressed="true"]{border-style:solid;background:var(--tinta);color:var(--plano);border-color:var(--tinta);opacity:1}
 .filtroSep{width:1px;align-self:stretch;background:var(--borde);margin:2px 5px}
 
-/* ============================ chips de producto ============================ */
 .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(214px,1fr));gap:10px;margin-top:16px}
 .chip{
   text-align:left;background:var(--sup);border:1px solid var(--borde);border-radius:12px;
@@ -157,7 +149,6 @@ a.btn{text-decoration:none}
 .chip.apagado{opacity:.45}
 .chip.apagado .vl{text-decoration:line-through;text-decoration-thickness:1px}
 
-/* ============================ detalle de fondo ============================ */
 .selFondo{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
 .selFondo button{
   display:inline-flex;align-items:center;gap:8px;border:1px solid var(--borde);background:var(--sup);
@@ -190,7 +181,6 @@ a.btn{text-decoration:none}
 .tramos i{width:11px;height:11px;border-radius:50%;flex:none}
 .tramos i.aro{outline:2px solid var(--tinta);outline-offset:1.5px}
 
-/* ============================ el mes ============================ */
 .mesBarra{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
 .mesBarra select{
   background:var(--sup);color:var(--tinta);border:1px solid var(--borde);border-radius:9px;
@@ -203,7 +193,6 @@ a.btn{text-decoration:none}
 .mesT .v{font-size:26px;font-weight:680;letter-spacing:-.025em;margin-top:7px;font-variant-numeric:tabular-nums}
 .mesT .n{color:var(--tinta3);font-size:12px;margin-top:4px}
 
-/* ============================ exposicion ============================ */
 .expo{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px}
 .expo h3{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--tinta3);margin-bottom:10px}
 .expoNota{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--tinta3)}
@@ -239,7 +228,6 @@ a.btn{text-decoration:none}
 .expoTitular{margin:-4px 0 18px;font-size:17px;color:var(--tinta2)}
 .expoTitular b{color:var(--tinta);font-size:22px;font-weight:700;letter-spacing:-.02em}
 
-/* ============================ tablas ============================ */
 .tablaEnv{overflow-x:auto;border-radius:11px;border:1px solid var(--borde)}
 table.dt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 table.dt th{
@@ -266,7 +254,6 @@ table.dt tfoot td:first-child{text-align:left}
 .leyenda td:nth-child(3){color:var(--tinta3);width:56px}
 .leyenda i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:9px}
 
-/* ============================ graficos ============================ */
 .envGraf{position:relative;width:100%}
 svg.grafico{display:block;width:100%;height:auto;overflow:visible}
 svg.grafico .rejilla{stroke:var(--rejilla);stroke-width:1}
@@ -311,7 +298,6 @@ svg.grafico .barValArriba{fill:var(--tinta);font-size:12px;font-weight:640;font-
 .gtt i.raya{width:12px;height:0;border-top:2px dashed var(--tinta2);border-radius:0;vertical-align:2px}
 .gtt .ttEvento{color:var(--s4);font-size:12px;margin-top:4px}
 
-/* ============================ hitos ============================ */
 .hitos{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
 .hito{flex:none;min-width:132px;background:var(--sup2);border-radius:11px;padding:13px 15px;border:1px solid transparent}
 .hito.hecho{border-color:color-mix(in srgb,var(--bien) 40%,transparent)}
@@ -319,20 +305,17 @@ svg.grafico .barValArriba{fill:var(--tinta);font-size:12px;font-weight:640;font-
 .hito .fe{font-size:12px;color:var(--tinta3);margin-top:4px}
 .hito.hecho .fe{color:var(--bien)}
 
-/* ============================ proyeccion ============================ */
 .mandos{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:18px}
 .mando label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--tinta3);margin-bottom:7px}
 .mando label b{color:var(--tinta);font-variant-numeric:tabular-nums;font-weight:640}
 input[type=range]{width:100%;accent-color:var(--s1);height:22px}
 
-/* ============================ avisos ============================ */
 .avisos{margin-top:18px;display:grid;gap:8px}
 .av{display:flex;gap:11px;align-items:flex-start;background:var(--sup);border:1px solid var(--borde);
   border-left:3px solid var(--aviso);border-radius:0 11px 11px 0;padding:12px 15px;font-size:13px;color:var(--tinta2)}
 .av b{color:var(--tinta)}
 .pie{margin-top:34px;color:var(--tinta3);font-size:12px;line-height:1.7;border-top:1px solid var(--borde);padding-top:18px}
 
-/* ============================ modo video ============================ */
 body.video .topFila,body.video #seccionTabla,body.video .pie,body.video #seccionProyeccion,body.video .banner{display:none}
 .banner{margin-top:18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--sup);
   border:1px solid var(--borde);border-left:3px solid var(--s1);border-radius:10px;padding:12px 16px;font-size:13.5px;line-height:1.5}
@@ -352,7 +335,6 @@ body.monedaLarga .chip .vl{font-size:15px}
 .btn.prim:hover{filter:brightness(1.1);color:#fff;background:var(--s1)}
 body.sinDatos #tabs button:not([data-tab="datos"]):not([data-tab="ayuda"]),body.sinDatos #btnPrecios,body.sinDatos #metaFecha{display:none}
 
-/* ---- Mis datos ---- */
 .sp{flex:1}
 .edBarra{display:flex;align-items:center;gap:12px;margin:22px 0 14px;flex-wrap:wrap}
 #editor .tarjeta + .tarjeta,#editor .saldos{margin-top:16px}
@@ -372,7 +354,6 @@ table.dt td.nota{max-width:220px;overflow:hidden;text-overflow:ellipsis;text-ali
 .bienvenida h2{font-size:18px;margin-bottom:8px}
 .bienvenida ol{margin:0 0 16px 18px;line-height:1.7;color:var(--tinta2)}
 
-/* ---- Ventana modal ---- */
 :root{--flecha:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23898781' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 .modal{border:0;border-radius:18px;background:var(--sup);color:var(--tinta);padding:0;text-align:left;
   width:min(640px,calc(100vw - 24px));max-height:calc(100vh - 32px);
@@ -522,7 +503,6 @@ body.video .tarjeta{padding:22px 24px}
   .tarjeta{padding:15px 15px}
   .hSub{font-size:13.5px}
 }
-/* ---- Importar ---- */
 .imOps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .imOp{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;font:inherit;color:var(--tinta);
   background:var(--sup2);border:1px solid var(--borde);border-radius:14px;padding:16px;cursor:pointer;transition:.13s}
@@ -590,7 +570,6 @@ body.video .tarjeta{padding:22px 24px}
   background:color-mix(in srgb,var(--bien) 12%,var(--sup));border:1px solid color-mix(in srgb,var(--bien) 35%,transparent)}
 .exito b{flex:1;font-size:14px}
 @media(max-width:640px){.imOps{grid-template-columns:1fr}}
-/* ---- Ayuda y versión ---- */
 .ayudaTarjeta{margin-top:24px;max-width:860px}
 .faq{border-top:1px solid var(--borde)}
 .faq summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;padding:15px 2px;font-size:14.5px;font-weight:620}
@@ -668,7 +647,6 @@ body.video .selPerfil,body.video #bannerTodos,body.video #seccionFiscal,body.vid
 .listaNovedades li{margin-bottom:5px}
 .verEnVideo{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;margin:0 0 12px;
   border-radius:10px;background:var(--sup2)}
-/* ---- Canal del autor ---- */
 .ayudaVideo{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
 .ayudaVideo > div:first-child{flex:1;min-width:260px}
 .ayudaVideo b{font-size:15px}
@@ -690,7 +668,6 @@ body.video .selPerfil,body.video #bannerTodos,body.video #seccionFiscal,body.vid
 .tarjetaCanal .ahoraNo{border:0;background:none;color:var(--tinta3);font:inherit;font-size:13px;cursor:pointer}
 body.video .tarjetaCanal{display:none}
 @media(max-width:640px){.tarjetaCanal{right:16px;left:16px;bottom:16px;width:auto}}
-/* ---- Marca ---- */
 .marca .logoIcono{width:24px;height:24px;border-radius:6px;display:block}
 .marca .nombreApp{font-weight:780;letter-spacing:.02em;text-transform:uppercase;font-size:14.5px}
 .marca .marcaSep{width:1px;height:15px;background:var(--borde)}
@@ -703,7 +680,7 @@ body.video .tarjetaCanal{display:none}
 <div class="top">
   <div class="env">
     <div class="topFila">
-      <div class="marca"><img class="logoIcono" src="icono-64.png" alt="" width="24" height="24"><span class="nombreApp">FinAppGo</span><span class="marcaSep"></span><span id="marcaTexto">Mi patrimonio</span></div>
+      <div class="marca"><img class="logoIcono" src="icon-64.png" alt="" width="24" height="24"><span class="nombreApp">FinAppGo</span><span class="marcaSep"></span><span id="marcaTexto">Mi patrimonio</span></div>
       <select class="btn selMoneda selPerfil" id="selPerfil" aria-label="Perfil" title="Cambiar de perfil: tu cartera, la de tu pareja, la de tus hijos…" hidden></select>
       <div class="sep"></div>
       <span class="meta" id="metaFecha"></span>
@@ -737,7 +714,6 @@ body.video .tarjetaCanal{display:none}
 <p class="aviso-legal">Herramienta informativa. No es asesoramiento financiero. No se garantiza la exactitud de los datos ni de los precios.</p>
 <p class="notaMoneda" id="notaMoneda" hidden></p>
 
-<!-- ==================================================== PATRIMONIO -->
 <div class="panel" id="tab-patrimonio" role="tabpanel">
 
   <section class="hero">
@@ -852,7 +828,6 @@ body.video .tarjetaCanal{display:none}
   </section>
 </div>
 
-<!-- ==================================================== EL MES -->
 <div class="panel" id="tab-mes" role="tabpanel" hidden>
   <section class="hero" style="padding-bottom:0">
     <div class="mesBarra">
@@ -883,7 +858,6 @@ body.video .tarjetaCanal{display:none}
   </section>
 </div>
 
-<!-- ==================================================== FONDOS -->
 <div class="panel" id="tab-fondos" role="tabpanel" hidden>
   <div class="selFondo" id="selFondo" style="margin-top:24px"></div>
   <section class="tarjeta" id="fondoFicha"></section>
@@ -891,7 +865,6 @@ body.video .tarjetaCanal{display:none}
   <section class="tarjeta" id="fondoTabla"></section>
 </div>
 
-<!-- ==================================================== RENDIMIENTO -->
 <div class="panel" id="tab-rendimiento" role="tabpanel" hidden>
   <section class="tarjeta" style="margin-top:24px">
     <header><h2>Rentabilidad por año natural</h2><span class="subt" id="notaAnual"></span></header>
@@ -948,10 +921,8 @@ body.video .tarjetaCanal{display:none}
 <div class="panel" id="tab-ayuda" role="tabpanel" hidden>
   <section class="tarjeta ayudaTarjeta ayudaVideo">
     <div><b>¿Prefieres verlo en vídeo?</b>
-      <p>En el canal de <span class="autorCanal"></span> tienes el vídeo con <b>todas las novedades de la 2.0</b> y el
-      <b>tutorial de instalación</b> paso a paso (grabado con la 1.0: se instala igual).</p></div>
+      <p>En el canal de <span class="autorCanal"></span> tienes el vídeo con <b>todas las novedades de la 2.0</b>.</p></div>
     <div class="botones"><a class="btn prim" id="ayudaNovedades" target="_blank" rel="noopener" hidden>▶ Novedades de la 2.0</a>
-      <a class="btn" id="ayudaTutorial" target="_blank" rel="noopener">▶ Tutorial de instalación</a>
       <a class="btn enlaceSuscribir" target="_blank" rel="noopener">Suscribirme</a></div>
   </section>
 
@@ -985,7 +956,7 @@ body.video .tarjetaCanal{display:none}
     <details class="faq"><summary>¿Mis datos salen de mi ordenador?</summary><div>
       <p>No. Todo se guarda en la carpeta <code>mis_datos</code>, dentro de la carpeta de la app. No hay cuentas, ni servidores, ni nadie más que los vea. La app solo sale a internet para descargar precios y el reparto de tus fondos, y en esas consultas no va ningún dato tuyo.</p>
       <p>A internet solo salen <b>códigos de producto</b> (ISIN o ticker) para pedir precios y el reparto por países, y lo que escribes en el buscador. Nunca cuánto tienes, cuánto has puesto ni el total de tu patrimonio.</p>
-      <p>Y desde la 2.0, la app se abre con una <b>llave de acceso</b> que solo tiene el navegador que abrió el lanzador: ninguna otra web, otro programa ni otro usuario del ordenador puede ver ni cambiar tus datos. If you need the access link again, retrieve it from the container logs.</p></div></details>
+      <p>Y desde la 2.0, la app se abre con una <b>llave de acceso</b> que obtienes de los registros del contenedor: ninguna otra web, otro programa ni otro usuario del ordenador puede ver ni cambiar tus datos. Puedes volver a obtener el enlace de acceso en los registros del contenedor.</p></div></details>
 
     <details class="faq"><summary>¿Cómo meto mi cuenta del banco, un plan de pensiones o un piso?</summary><div>
       <ol>
@@ -1097,7 +1068,7 @@ body.video .tarjetaCanal{display:none}
     <details class="faq"><summary>He borrado o cambiado algo sin querer</summary><div>
       <p>Antes de cada cambio, la app guarda una copia automática (las últimas 20). Ve a <b>Mis datos → Copias y exportar</b> y pulsa <b>«Recuperar»</b> en la copia de antes del error.</p></div></details>
 
-    <details class="faq"><summary>How do I update without losing data?</summary><div><p>Back up the data volume, pull the new image and recreate the container without removing its volume.</p></div></details>
+    <details class="faq"><summary>¿Cómo actualizo sin perder los datos?</summary><div><p>Copia el volumen de datos, descarga la imagen nueva y vuelve a crear el contenedor conservando el volumen.</p></div></details>
 
     <details class="faq"><summary>¿Puedo sacar mis datos a Excel?</summary><div>
       <p>Sí: <b>Mis datos → Copias y exportar → Descargar en Excel</b>. Tienes todos tus movimientos y saldos, y una hoja con la ficha de cada producto. La hoja «Movimientos» tiene el formato de la plantilla de importación, así que puedes cambiarla y volver a importarla.</p></div></details>
@@ -1109,14 +1080,14 @@ body.video .tarjetaCanal{display:none}
       <p>Usa la <b>plantilla</b> o la opción <b>«Con ayuda de una IA»</b> de Mis datos → Importar: sirven para cualquier banco o bróker.</p></div></details>
 
     <details class="faq"><summary>Algo no funciona: ¿cómo pido ayuda?</summary><div>
-      <p>Pulsa este botón y pega lo que copia en un <a href="https://github.com/danidm98/rumbo/issues" target="_blank" rel="noopener">issue de GitHub</a>
+      <p>Pulsa este botón y pega lo que copia en un <a href="https://github.com/sersango/finappgo/issues" target="_blank" rel="noopener">issue de GitHub</a>
         junto con lo que estabas haciendo. Lleva la versión, tu sistema, cuántos productos y movimientos tienes y los
         últimos errores técnicos: <b>no lleva importes ni tus datos personales</b>. Léelo antes de pegarlo.</p>
       <p><button class="btn prim" id="btnDiagnostico">Copiar informe para soporte</button></p></div></details>
 
     <p class="ayudaPie" id="ayudaVersion">¿Otra duda? Mira la página del proyecto en GitHub.</p>
   </section>
-</div><!-- /ayuda -->
+</div><!-- /help -->
 
   <div class="avisos" id="avisos"></div>
   <footer class="pie" id="pie"></footer>
@@ -1124,19 +1095,14 @@ body.video .tarjetaCanal{display:none}
 
 <dialog class="modal" id="modal"></dialog>
 
-<script>
-/* Carga los scripts con un sello temporal para que, al recargar despues de
-   actualizar, el navegador no sirva los datos viejos de su cache.
-   async=false conserva el orden de ejecucion. */
+<script id="script-loader">
 (function () {
-  // Con file:// no se puede anadir "?v=": algunos navegadores no encuentran
-  // el archivo. Ahi basta con la revalidacion por fecha de modificacion.
-  var sello = location.protocol === "file:" ? "" : "?v=" + Date.now();
-  ["datos.js", "canal.js", "graficos.js", "calculos.js", "app.js", "editor.js", "compartir.js"].forEach(function (archivo) {
-    var s = document.createElement("script");
-    s.src = archivo + sello;
-    s.async = false;
-    document.body.appendChild(s);
+  const suffix = location.protocol === "file:" ? "" : "?v=" + Date.now();
+  ["datos.js", "channel.js", "charts.js", "calculations.js", "app.js", "editor.js", "share.js"].forEach(function (file) {
+    const script = document.createElement("script");
+    script.src = file + suffix;
+    script.async = false;
+    document.body.appendChild(script);
   });
 })();
 </script>
