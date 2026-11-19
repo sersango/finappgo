@@ -9,10 +9,14 @@
 
 services:
   rumbo:
-    image: ghcr.io/danidm98/rumbo:latest   # o una versión fija, por ejemplo ghcr.io/danidm98/rumbo:2.0.0
+    image: ghcr.io/sersango/finappgo:latest   # o una versión fija, por ejemplo ghcr.io/danidm98/rumbo:2.0.0
     # build: .                              # para construirla tú desde el código, en vez de descargarla
     container_name: rumbo
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     ports:
       - "8765:8765"
     volumes:

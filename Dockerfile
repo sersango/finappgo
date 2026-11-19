@@ -5,6 +5,8 @@
 
 FROM python:3.12-slim
 
+LABEL org.opencontainers.image.source="https://github.com/sersango/finappgo"
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PATRIMONIO_DATOS=/data \
@@ -35,6 +37,6 @@ VOLUME ["/data"]
 EXPOSE 8765
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/api/ping', timeout=3)"
+    CMD python -c "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:' + os.environ.get('PATRIMONIO_PUERTO', '8765') + '/api/ping', timeout=3)"
 
 CMD ["python", "-m", "app"]
