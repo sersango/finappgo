@@ -1,0 +1,9 @@
+# Deploying on a QNAP TS-253A
+
+The container workflow builds a `linux/amd64` image on pull requests and publishes on pushes to `main`. The image is `ghcr.io/sersango/finappgo`, tagged `latest` and `sha-<full-commit-sha>`. The first package publication may be private: in GitHub, open the package settings and explicitly make it public before pulling anonymously. A pull request never publishes an image.
+
+After the workflow succeeds and the package is public, open Container Station 3, select **Applications**, then **Create**. Paste the repository's `docker-compose.yml` and create the application. It listens on port 8765 on the NAS network interfaces. Do not forward this port on your router; use a trusted LAN or VPN. Open `http://NAS-IP:8765` using the access URL and key shown in the container logs. The application has outbound connections for price updates.
+
+The named volume `rumbo_datos` stores portfolios, backups, profiles and the access key. Do not delete the volume when removing or recreating the application. Back it up separately before upgrading and test restoration. To back up consistently, stop the application and copy the volume using the NAS backup tools or Docker; restart it afterwards. Restore by stopping the application, restoring the volume contents and starting it again. Do not overwrite existing data without a separate backup.
+
+For a controlled deployment, replace `latest` in the Compose file with the `sha-...` tag of a tested build. Pull the selected image and recreate the application, retaining its volume. To roll back, use the previous image tag and the backup from before the upgrade if the data format changed. A successful image build does not guarantee compatibility with the NAS: verify startup, the health status, login, persistence after recreation, and backup restoration on the actual device.
