@@ -985,7 +985,7 @@ body.video .tarjetaCanal{display:none}
     <details class="faq"><summary>¿Mis datos salen de mi ordenador?</summary><div>
       <p>No. Todo se guarda en la carpeta <code>mis_datos</code>, dentro de la carpeta de la app. No hay cuentas, ni servidores, ni nadie más que los vea. La app solo sale a internet para descargar precios y el reparto de tus fondos, y en esas consultas no va ningún dato tuyo.</p>
       <p>A internet solo salen <b>códigos de producto</b> (ISIN o ticker) para pedir precios y el reparto por países, y lo que escribes en el buscador. Nunca cuánto tienes, cuánto has puesto ni el total de tu patrimonio.</p>
-      <p>Y desde la 2.0, la app se abre con una <b>llave de acceso</b> que solo tiene el navegador que abrió el lanzador: ninguna otra web, otro programa ni otro usuario del ordenador puede ver ni cambiar tus datos. Por eso, si cierras la pestaña, vuelve a abrirla con el lanzador.</p></div></details>
+      <p>Y desde la 2.0, la app se abre con una <b>llave de acceso</b> que solo tiene el navegador que abrió el lanzador: ninguna otra web, otro programa ni otro usuario del ordenador puede ver ni cambiar tus datos. If you need the access link again, retrieve it from the container logs.</p></div></details>
 
     <details class="faq"><summary>¿Cómo meto mi cuenta del banco, un plan de pensiones o un piso?</summary><div>
       <ol>
@@ -1097,35 +1097,13 @@ body.video .tarjetaCanal{display:none}
     <details class="faq"><summary>He borrado o cambiado algo sin querer</summary><div>
       <p>Antes de cada cambio, la app guarda una copia automática (las últimas 20). Ve a <b>Mis datos → Copias y exportar</b> y pulsa <b>«Recuperar»</b> en la copia de antes del error.</p></div></details>
 
-    <details class="faq"><summary>¿Cómo actualizo a una versión nueva sin perder mis datos?</summary><div>
-      <ol>
-        <li>Cierra la app (la ventana negra).</li>
-        <li>Descarga el ZIP nuevo desde la página del proyecto en GitHub y descomprímelo.</li>
-        <li>Copia tu carpeta <code>mis_datos</code> de la versión antigua a la nueva (o copia todo lo nuevo encima de lo viejo, menos <code>mis_datos</code>).</li>
-        <li>Abre la app con «Iniciar» como siempre.</li>
-      </ol>
-      <p>Por si acaso, antes descarga una copia en <b>Mis datos → Copias y exportar</b>.</p></div></details>
+    <details class="faq"><summary>How do I update without losing data?</summary><div><p>Back up the data volume, pull the new image and recreate the container without removing its volume.</p></div></details>
 
     <details class="faq"><summary>¿Puedo sacar mis datos a Excel?</summary><div>
       <p>Sí: <b>Mis datos → Copias y exportar → Descargar en Excel</b>. Tienes todos tus movimientos y saldos, y una hoja con la ficha de cada producto. La hoja «Movimientos» tiene el formato de la plantilla de importación, así que puedes cambiarla y volver a importarla.</p></div></details>
 
     <details class="faq"><summary>¿Cómo lo paso a otro ordenador?</summary><div>
       <p>En el ordenador viejo, <b>Mis datos → Copias y exportar → Descargar copia</b>. En el nuevo, instala la app, ábrela y, en ese mismo sitio, sube el archivo con <b>«Recuperar desde un archivo»</b>. También vale copiar la carpeta <code>mis_datos</code> entera.</p></div></details>
-
-    <details class="faq"><summary>Windows o Mac me dicen que el archivo puede ser peligroso</summary><div>
-      <p>Pasa con cualquier archivo descargado de internet que no viene de una tienda de apps. <code>Iniciar.bat</code> e <code>Iniciar.command</code> son texto plano: puedes abrirlos con el Bloc de notas o TextEdit y leer todo lo que hacen.</p>
-      <ul>
-        <li><b>Windows</b>: en el aviso azul, pulsa «Más información» y luego «Ejecutar de todas formas».</li>
-        <li><b>Mac</b>: la primera vez, clic derecho sobre <code>Iniciar.command</code> → «Abrir» → «Abrir».</li>
-      </ul></div></details>
-
-    <details class="faq"><summary>¿Puedo tener FinAppGo en el Escritorio con su icono?</summary><div>
-      <ul>
-        <li><b>Windows</b>: en la carpeta de la app, doble clic en <code>Crear acceso directo.bat</code>. Aparece «FinAppGo» en tu Escritorio.</li>
-        <li><b>Mac</b>: arrastra <code>Iniciar.command</code> al Dock, o clic derecho → «Crear alias» y deja el alias en el Escritorio.</li>
-        <li><b>Linux</b>: ejecuta una vez <code>bash crear-acceso-directo.sh</code> y lo tendrás en el menú de aplicaciones.</li>
-      </ul>
-      <p>El icono abre el lanzador de siempre, con tu llave de acceso. Si mueves la carpeta de la app, vuelve a crearlo.</p></div></details>
 
     <details class="faq"><summary>Mi banco o bróker no se puede importar directamente</summary><div>
       <p>Usa la <b>plantilla</b> o la opción <b>«Con ayuda de una IA»</b> de Mis datos → Importar: sirven para cualquier banco o bróker.</p></div></details>

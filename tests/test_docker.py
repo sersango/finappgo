@@ -100,13 +100,11 @@ class ArchivosDeDocker(ConCarpeta):
         for x in ("mis_datos", ".venv", ".git", "tests"):
             self.assertIn(x, ignora)
 
-    def test_github_prueba_antes_de_publicar(self):
-        w = lee(os.path.join(".github", "workflows", "docker.yml"))
-        self.assertIn("needs: pruebas", w)
-        self.assertIn("linux/amd64,linux/arm64", w)
-        self.assertLess(w.index("Arrancarla y comprobar"), w.index("Publicar para amd64 y arm64"))
-        p = lee(os.path.join(".github", "workflows", "pruebas.yml"))
-        self.assertIn("unittest discover -s tests", p)
+    def test_github_builds_pull_requests_and_publishes_main(self):
+        workflow = lee(os.path.join(".github", "workflows", "container.yml"))
+        self.assertIn("pull_request:", workflow)
+        self.assertIn("platforms: linux/amd64", workflow)
+        self.assertIn("github.event_name == 'push' && github.ref == 'refs/heads/main'", workflow)
 
     def test_misma_version_de_python_y_puerto(self):
         self.assertRegex(lee("Dockerfile"), r"FROM python:3\.1[0-9]")

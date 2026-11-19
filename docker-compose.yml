@@ -28,3 +28,4 @@ services:
 
 volumes:
   finappgo_datos:
+    name: ${FINAPPGO_DATA_VOLUME:-finappgo_datos}

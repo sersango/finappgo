@@ -138,14 +138,5 @@ class VerEnOtraMoneda(ConCarpeta):
         self.assertLessEqual((dt.date.today() - dt.date.fromisoformat(m["USD"]["fecha"])).days, 3)
 
 
-class Linux(unittest.TestCase):
-    def test_lanzador(self):
-        with open(os.path.join(RAIZ, "Iniciar.sh"), "rb") as f:
-            sh = f.read()
-        self.assertTrue(sh.startswith(b"#!/bin/bash"))
-        self.assertNotIn(b"\r", sh)
-        self.assertIn(b"uv run --quiet python -m app", sh)
-
-
 if __name__ == "__main__":
     unittest.main()

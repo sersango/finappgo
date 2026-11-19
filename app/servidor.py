@@ -65,10 +65,8 @@ _LLAVES = {}
 PAGINA_SIN_LLAVE = """<!doctype html><html lang="es"><head><meta charset="utf-8"><title>FinAppGo</title>
 <style>body{font:16px/1.6 system-ui,sans-serif;margin:14vh auto;max-width:540px;padding:0 22px;color:#1d1d1b;background:#f9f9f7}
 h1{font-size:22px}code{background:#ecebe6;padding:1px 6px;border-radius:5px}</style></head><body>
-<h1>Abre FinAppGo con su lanzador</h1>
-<p>Por seguridad, FinAppGo solo se abre desde su lanzador: <code>Iniciar.bat</code> en Windows,
-<code>Iniciar.command</code> en Mac o <code>Iniciar.sh</code> en Linux. Haz doble clic en él y se abrirá aquí.</p>
-<p>Así, ninguna otra página ni otro programa puede ver ni cambiar tus datos.</p></body></html>"""
+<h1>Open FinAppGo using your access link</h1>
+<p>Find the access link in the container logs and open it in your browser.</p></body></html>"""
 
 
 def token_acceso():
@@ -182,7 +180,7 @@ def solo_desde_finappgo():
     dada = request.args.get("acceso")
     if dada is not None:
         if not hmac.compare_digest(dada, llave):
-            return _rechazo("Llave de acceso incorrecta: abre FinAppGo con su lanzador.")
+            return _rechazo("Invalid access key. Open the access link from the container logs.")
         g.poner_cookie = True
         if request.method == "GET":
             # La llave no se queda en la barra de direcciones; lo demás (?tab=, ?novedades=) sí.
@@ -190,7 +188,7 @@ def solo_desde_finappgo():
             return redirect(request.path + ("?" + resto if resto else ""))
         return None
     if not hmac.compare_digest(request.cookies.get(COOKIE, ""), llave):
-        return _rechazo("Sin llave de acceso: abre FinAppGo con su lanzador.")
+        return _rechazo("Missing access key. Open the access link from the container logs.")
     return None
 
 
